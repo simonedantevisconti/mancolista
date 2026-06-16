@@ -1,0 +1,79 @@
+.collection-detail {
+  padding: 56px 0 80px;
+}
+
+.page-heading {
+  max-width: 760px;
+  margin-bottom: 36px;
+}
+
+.page-heading h1 {
+  font-size: clamp(42px, 8vw, 82px);
+  line-height: 0.95;
+  margin: 0 0 16px;
+  letter-spacing: -0.07em;
+}
+
+.page-heading p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.series-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.series-card {
+  min-height: 260px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel), var(--bg-soft));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: 0.2s ease;
+}
+
+.series-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.series-label {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.series-card h2 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.series-counter {
+  display: grid;
+  gap: 4px;
+}
+
+.series-counter strong {
+  font-size: 34px;
+  color: var(--accent);
+}
+
+.series-counter span {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .series-grid {
+    grid-template-columns: 1fr;
+  }
+}

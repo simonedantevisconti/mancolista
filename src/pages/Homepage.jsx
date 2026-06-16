@@ -1,40 +1,23 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { mainCollections } from "../data/collections";
 import "../styles/homepage.css";
-
-const collections = [
-  {
-    id: 1,
-    name: "Italian Brainrot",
-    description:
-      "Tieni traccia delle carte che hai, delle doppie e delle mancanti.",
-    totalCards: 120,
-    ownedCards: 34,
-    image: "🧠",
-  },
-  {
-    id: 2,
-    name: "Pokémon",
-    description: "Collezione futura per carte Pokémon.",
-    totalCards: 0,
-    ownedCards: 0,
-    image: "⚡",
-  },
-  {
-    id: 3,
-    name: "Yu-Gi-Oh!",
-    description: "Collezione futura per carte Yu-Gi-Oh!.",
-    totalCards: 0,
-    ownedCards: 0,
-    image: "🐉",
-  },
-];
 
 const Homepage = () => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
-  const filteredCollections = collections.filter((collection) =>
+  const filteredCollections = mainCollections.filter((collection) =>
     collection.name.toLowerCase().includes(search.toLowerCase()),
   );
+
+  const handleOpenCollection = (collection) => {
+    if (!collection.active) {
+      return;
+    }
+
+    navigate(`/collezioni/${collection.id}`);
+  };
 
   return (
     <section className="homepage">
@@ -58,8 +41,13 @@ const Homepage = () => {
 
       <div className="collections-grid">
         {filteredCollections.map((collection) => (
-          <article className="collection-card" key={collection.id}>
-            <div className="collection-icon">{collection.image}</div>
+          <article
+            className={`collection-card ${
+              !collection.active ? "collection-card--disabled" : ""
+            }`}
+            key={collection.id}
+          >
+            <div className="collection-icon">{collection.icon}</div>
 
             <div>
               <h2>{collection.name}</h2>
@@ -77,14 +65,24 @@ const Homepage = () => {
                   style={{
                     width:
                       collection.totalCards > 0
-                        ? `${(collection.ownedCards / collection.totalCards) * 100}%`
+                        ? `${
+                            (collection.ownedCards / collection.totalCards) *
+                            100
+                          }%`
                         : "0%",
                   }}
                 />
               </div>
             </div>
 
-            <button className="card-button">Apri collezione</button>
+            <button
+              className="card-button"
+              type="button"
+              onClick={() => handleOpenCollection(collection)}
+              disabled={!collection.active}
+            >
+              {collection.active ? "Apri collezione" : "Presto disponibile"}
+            </button>
           </article>
         ))}
       </div>

@@ -1,14 +1,20 @@
-import React from "react";
+import { NavLink } from "react-router-dom";
+import "../styles/header.css";
 
 const Header = () => {
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-12"></div>
-        </div>
-      </div>
-    </>
+    <header className="site-header">
+      <NavLink to="/" className="logo">
+        <span className="logo-mark">M</span>
+        <span>MancoLista</span>
+      </NavLink>
+
+      <nav className="main-nav">
+        <NavLink to="/">Homepage</NavLink>
+        <NavLink to="/le-mie-collezioni">Le mie collezioni</NavLink>
+        <NavLink to="/login">Login</NavLink>
+      </nav>
+    </header>
   );
 };
 

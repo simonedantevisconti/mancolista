@@ -1,14 +1,14 @@
-import React from "react";
+import "../styles/footer.css";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
+
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="col-12"></div>
-        </div>
-      </div>
-    </>
+    <footer className="site-footer">
+      <p>
+        © {year} MancoLista — Developed by <span>Syndycore</span>
+      </p>
+    </footer>
   );
 };
 

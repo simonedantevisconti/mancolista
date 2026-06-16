@@ -1,0 +1,125 @@
+.homepage {
+  padding: 56px 0 80px;
+}
+
+.homepage-hero {
+  max-width: 780px;
+  margin-bottom: 40px;
+}
+
+.homepage-hero h1 {
+  font-size: clamp(48px, 9vw, 96px);
+  line-height: 0.9;
+  margin: 0 0 20px;
+  letter-spacing: -0.08em;
+}
+
+.homepage-hero p {
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.search-box {
+  margin-top: 28px;
+}
+
+.search-box input {
+  width: min(520px, 100%);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 16px;
+  padding: 16px 18px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.collection-card {
+  min-height: 320px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--panel), var(--bg-soft));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.collection-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--accent-soft);
+  font-size: 32px;
+}
+
+.collection-card h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.collection-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.collection-progress {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--panel-light);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.card-button {
+  border: 0;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #111;
+  padding: 13px 16px;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .collections-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .homepage {
+    padding-top: 32px;
+  }
+
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -5,5 +5,6 @@ TODO:
 -colori sito
 -loghi collezioni
 -carte ufficiali
+-rarità carte
 -stile homepage
 -salvare carte presenti con firebase

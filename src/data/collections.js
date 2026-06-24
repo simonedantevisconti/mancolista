@@ -101,7 +101,7 @@ export const italianBrainrotSeries = [
 const rarities = ["Comune", "Non Comune", "Rara", "Epica", "Leggendaria"];
 
 const seriesImageFolders = {
-  alpha: null,
+  alpha: "universo-psichedelico",
   beta: "allucinazione-cosmica",
   gamma: null,
 };

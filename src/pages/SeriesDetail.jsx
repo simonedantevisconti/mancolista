@@ -1,15 +1,31 @@
-import { useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, Navigate, useParams } from "react-router-dom";
+import {
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  collection,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import {
   generateBrainrotCards,
   italianBrainrotSeries,
 } from "../data/collections";
+import { db } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import "../styles/series-detail.css";
 
 const SeriesDetail = () => {
   const { collectionId, seriesId } = useParams();
+  const { user, authLoading } = useAuth();
 
   const [ownedCards, setOwnedCards] = useState([]);
+  const [cardsLoading, setCardsLoading] = useState(true);
+  const [savingCardId, setSavingCardId] = useState("");
+  const [error, setError] = useState("");
 
   const series = italianBrainrotSeries.find((item) => item.id === seriesId);
 
@@ -20,15 +36,116 @@ const SeriesDetail = () => {
   const ownedCount = ownedCards.length;
   const missingCount = cards.length - ownedCount;
 
-  const toggleCard = (cardId) => {
-    setOwnedCards((currentCards) => {
-      if (currentCards.includes(cardId)) {
-        return currentCards.filter((id) => id !== cardId);
+  useEffect(() => {
+    const loadOwnedCards = async () => {
+      if (authLoading) {
+        return;
       }
 
-      return [...currentCards, cardId];
-    });
+      if (!user || collectionId !== "italian-brainrot" || !series) {
+        setCardsLoading(false);
+        return;
+      }
+
+      setCardsLoading(true);
+      setError("");
+
+      try {
+        const cardsRef = collection(db, "users", user.uid, "cards");
+
+        const cardsQuery = query(
+          cardsRef,
+          where("collectionId", "==", collectionId),
+          where("seriesId", "==", seriesId),
+          where("owned", "==", true),
+        );
+
+        const snapshot = await getDocs(cardsQuery);
+
+        const savedOwnedCards = snapshot.docs.map((document) => {
+          return document.data().cardId;
+        });
+
+        setOwnedCards(savedOwnedCards);
+      } catch (error) {
+        console.error(error);
+        setError("Non riesco a caricare le carte salvate.");
+      } finally {
+        setCardsLoading(false);
+      }
+    };
+
+    loadOwnedCards();
+  }, [authLoading, user, collectionId, seriesId, series]);
+
+  const getCardDocId = (cardId) => {
+    return `${collectionId}_${seriesId}_${cardId}`;
   };
+
+  const toggleCard = async (card) => {
+    if (!user) {
+      return;
+    }
+
+    const isOwned = ownedCards.includes(card.id);
+    const cardDocId = getCardDocId(card.id);
+    const cardRef = doc(db, "users", user.uid, "cards", cardDocId);
+
+    setSavingCardId(card.id);
+    setError("");
+
+    try {
+      if (isOwned) {
+        await deleteDoc(cardRef);
+
+        setOwnedCards((currentCards) => {
+          return currentCards.filter((id) => id !== card.id);
+        });
+
+        return;
+      }
+
+      await setDoc(
+        cardRef,
+        {
+          collectionId,
+          seriesId,
+          cardId: card.id,
+          cardNumber: card.number,
+          cardName: card.name,
+          rarity: card.rarity,
+          owned: true,
+          duplicates: 0,
+          updatedAt: serverTimestamp(),
+          createdAt: serverTimestamp(),
+        },
+        { merge: true },
+      );
+
+      setOwnedCards((currentCards) => {
+        return [...currentCards, card.id];
+      });
+    } catch (error) {
+      console.error(error);
+      setError("Non riesco a salvare questa carta. Riprova.");
+    } finally {
+      setSavingCardId("");
+    }
+  };
+
+  if (authLoading) {
+    return (
+      <section className="series-detail">
+        <p className="eyebrow">Caricamento</p>
+        <h1>Controllo accesso...</h1>
+        <p>Stiamo verificando la tua sessione.</p>
+      </section>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
   if (collectionId !== "italian-brainrot" || !series) {
     return (
@@ -53,6 +170,11 @@ const SeriesDetail = () => {
             Segna le carte che hai. Le carte possedute mostrano il fronte,
             quelle mancanti mostrano il retro.
           </p>
+
+          {error && <p className="series-error">{error}</p>}
+          {cardsLoading && (
+            <p className="series-loading">Caricamento carte...</p>
+          )}
         </div>
 
         <div className="series-stats">
@@ -76,6 +198,7 @@ const SeriesDetail = () => {
       <div className="cards-grid">
         {cards.map((card) => {
           const isOwned = ownedCards.includes(card.id);
+          const isSaving = savingCardId === card.id;
 
           return (
             <article
@@ -85,7 +208,8 @@ const SeriesDetail = () => {
               <button
                 className="card-image-button"
                 type="button"
-                onClick={() => toggleCard(card.id)}
+                onClick={() => toggleCard(card)}
+                disabled={cardsLoading || isSaving}
                 aria-label={`Segna ${card.name}`}
               >
                 <div className="card-flip">
@@ -111,9 +235,16 @@ const SeriesDetail = () => {
                   <input
                     type="checkbox"
                     checked={isOwned}
-                    onChange={() => toggleCard(card.id)}
+                    disabled={cardsLoading || isSaving}
+                    onChange={() => toggleCard(card)}
                   />
-                  <span>{isOwned ? "Ce l'ho" : "Mi manca"}</span>
+                  <span>
+                    {isSaving
+                      ? "Salvataggio..."
+                      : isOwned
+                        ? "Ce l'ho"
+                        : "Mi manca"}
+                  </span>
                 </label>
               </div>
             </article>

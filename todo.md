@@ -10,4 +10,5 @@ AFTER FIREBASE
 -loghi collezioni
 -carte ufficiali
 -rarità carte
+-nome carte
 -stile homepage

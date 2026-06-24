@@ -153,6 +153,23 @@
   accent-color: var(--accent);
 }
 
+.series-error {
+  margin-top: 14px;
+  color: var(--danger) !important;
+  font-weight: 700;
+}
+
+.series-loading {
+  margin-top: 14px;
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+.card-image-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
 @media (max-width: 1100px) {
   .cards-grid {
     grid-template-columns: repeat(4, 1fr);

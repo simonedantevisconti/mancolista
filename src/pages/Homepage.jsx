@@ -1,13 +1,85 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { mainCollections } from "../data/collections";
+import { db } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import "../styles/homepage.css";
 
 const Homepage = () => {
   const [search, setSearch] = useState("");
-  const navigate = useNavigate();
+  const [collectionStats, setCollectionStats] = useState({});
+  const [statsLoading, setStatsLoading] = useState(false);
 
-  const filteredCollections = mainCollections.filter((collection) =>
+  const navigate = useNavigate();
+  const { user, authLoading } = useAuth();
+
+  useEffect(() => {
+    const loadHomepageStats = async () => {
+      if (authLoading) {
+        return;
+      }
+
+      if (!user) {
+        setCollectionStats({});
+        return;
+      }
+
+      setStatsLoading(true);
+
+      try {
+        const cardsRef = collection(db, "users", user.uid, "cards");
+
+        const cardsQuery = query(
+          cardsRef,
+          where("collectionId", "==", "italian-brainrot"),
+          where("owned", "==", true),
+        );
+
+        const snapshot = await getDocs(cardsQuery);
+
+        let owned = 0;
+        let duplicates = 0;
+
+        snapshot.docs.forEach((document) => {
+          const cardData = document.data();
+
+          owned += 1;
+          duplicates += cardData.duplicates || 0;
+        });
+
+        setCollectionStats({
+          "italian-brainrot": {
+            owned,
+            duplicates,
+          },
+        });
+      } catch (error) {
+        console.error("Errore caricamento statistiche homepage:", error);
+      } finally {
+        setStatsLoading(false);
+      }
+    };
+
+    loadHomepageStats();
+  }, [authLoading, user]);
+
+  const collectionsWithStats = useMemo(() => {
+    return mainCollections.map((collection) => {
+      const stats = collectionStats[collection.id] || {
+        owned: collection.ownedCards,
+        duplicates: 0,
+      };
+
+      return {
+        ...collection,
+        ownedCards: stats.owned,
+        duplicates: stats.duplicates,
+      };
+    });
+  }, [collectionStats]);
+
+  const filteredCollections = collectionsWithStats.filter((collection) =>
     collection.name.toLowerCase().includes(search.toLowerCase()),
   );
 
@@ -37,54 +109,63 @@ const Homepage = () => {
             onChange={(event) => setSearch(event.target.value)}
           />
         </div>
+
+        {statsLoading && (
+          <p className="homepage-loading">Aggiornamento progressi...</p>
+        )}
       </div>
 
       <div className="collections-grid">
-        {filteredCollections.map((collection) => (
-          <article
-            className={`collection-card ${
-              !collection.active ? "collection-card--disabled" : ""
-            }`}
-            key={collection.id}
-          >
-            <div className="collection-icon">{collection.icon}</div>
+        {filteredCollections.map((collection) => {
+          const progress =
+            collection.totalCards > 0
+              ? (collection.ownedCards / collection.totalCards) * 100
+              : 0;
 
-            <div>
-              <h2>{collection.name}</h2>
-              <p>{collection.description}</p>
-            </div>
-
-            <div className="collection-progress">
-              <span>
-                {collection.ownedCards}/{collection.totalCards} carte
-              </span>
-
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{
-                    width:
-                      collection.totalCards > 0
-                        ? `${
-                            (collection.ownedCards / collection.totalCards) *
-                            100
-                          }%`
-                        : "0%",
-                  }}
-                />
-              </div>
-            </div>
-
-            <button
-              className="card-button"
-              type="button"
-              onClick={() => handleOpenCollection(collection)}
-              disabled={!collection.active}
+          return (
+            <article
+              className={`collection-card ${
+                !collection.active ? "collection-card--disabled" : ""
+              }`}
+              key={collection.id}
             >
-              {collection.active ? "Apri collezioni" : "Presto disponibile"}
-            </button>
-          </article>
-        ))}
+              <div className="collection-icon">{collection.icon}</div>
+
+              <div>
+                <h2>{collection.name}</h2>
+                <p>{collection.description}</p>
+              </div>
+
+              <div className="collection-progress">
+                <span>
+                  {collection.ownedCards}/{collection.totalCards} carte
+                </span>
+
+                {collection.active && (
+                  <span>{collection.duplicates} doppie</span>
+                )}
+
+                <div className="progress-bar">
+                  <div
+                    className="progress-fill"
+                    style={{
+                      width: `${progress}%`,
+                    }}
+                  />
+                </div>
+              </div>
+
+              <button
+                className="card-button"
+                type="button"
+                onClick={() => handleOpenCollection(collection)}
+                disabled={!collection.active}
+              >
+                {collection.active ? "Apri collezione" : "Presto disponibile"}
+              </button>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

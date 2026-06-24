@@ -70,6 +70,59 @@
   font-weight: 800;
 }
 
+.manage-collection-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #111;
+  padding: 13px 16px;
+  font-weight: 800;
+}
+
+.favourites-loading {
+  margin-top: 14px;
+  color: var(--accent) !important;
+  font-weight: 700;
+}
+
+.favourites-error {
+  margin-top: 14px;
+  color: var(--danger) !important;
+  font-weight: 700;
+}
+
+.empty-collections {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+.empty-collections h2 {
+  margin: 0 0 12px;
+  font-size: 28px;
+}
+
+.empty-collections p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.empty-collections a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #111;
+  padding: 13px 16px;
+  font-weight: 800;
+}
+
 @media (max-width: 620px) {
   .stats-grid {
     grid-template-columns: 1fr;

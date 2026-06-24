@@ -48,6 +48,28 @@
   background: var(--panel);
 }
 
+.user-email {
+  color: var(--muted);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--panel);
+  font-size: 14px;
+}
+
+.logout-button {
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #111;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.logout-button:hover {
+  opacity: 0.9;
+}
+
 @media (max-width: 720px) {
   .site-header {
     align-items: flex-start;
@@ -61,6 +83,14 @@
   }
 
   .main-nav a {
+    white-space: nowrap;
+  }
+
+  .user-email {
+    white-space: nowrap;
+  }
+
+  .logout-button {
     white-space: nowrap;
   }
 }

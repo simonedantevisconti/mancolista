@@ -4,9 +4,9 @@ const myCollections = [
   {
     id: 1,
     name: "Italian Brainrot",
-    owned: 34,
-    duplicates: 8,
-    missing: 86,
+    owned: 0,
+    duplicates: 0,
+    missing: 150,
   },
 ];
 

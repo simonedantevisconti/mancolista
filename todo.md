@@ -6,4 +6,4 @@ TODO:
 -loghi collezioni
 -carte ufficiali
 -stile homepage
--salvare carte presenti 
+-salvare carte presenti con firebase

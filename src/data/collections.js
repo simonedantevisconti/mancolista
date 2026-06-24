@@ -103,7 +103,7 @@ const rarities = ["Comune", "Non Comune", "Rara", "Epica", "Leggendaria"];
 const seriesImageFolders = {
   alpha: "universo-psichedelico",
   beta: "allucinazione-cosmica",
-  gamma: null,
+  gamma: "anomalia-galattica",
 };
 
 export const generateBrainrotCards = (seriesId) => {

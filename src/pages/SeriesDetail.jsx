@@ -8,6 +8,7 @@ import {
   collection,
   serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import {
@@ -22,7 +23,7 @@ const SeriesDetail = () => {
   const { collectionId, seriesId } = useParams();
   const { user, authLoading } = useAuth();
 
-  const [ownedCards, setOwnedCards] = useState([]);
+  const [cardsStatus, setCardsStatus] = useState({});
   const [cardsLoading, setCardsLoading] = useState(true);
   const [savingCardId, setSavingCardId] = useState("");
   const [error, setError] = useState("");
@@ -33,11 +34,18 @@ const SeriesDetail = () => {
     return generateBrainrotCards(seriesId);
   }, [seriesId]);
 
-  const ownedCount = ownedCards.length;
+  const ownedCount = Object.values(cardsStatus).filter((card) => {
+    return card.owned;
+  }).length;
+
+  const duplicatesCount = Object.values(cardsStatus).reduce((total, card) => {
+    return total + (card.duplicates || 0);
+  }, 0);
+
   const missingCount = cards.length - ownedCount;
 
   useEffect(() => {
-    const loadOwnedCards = async () => {
+    const loadCardsStatus = async () => {
       if (authLoading) {
         return;
       }
@@ -57,16 +65,22 @@ const SeriesDetail = () => {
           cardsRef,
           where("collectionId", "==", collectionId),
           where("seriesId", "==", seriesId),
-          where("owned", "==", true),
         );
 
         const snapshot = await getDocs(cardsQuery);
 
-        const savedOwnedCards = snapshot.docs.map((document) => {
-          return document.data().cardId;
+        const savedCardsStatus = {};
+
+        snapshot.docs.forEach((document) => {
+          const cardData = document.data();
+
+          savedCardsStatus[cardData.cardId] = {
+            owned: Boolean(cardData.owned),
+            duplicates: cardData.duplicates || 0,
+          };
         });
 
-        setOwnedCards(savedOwnedCards);
+        setCardsStatus(savedCardsStatus);
       } catch (error) {
         console.error(error);
         setError("Non riesco a caricare le carte salvate.");
@@ -75,11 +89,16 @@ const SeriesDetail = () => {
       }
     };
 
-    loadOwnedCards();
+    loadCardsStatus();
   }, [authLoading, user, collectionId, seriesId, series]);
 
   const getCardDocId = (cardId) => {
     return `${collectionId}_${seriesId}_${cardId}`;
+  };
+
+  const getCardRef = (cardId) => {
+    const cardDocId = getCardDocId(cardId);
+    return doc(db, "users", user.uid, "cards", cardDocId);
   };
 
   const toggleCard = async (card) => {
@@ -87,9 +106,9 @@ const SeriesDetail = () => {
       return;
     }
 
-    const isOwned = ownedCards.includes(card.id);
-    const cardDocId = getCardDocId(card.id);
-    const cardRef = doc(db, "users", user.uid, "cards", cardDocId);
+    const currentStatus = cardsStatus[card.id];
+    const isOwned = Boolean(currentStatus?.owned);
+    const cardRef = getCardRef(card.id);
 
     setSavingCardId(card.id);
     setError("");
@@ -98,8 +117,10 @@ const SeriesDetail = () => {
       if (isOwned) {
         await deleteDoc(cardRef);
 
-        setOwnedCards((currentCards) => {
-          return currentCards.filter((id) => id !== card.id);
+        setCardsStatus((currentCardsStatus) => {
+          const updatedCardsStatus = { ...currentCardsStatus };
+          delete updatedCardsStatus[card.id];
+          return updatedCardsStatus;
         });
 
         return;
@@ -122,12 +143,107 @@ const SeriesDetail = () => {
         { merge: true },
       );
 
-      setOwnedCards((currentCards) => {
-        return [...currentCards, card.id];
+      setCardsStatus((currentCardsStatus) => {
+        return {
+          ...currentCardsStatus,
+          [card.id]: {
+            owned: true,
+            duplicates: 0,
+          },
+        };
       });
     } catch (error) {
       console.error(error);
       setError("Non riesco a salvare questa carta. Riprova.");
+    } finally {
+      setSavingCardId("");
+    }
+  };
+
+  const addDuplicate = async (card) => {
+    if (!user) {
+      return;
+    }
+
+    const currentStatus = cardsStatus[card.id];
+    const currentDuplicates = currentStatus?.duplicates || 0;
+    const nextDuplicates = currentDuplicates + 1;
+    const cardRef = getCardRef(card.id);
+
+    setSavingCardId(card.id);
+    setError("");
+
+    try {
+      await setDoc(
+        cardRef,
+        {
+          collectionId,
+          seriesId,
+          cardId: card.id,
+          cardNumber: card.number,
+          cardName: card.name,
+          rarity: card.rarity,
+          owned: true,
+          duplicates: nextDuplicates,
+          updatedAt: serverTimestamp(),
+          createdAt: serverTimestamp(),
+        },
+        { merge: true },
+      );
+
+      setCardsStatus((currentCardsStatus) => {
+        return {
+          ...currentCardsStatus,
+          [card.id]: {
+            owned: true,
+            duplicates: nextDuplicates,
+          },
+        };
+      });
+    } catch (error) {
+      console.error(error);
+      setError("Non riesco ad aggiungere la doppia. Riprova.");
+    } finally {
+      setSavingCardId("");
+    }
+  };
+
+  const removeDuplicate = async (card) => {
+    if (!user) {
+      return;
+    }
+
+    const currentStatus = cardsStatus[card.id];
+    const currentDuplicates = currentStatus?.duplicates || 0;
+
+    if (currentDuplicates <= 0) {
+      return;
+    }
+
+    const nextDuplicates = currentDuplicates - 1;
+    const cardRef = getCardRef(card.id);
+
+    setSavingCardId(card.id);
+    setError("");
+
+    try {
+      await updateDoc(cardRef, {
+        duplicates: nextDuplicates,
+        updatedAt: serverTimestamp(),
+      });
+
+      setCardsStatus((currentCardsStatus) => {
+        return {
+          ...currentCardsStatus,
+          [card.id]: {
+            owned: true,
+            duplicates: nextDuplicates,
+          },
+        };
+      });
+    } catch (error) {
+      console.error(error);
+      setError("Non riesco a rimuovere la doppia. Riprova.");
     } finally {
       setSavingCardId("");
     }
@@ -168,7 +284,8 @@ const SeriesDetail = () => {
           <h1>{series.subtitle}</h1>
           <p>
             Segna le carte che hai. Le carte possedute mostrano il fronte,
-            quelle mancanti mostrano il retro.
+            quelle mancanti mostrano il retro. Puoi anche indicare quante doppie
+            hai per ogni carta.
           </p>
 
           {error && <p className="series-error">{error}</p>}
@@ -189,15 +306,17 @@ const SeriesDetail = () => {
           </div>
 
           <div>
-            <strong>{cards.length}</strong>
-            <span>Totali</span>
+            <strong>{duplicatesCount}</strong>
+            <span>Doppie</span>
           </div>
         </div>
       </div>
 
       <div className="cards-grid">
         {cards.map((card) => {
-          const isOwned = ownedCards.includes(card.id);
+          const cardStatus = cardsStatus[card.id];
+          const isOwned = Boolean(cardStatus?.owned);
+          const duplicates = cardStatus?.duplicates || 0;
           const isSaving = savingCardId === card.id;
 
           return (
@@ -246,6 +365,32 @@ const SeriesDetail = () => {
                         : "Mi manca"}
                   </span>
                 </label>
+
+                {isOwned && (
+                  <div className="duplicates-control">
+                    <span>Doppie</span>
+
+                    <div className="duplicates-actions">
+                      <button
+                        type="button"
+                        onClick={() => removeDuplicate(card)}
+                        disabled={cardsLoading || isSaving || duplicates === 0}
+                      >
+                        -
+                      </button>
+
+                      <strong>{duplicates}</strong>
+
+                      <button
+                        type="button"
+                        onClick={() => addDuplicate(card)}
+                        disabled={cardsLoading || isSaving}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </article>
           );

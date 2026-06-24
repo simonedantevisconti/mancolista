@@ -81,7 +81,7 @@ const Homepage = () => {
               onClick={() => handleOpenCollection(collection)}
               disabled={!collection.active}
             >
-              {collection.active ? "Apri collezione" : "Presto disponibile"}
+              {collection.active ? "Apri collezioni" : "Presto disponibile"}
             </button>
           </article>
         ))}

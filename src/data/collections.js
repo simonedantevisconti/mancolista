@@ -100,6 +100,12 @@ export const italianBrainrotSeries = [
 
 const rarities = ["Comune", "Non Comune", "Rara", "Epica", "Leggendaria"];
 
+const seriesImageFolders = {
+  alpha: null,
+  beta: "allucinazione-cosmica",
+  gamma: null,
+};
+
 export const generateBrainrotCards = (seriesId) => {
   const seriesMap = {
     alpha: "Alpha",
@@ -108,6 +114,7 @@ export const generateBrainrotCards = (seriesId) => {
   };
 
   const seriesName = seriesMap[seriesId] || "Alpha";
+  const imageFolder = seriesImageFolders[seriesId];
 
   return Array.from({ length: 150 }, (_, index) => {
     const number = index + 1;
@@ -117,7 +124,13 @@ export const generateBrainrotCards = (seriesId) => {
       number,
       name: `Brainrot ${seriesName} #${String(number).padStart(3, "0")}`,
       rarity: rarities[index % rarities.length],
-      frontImage: "/fronte.webp",
+
+      // Se la serie ha una cartella immagini, usa quelle.
+      // Altrimenti usa l'immagine provvisoria fronte.webp.
+      frontImage: imageFolder
+        ? `/${imageFolder}/${number}.png`
+        : "/fronte.webp",
+
       backImage: "/retro.webp",
     };
   });

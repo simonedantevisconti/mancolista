@@ -15,6 +15,7 @@ import {
   generateBrainrotCards,
   italianBrainrotSeries,
 } from "../data/collections";
+import { rarityLabels } from "../data/italianBrainrotCards";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import "../styles/series-detail.css";
@@ -348,7 +349,9 @@ const SeriesDetail = () => {
                 </span>
 
                 <h2>{card.name}</h2>
-                <p>{card.rarity}</p>
+                <p className={`card-rarity rarity-${card.rarity}`}>
+                  {rarityLabels[card.rarity] || card.rarity}
+                </p>
 
                 <label className="owned-toggle">
                   <input

@@ -1,3 +1,5 @@
+import { italianBrainrotCards } from "./italianBrainrotCards";
+
 export const mainCollections = [
   {
     id: "italian-brainrot",
@@ -133,7 +135,6 @@ export const italianBrainrotSeries = [
   },
 ];
 
-const rarities = ["Comune", "Non Comune", "Rara", "Epica", "Leggendaria"];
 
 const seriesImageFolders = {
   alpha: "universo-psichedelico",
@@ -142,26 +143,22 @@ const seriesImageFolders = {
 };
 
 export const generateBrainrotCards = (seriesId) => {
-  const seriesMap = {
-    alpha: "Alpha",
-    beta: "Beta",
-    gamma: "Gamma",
-  };
-
-  const seriesName = seriesMap[seriesId] || "Alpha";
   const imageFolder = seriesImageFolders[seriesId];
+  const realCards = italianBrainrotCards[seriesId] || [];
 
   return Array.from({ length: 150 }, (_, index) => {
     const number = index + 1;
 
+    const realCard = realCards.find((card) => {
+      return card.number === number;
+    });
+
     return {
       id: `${seriesId}-${number}`,
       number,
-      name: `Brainrot ${seriesName} #${String(number).padStart(3, "0")}`,
-      rarity: rarities[index % rarities.length],
+      name: realCard?.name || `Carta #${String(number).padStart(3, "0")}`,
+      rarity: realCard?.rarity || "da-verificare",
 
-      // Se la serie ha una cartella immagini, usa quelle.
-      // Altrimenti usa l'immagine provvisoria fronte.webp.
       frontImage: imageFolder
         ? `/${imageFolder}/${number}.png`
         : "/fronte.webp",

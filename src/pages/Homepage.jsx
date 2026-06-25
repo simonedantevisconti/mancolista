@@ -129,8 +129,9 @@ const Homepage = () => {
               }`}
               key={collection.id}
             >
-              <div className="collection-icon">{collection.icon}</div>
-
+              <div className="collection-logo">
+                <img src={collection.logo} alt={`Logo ${collection.name}`} />
+              </div>
               <div>
                 <h2>{collection.name}</h2>
                 <p>{collection.description}</p>

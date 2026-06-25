@@ -1,11 +1,10 @@
 TODO:
--Favourites.jsx counter in comunicazione con le collezioni counter
 
 AFTER FIREBASE
--filtro carte (rarità / possedute / mancanti)
 -colori sito
 -loghi collezioni
 -carte ufficiali
 -rarità carte
 -nome carte
 -stile homepage
+-app 

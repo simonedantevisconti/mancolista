@@ -6,6 +6,12 @@ import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import "../styles/collection-detail.css";
 
+const seriesAlbumImages = {
+  alpha: "/album/universo-psichedelico-album.jpg",
+  beta: "/album/allucinazione-cosmica-album.png",
+  gamma: "/album/anomalia-galattica-album.jpg",
+};
+
 const CollectionDetail = () => {
   const { collectionId } = useParams();
   const { user, authLoading } = useAuth();
@@ -172,6 +178,12 @@ const CollectionDetail = () => {
               className="series-card"
               key={series.id}
             >
+              <div className="series-album-cover">
+                <img
+                  src={seriesAlbumImages[series.id]}
+                  alt={`Album ${series.name}`}
+                />
+              </div>
               <div>
                 <p className="series-label">{series.name}</p>
                 <h2>{series.subtitle}</h2>

@@ -35,6 +35,9 @@ const SeriesDetail = () => {
   const [cardsLoading, setCardsLoading] = useState(true);
   const [savingCardId, setSavingCardId] = useState("");
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [rarityFilter, setRarityFilter] = useState("all");
+  const [ownershipFilter, setOwnershipFilter] = useState("all");
 
   const series = italianBrainrotSeries.find((item) => item.id === seriesId);
 
@@ -72,6 +75,28 @@ const SeriesDetail = () => {
   }, 0);
 
   const missingCount = cards.length - ownedCount;
+
+  const filteredCards = cards.filter((card) => {
+    const cardStatus = cardsStatus[card.id];
+    const isOwned = Boolean(cardStatus?.owned);
+
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    const matchesSearch =
+      normalizedSearch.length === 0 ||
+      card.name.toLowerCase().includes(normalizedSearch) ||
+      String(card.number).includes(normalizedSearch);
+
+    const matchesRarity =
+      rarityFilter === "all" || card.rarity === rarityFilter;
+
+    const matchesOwnership =
+      ownershipFilter === "all" ||
+      (ownershipFilter === "owned" && isOwned) ||
+      (ownershipFilter === "missing" && !isOwned);
+
+    return matchesSearch && matchesRarity && matchesOwnership;
+  });
 
   useEffect(() => {
     const loadCardsStatus = async () => {
@@ -364,8 +389,62 @@ const SeriesDetail = () => {
         </div>
       </div>
 
+      <div className="series-filters">
+        <div className="search-field">
+          <label htmlFor="card-search">Cerca carta</label>
+          <input
+            id="card-search"
+            type="search"
+            placeholder="Cerca per nome o numero..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </div>
+
+        <div className="filter-field">
+          <label htmlFor="rarity-filter">Rarità</label>
+          <select
+            id="rarity-filter"
+            value={rarityFilter}
+            onChange={(event) => setRarityFilter(event.target.value)}
+          >
+            <option value="all">Tutte</option>
+            <option value="niente-di-che">Niente di che</option>
+            <option value="cosi-cosi">Così così</option>
+            <option value="bella">Bella</option>
+            <option value="fighissima">Fighissima</option>
+            <option value="polygon">Polygon</option>
+          </select>
+        </div>
+
+        <div className="filter-field">
+          <label htmlFor="ownership-filter">Stato</label>
+          <select
+            id="ownership-filter"
+            value={ownershipFilter}
+            onChange={(event) => setOwnershipFilter(event.target.value)}
+          >
+            <option value="all">Tutte</option>
+            <option value="owned">Possedute</option>
+            <option value="missing">Mancanti</option>
+          </select>
+        </div>
+
+        <div className="filter-result">
+          <strong>{filteredCards.length}</strong>
+          <span>risultati</span>
+        </div>
+      </div>
+
+      {filteredCards.length === 0 && (
+        <div className="empty-cards-message">
+          <h2>Nessuna carta trovata</h2>
+          <p>Prova a cambiare ricerca, rarità o stato della carta.</p>
+        </div>
+      )}
+
       <div className="cards-grid">
-        {cards.map((card) => {
+        {filteredCards.map((card) => {
           const cardStatus = cardsStatus[card.id];
           const isOwned = Boolean(cardStatus?.owned);
           const duplicates = cardStatus?.duplicates || 0;

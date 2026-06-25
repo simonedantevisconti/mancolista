@@ -1,6 +1,5 @@
 TODO:
 
 AFTER FIREBASE
--colori sito
--stile homepage
+-filtri carte rarità
 -app 

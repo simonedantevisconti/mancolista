@@ -42,6 +42,27 @@ const SeriesDetail = () => {
     return generateBrainrotCards(seriesId);
   }, [seriesId]);
 
+  const getRealCardById = (cardId) => {
+    return cards.find((card) => card.id === cardId);
+  };
+
+  const getRealCardByNumber = (cardNumber) => {
+    return cards.find((card) => card.number === cardNumber);
+  };
+
+  const buildCardFirestoreData = (card, extraData = {}) => {
+    return {
+      collectionId,
+      seriesId,
+      cardId: card.id,
+      cardNumber: card.number,
+      cardName: card.name,
+      rarity: card.rarity,
+      ...extraData,
+      updatedAt: serverTimestamp(),
+    };
+  };
+
   const ownedCount = Object.values(cardsStatus).filter((card) => {
     return card.owned;
   }).length;
@@ -79,14 +100,48 @@ const SeriesDetail = () => {
 
         const savedCardsStatus = {};
 
+        const metadataUpdates = [];
+
         snapshot.docs.forEach((document) => {
           const cardData = document.data();
 
-          savedCardsStatus[cardData.cardId] = {
+          const realCard =
+            getRealCardById(cardData.cardId) ||
+            getRealCardByNumber(cardData.cardNumber);
+
+          if (!realCard) {
+            return;
+          }
+
+          savedCardsStatus[realCard.id] = {
             owned: Boolean(cardData.owned),
             duplicates: cardData.duplicates || 0,
           };
+
+          const hasOldMetadata =
+            cardData.cardId !== realCard.id ||
+            cardData.cardNumber !== realCard.number ||
+            cardData.cardName !== realCard.name ||
+            cardData.rarity !== realCard.rarity;
+
+          if (hasOldMetadata) {
+            const cardRef = doc(db, "users", user.uid, "cards", document.id);
+
+            metadataUpdates.push(
+              updateDoc(cardRef, {
+                cardId: realCard.id,
+                cardNumber: realCard.number,
+                cardName: realCard.name,
+                rarity: realCard.rarity,
+                updatedAt: serverTimestamp(),
+              }),
+            );
+          }
         });
+
+        if (metadataUpdates.length > 0) {
+          await Promise.all(metadataUpdates);
+        }
 
         setCardsStatus(savedCardsStatus);
       } catch (error) {
@@ -98,7 +153,7 @@ const SeriesDetail = () => {
     };
 
     loadCardsStatus();
-  }, [authLoading, user, collectionId, seriesId, series]);
+  }, [authLoading, user, collectionId, seriesId, series, cards]);
 
   const getCardDocId = (cardId) => {
     return `${collectionId}_${seriesId}_${cardId}`;
@@ -136,18 +191,11 @@ const SeriesDetail = () => {
 
       await setDoc(
         cardRef,
-        {
-          collectionId,
-          seriesId,
-          cardId: card.id,
-          cardNumber: card.number,
-          cardName: card.name,
-          rarity: card.rarity,
+        buildCardFirestoreData(card, {
           owned: true,
           duplicates: 0,
-          updatedAt: serverTimestamp(),
           createdAt: serverTimestamp(),
-        },
+        }),
         { merge: true },
       );
 
@@ -184,18 +232,11 @@ const SeriesDetail = () => {
     try {
       await setDoc(
         cardRef,
-        {
-          collectionId,
-          seriesId,
-          cardId: card.id,
-          cardNumber: card.number,
-          cardName: card.name,
-          rarity: card.rarity,
+        buildCardFirestoreData(card, {
           owned: true,
           duplicates: nextDuplicates,
-          updatedAt: serverTimestamp(),
           createdAt: serverTimestamp(),
-        },
+        }),
         { merge: true },
       );
 
@@ -236,6 +277,9 @@ const SeriesDetail = () => {
 
     try {
       await updateDoc(cardRef, {
+        cardNumber: card.number,
+        cardName: card.name,
+        rarity: card.rarity,
         duplicates: nextDuplicates,
         updatedAt: serverTimestamp(),
       });

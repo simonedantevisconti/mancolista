@@ -159,6 +159,33 @@
   padding: 18px;
 }
 
+.image-paths-panel {
+  margin-top: 34px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel);
+}
+
+.image-paths-panel summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.image-paths-panel pre {
+  max-height: 360px;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
 @media (max-width: 900px) {
   .series-grid {
     grid-template-columns: 1fr;

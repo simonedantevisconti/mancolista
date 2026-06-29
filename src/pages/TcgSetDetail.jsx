@@ -336,6 +336,8 @@ const TcgSetDetail = () => {
           <p>
             Segna le carte che hai, quelle mancanti e le doppie. I dati arrivano
             dal provider collegato alla collezione.
+            {setData.languageUsed === "en" &&
+              " Questo set non era completo in italiano, quindi viene mostrato in inglese."}
           </p>
 
           {error && <p className="series-error">{error}</p>}

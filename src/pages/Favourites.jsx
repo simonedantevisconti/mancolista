@@ -1,21 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { mainCollections } from "../data/collections";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import "../styles/favourites.css";
 
-const TOTAL_BRAINROT_CARDS = 450;
-
 const Favourites = () => {
   const { user, authLoading } = useAuth();
 
-  const [collectionStats, setCollectionStats] = useState({
-    owned: 0,
-    duplicates: 0,
-    missing: TOTAL_BRAINROT_CARDS,
-  });
-
+  const [collectionStats, setCollectionStats] = useState({});
   const [statsLoading, setStatsLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -36,29 +30,33 @@ const Favourites = () => {
       try {
         const cardsRef = collection(db, "users", user.uid, "cards");
 
-        const cardsQuery = query(
-          cardsRef,
-          where("collectionId", "==", "italian-brainrot"),
-          where("owned", "==", true),
-        );
+        const cardsQuery = query(cardsRef, where("owned", "==", true));
 
         const snapshot = await getDocs(cardsQuery);
 
-        let owned = 0;
-        let duplicates = 0;
+        const nextCollectionStats = {};
 
         snapshot.docs.forEach((document) => {
           const cardData = document.data();
+          const currentCollectionId = cardData.collectionId;
 
-          owned += 1;
-          duplicates += cardData.duplicates || 0;
+          if (!currentCollectionId) {
+            return;
+          }
+
+          if (!nextCollectionStats[currentCollectionId]) {
+            nextCollectionStats[currentCollectionId] = {
+              owned: 0,
+              duplicates: 0,
+            };
+          }
+
+          nextCollectionStats[currentCollectionId].owned += 1;
+          nextCollectionStats[currentCollectionId].duplicates +=
+            cardData.duplicates || 0;
         });
 
-        setCollectionStats({
-          owned,
-          duplicates,
-          missing: TOTAL_BRAINROT_CARDS - owned,
-        });
+        setCollectionStats(nextCollectionStats);
       } catch (error) {
         console.error(error);
         setError("Non riesco a caricare le tue collezioni.");
@@ -69,6 +67,28 @@ const Favourites = () => {
 
     loadFavouritesStats();
   }, [authLoading, user]);
+
+  const startedCollections = useMemo(() => {
+    return mainCollections
+      .map((collection) => {
+        const stats = collectionStats[collection.id];
+
+        if (!stats) {
+          return null;
+        }
+
+        return {
+          ...collection,
+          owned: stats.owned,
+          duplicates: stats.duplicates,
+          missing:
+            collection.totalCards > 0
+              ? Math.max(collection.totalCards - stats.owned, 0)
+              : null,
+        };
+      })
+      .filter(Boolean);
+  }, [collectionStats]);
 
   if (authLoading) {
     return (
@@ -86,9 +106,6 @@ const Favourites = () => {
     return <Navigate to="/login" replace />;
   }
 
-  const hasStartedCollection =
-    collectionStats.owned > 0 || collectionStats.duplicates > 0;
-
   return (
     <section className="favourites-page">
       <div className="page-heading">
@@ -105,7 +122,7 @@ const Favourites = () => {
         {error && <p className="favourites-error">{error}</p>}
       </div>
 
-      {!statsLoading && !hasStartedCollection && (
+      {!statsLoading && startedCollections.length === 0 && (
         <div className="empty-collections">
           <h2>Nessuna collezione iniziata</h2>
           <p>
@@ -117,35 +134,41 @@ const Favourites = () => {
         </div>
       )}
 
-      {!statsLoading && hasStartedCollection && (
+      {!statsLoading && startedCollections.length > 0 && (
         <div className="my-collections-list">
-          <article className="my-collection-card">
-            <h2>Italian Brainrot</h2>
+          {startedCollections.map((collection) => {
+            return (
+              <article className="my-collection-card" key={collection.id}>
+                <h2>{collection.name}</h2>
 
-            <div className="stats-grid">
-              <div>
-                <strong>{collectionStats.owned}</strong>
-                <span>Possedute</span>
-              </div>
+                <div className="stats-grid">
+                  <div>
+                    <strong>{collection.owned}</strong>
+                    <span>Possedute</span>
+                  </div>
 
-              <div>
-                <strong>{collectionStats.duplicates}</strong>
-                <span>Doppie</span>
-              </div>
+                  <div>
+                    <strong>{collection.duplicates}</strong>
+                    <span>Doppie</span>
+                  </div>
 
-              <div>
-                <strong>{collectionStats.missing}</strong>
-                <span>Mancanti</span>
-              </div>
-            </div>
+                  <div>
+                    <strong>
+                      {collection.missing === null ? "-" : collection.missing}
+                    </strong>
+                    <span>Mancanti</span>
+                  </div>
+                </div>
 
-            <Link
-              className="manage-collection-button"
-              to="/collezioni/italian-brainrot"
-            >
-              Gestisci lista
-            </Link>
-          </article>
+                <Link
+                  className="manage-collection-button"
+                  to={`/collezioni/${collection.id}`}
+                >
+                  Gestisci lista
+                </Link>
+              </article>
+            );
+          })}
         </div>
       )}
     </section>

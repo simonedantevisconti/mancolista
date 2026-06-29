@@ -30,30 +30,33 @@ const Homepage = () => {
       try {
         const cardsRef = collection(db, "users", user.uid, "cards");
 
-        const cardsQuery = query(
-          cardsRef,
-          where("collectionId", "==", "italian-brainrot"),
-          where("owned", "==", true),
-        );
+        const cardsQuery = query(cardsRef, where("owned", "==", true));
 
         const snapshot = await getDocs(cardsQuery);
 
-        let owned = 0;
-        let duplicates = 0;
+        const nextCollectionStats = {};
 
         snapshot.docs.forEach((document) => {
           const cardData = document.data();
+          const currentCollectionId = cardData.collectionId;
 
-          owned += 1;
-          duplicates += cardData.duplicates || 0;
+          if (!currentCollectionId) {
+            return;
+          }
+
+          if (!nextCollectionStats[currentCollectionId]) {
+            nextCollectionStats[currentCollectionId] = {
+              owned: 0,
+              duplicates: 0,
+            };
+          }
+
+          nextCollectionStats[currentCollectionId].owned += 1;
+          nextCollectionStats[currentCollectionId].duplicates +=
+            cardData.duplicates || 0;
         });
 
-        setCollectionStats({
-          "italian-brainrot": {
-            owned,
-            duplicates,
-          },
-        });
+        setCollectionStats(nextCollectionStats);
       } catch (error) {
         console.error("Errore caricamento statistiche homepage:", error);
       } finally {
@@ -132,6 +135,7 @@ const Homepage = () => {
               <div className="collection-logo">
                 <img src={collection.logo} alt={`Logo ${collection.name}`} />
               </div>
+
               <div>
                 <h2>{collection.name}</h2>
                 <p>{collection.description}</p>
@@ -139,21 +143,26 @@ const Homepage = () => {
 
               <div className="collection-progress">
                 <span>
-                  {collection.ownedCards}/{collection.totalCards} carte
+                  {collection.ownedCards}
+                  {collection.totalCards > 0
+                    ? `/${collection.totalCards} carte`
+                    : " carte segnate"}
                 </span>
 
                 {collection.active && (
                   <span>{collection.duplicates} doppie</span>
                 )}
 
-                <div className="progress-bar">
-                  <div
-                    className="progress-fill"
-                    style={{
-                      width: `${progress}%`,
-                    }}
-                  />
-                </div>
+                {collection.totalCards > 0 && (
+                  <div className="progress-bar">
+                    <div
+                      className="progress-fill"
+                      style={{
+                        width: `${progress}%`,
+                      }}
+                    />
+                  </div>
+                )}
               </div>
 
               <button

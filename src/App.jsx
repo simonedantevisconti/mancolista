@@ -4,7 +4,7 @@ import Homepage from "./pages/Homepage";
 import Favourites from "./pages/Favourites";
 import Login from "./pages/Login";
 import CollectionDetail from "./pages/CollectionDetail";
-import SeriesDetail from "./pages/SeriesDetail";
+import CollectionItemDetail from "./pages/CollectionItemDetail";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 
@@ -22,9 +22,10 @@ function App() {
               path="/collezioni/:collectionId"
               element={<CollectionDetail />}
             />
+
             <Route
               path="/collezioni/:collectionId/:seriesId"
-              element={<SeriesDetail />}
+              element={<CollectionItemDetail />}
             />
           </Route>
         </Routes>

@@ -473,6 +473,35 @@
   font-weight: 700;
 }
 
+.tcg-series-filters {
+  grid-template-columns: minmax(220px, 1fr) 180px auto;
+}
+
+.tcg-card-image-button {
+  display: block;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.tcg-card-image-button img {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+}
+
+.card-placeholder {
+  width: 100%;
+  aspect-ratio: 2.5 / 3.5;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--bg-soft);
+  color: var(--accent);
+  font-weight: 900;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 1100px) {

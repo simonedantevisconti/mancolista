@@ -9,15 +9,20 @@ export const mainCollections = [
     ownedCards: 0,
     active: true,
     logo: "/loghi/italian-brainrot.jpg",
+    type: "static-series",
+    provider: "italian-brainrot",
   },
   {
     id: "pokemon",
-    name: "Pokemon",
-    description: "Carte collezionabili Pokemon",
+    name: "Pokémon",
+    description:
+      "Carte collezionabili Pokémon TCG con espansioni e immagini da TCGdex.",
     totalCards: 0,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/pokemon-logo.jpg",
+    type: "remote",
+    provider: "pokemon",
   },
   {
     id: "disney-lorcana",
@@ -134,7 +139,6 @@ export const italianBrainrotSeries = [
     ownedCards: 0,
   },
 ];
-
 
 const seriesImageFolders = {
   alpha: "universo-psichedelico",

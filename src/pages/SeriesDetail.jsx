@@ -22,10 +22,12 @@ import {
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/series-detail.css";
+import { exportCollectionPdf } from "../utils/exportCollectionPdf";
 
 const SeriesDetail = () => {
   const { collectionId, seriesId } = useParams();
   const { user, authLoading } = useAuth();
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   const [cardsStatus, setCardsStatus] = useState({});
   const [cardsLoading, setCardsLoading] = useState(true);
@@ -63,6 +65,30 @@ const SeriesDetail = () => {
   }, 0);
 
   const missingCount = cards.length - ownedCount;
+
+  const handleExportPdf = async () => {
+    if (!user || !series || pdfLoading) {
+      return;
+    }
+
+    setPdfLoading(true);
+    setError("");
+
+    try {
+      await exportCollectionPdf({
+        username: user.displayName || user.email || "Utente MancoLista",
+        collectionName: "Italian Brainrot",
+        seriesName: `${series.name} - ${series.subtitle}`,
+        cards,
+        cardsStatus,
+      });
+    } catch (error) {
+      console.error("Errore esportazione PDF:", error);
+      setError("Non riesco a generare il PDF. Riprova.");
+    } finally {
+      setPdfLoading(false);
+    }
+  };
 
   const filteredCards = cards.filter((card) => {
     const cardStatus = cardsStatus[card.id];
@@ -352,6 +378,17 @@ const SeriesDetail = () => {
             quelle mancanti mostrano il retro. Puoi anche indicare quante doppie
             hai per ogni carta.
           </p>
+
+          <button
+            type="button"
+            className="export-pdf-button"
+            onClick={handleExportPdf}
+            disabled={cardsLoading || pdfLoading}
+          >
+            {pdfLoading
+              ? "Generazione PDF..."
+              : "Esporta carte mancanti in PDF"}
+          </button>
 
           {error && <p className="series-error">{error}</p>}
           {cardsLoading && (

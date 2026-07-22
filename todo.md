@@ -1,5 +1,13 @@
 TODO:
--generazione mancolista pdf
-
-AFTER FIREBASE
--app 
+-calciatori panini
+-Pokémon
+-Disney Lorcana
+-One Piece Card Game
+-Star Wars: Unlimited
+-Magic: The Gathering
+-Flesh and Blood
+-Digimon Card Game
+-Hearthstone
+-Yu-Gi-Oh!
+-Vanguard
+-Duel Master

@@ -1,37 +1,54 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DefaultLayout from "./layouts/DefaultLayout";
-import Homepage from "./pages/Homepage";
-import Favourites from "./pages/Favourites";
-import Login from "./pages/Login";
-import CollectionDetail from "./pages/CollectionDetail";
-import CollectionItemDetail from "./pages/CollectionItemDetail";
-import NotFound from "./pages/NotFound";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { AuthProvider } from "./context/AuthProvider";
+import DefaultLayout from "./layouts/DefaultLayout";
+
 import "./index.css";
+
+const Homepage = lazy(() => import("./pages/Homepage"));
+const Favourites = lazy(() => import("./pages/Favourites"));
+const Login = lazy(() => import("./pages/Login"));
+const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
+const CollectionItemDetail = lazy(() => import("./pages/CollectionItemDetail"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+const PageLoader = () => {
+  return (
+    <section className="page-loader">
+      <div className="page-loader__spinner" />
+
+      <p>Caricamento...</p>
+    </section>
+  );
+};
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route element={<DefaultLayout />}>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/le-mie-collezioni" element={<Favourites />} />
-            <Route path="/login" element={<Login />} />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route element={<DefaultLayout />}>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/login" element={<Login />} />
 
-            <Route
-              path="/collezioni/:collectionId"
-              element={<CollectionDetail />}
-            />
+              <Route path="/le-mie-collezioni" element={<Favourites />} />
 
-            <Route
-              path="/collezioni/:collectionId/:seriesId"
-              element={<CollectionItemDetail />}
-            />
+              <Route
+                path="/collezioni/:collectionId"
+                element={<CollectionDetail />}
+              />
 
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
+              <Route
+                path="/collezioni/:collectionId/:seriesId"
+                element={<CollectionItemDetail />}
+              />
+
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </AuthProvider>
     </BrowserRouter>
   );

@@ -20,12 +20,8 @@ import {
   getRarityLabel,
 } from "../data/italianBrainrotCards";
 import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/series-detail.css";
-
-const getRarityClass = (rarity) => {
-  return rarity || "da-verificare";
-};
 
 const SeriesDetail = () => {
   const { collectionId, seriesId } = useParams();
@@ -44,14 +40,6 @@ const SeriesDetail = () => {
   const cards = useMemo(() => {
     return generateBrainrotCards(seriesId);
   }, [seriesId]);
-
-  const getRealCardById = (cardId) => {
-    return cards.find((card) => card.id === cardId);
-  };
-
-  const getRealCardByNumber = (cardNumber) => {
-    return cards.find((card) => card.number === cardNumber);
-  };
 
   const buildCardFirestoreData = (card, extraData = {}) => {
     return {
@@ -131,8 +119,8 @@ const SeriesDetail = () => {
           const cardData = document.data();
 
           const realCard =
-            getRealCardById(cardData.cardId) ||
-            getRealCardByNumber(cardData.cardNumber);
+            cards.find((card) => card.id === cardData.cardId) ||
+            cards.find((card) => card.number === cardData.cardNumber);
 
           if (!realCard) {
             return;

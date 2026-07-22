@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import CollectionDetail from "./pages/CollectionDetail";
 import CollectionItemDetail from "./pages/CollectionItemDetail";
 import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 import "./index.css";
 
 function App() {

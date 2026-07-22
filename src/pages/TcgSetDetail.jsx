@@ -14,7 +14,7 @@ import {
 import { mainCollections } from "../data/collections";
 import { collectionProviders } from "../data/collectionProviders";
 import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/series-detail.css";
 
 const TcgSetDetail = () => {
@@ -39,8 +39,10 @@ const TcgSetDetail = () => {
     ? collectionProviders[collectionData.provider]
     : null;
 
-  const cards = setData?.cards || [];
-
+  const cards = useMemo(() => {
+    return setData?.cards || [];
+  }, [setData]);
+  
   const ownedCount = Object.values(cardsStatus).filter((card) => {
     return card.owned;
   }).length;

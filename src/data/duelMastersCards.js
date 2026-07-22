@@ -1,25 +1,3 @@
-const createDuelMastersCollection = ({
-  id,
-  code,
-  name,
-  italianName = "",
-  year,
-  type = "booster",
-  status = "released",
-}) => ({
-  id,
-  code,
-  name,
-  italianName,
-  brand: "Duel Masters",
-  type,
-  series: "English TCG Booster",
-  year,
-  status,
-  language: "en",
-  imageFolder: `/duel-masters/${id.replace("duel-masters-", "")}/`,
-});
-
 export const duelMastersCollections = [
   {
     id: "duel-masters-base-set",

@@ -3,7 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { mainCollections } from "../data/collections";
 import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 import "../styles/favourites.css";
 
 const Favourites = () => {

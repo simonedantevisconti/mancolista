@@ -685,12 +685,18 @@
   }
 }
 
+.pdf-export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
 .export-pdf-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 46px;
-  margin-top: 18px;
   padding: 12px 18px;
   border: 1px solid var(--accent);
   border-radius: 14px;
@@ -704,8 +710,17 @@
     background-color 0.18s ease;
 }
 
+.export-pdf-button--secondary {
+  background: transparent;
+  color: var(--accent);
+}
+
 .export-pdf-button:hover:not(:disabled) {
   transform: translateY(-2px);
+}
+
+.export-pdf-button--secondary:hover:not(:disabled) {
+  background: var(--accent-soft);
 }
 
 .export-pdf-button:disabled {
@@ -714,9 +729,15 @@
 }
 
 @media (max-width: 700px) {
+  .pdf-export-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
   .export-pdf-button {
     width: 100%;
     min-height: 48px;
-    margin-top: 14px;
   }
 }

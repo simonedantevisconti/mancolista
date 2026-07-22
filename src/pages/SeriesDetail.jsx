@@ -27,7 +27,7 @@ import { exportCollectionPdf } from "../utils/exportCollectionPdf";
 const SeriesDetail = () => {
   const { collectionId, seriesId } = useParams();
   const { user, authLoading } = useAuth();
-  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfLoadingType, setPdfLoadingType] = useState("");
 
   const [cardsStatus, setCardsStatus] = useState({});
   const [cardsLoading, setCardsLoading] = useState(true);
@@ -66,16 +66,17 @@ const SeriesDetail = () => {
 
   const missingCount = cards.length - ownedCount;
 
-  const handleExportPdf = async () => {
-    if (!user || !series || pdfLoading) {
+  const handleExportPdf = async (exportType) => {
+    if (!user || !series || pdfLoadingType) {
       return;
     }
 
-    setPdfLoading(true);
+    setPdfLoadingType(exportType);
     setError("");
 
     try {
       await exportCollectionPdf({
+        exportType,
         username: user.displayName || user.email || "Utente MancoLista",
         collectionName: "Italian Brainrot",
         seriesName: `${series.name} - ${series.subtitle}`,
@@ -86,7 +87,7 @@ const SeriesDetail = () => {
       console.error("Errore esportazione PDF:", error);
       setError("Non riesco a generare il PDF. Riprova.");
     } finally {
-      setPdfLoading(false);
+      setPdfLoadingType("");
     }
   };
 
@@ -379,16 +380,29 @@ const SeriesDetail = () => {
             hai per ogni carta.
           </p>
 
-          <button
-            type="button"
-            className="export-pdf-button"
-            onClick={handleExportPdf}
-            disabled={cardsLoading || pdfLoading}
-          >
-            {pdfLoading
-              ? "Generazione PDF..."
-              : "Esporta carte mancanti in PDF"}
-          </button>
+          <div className="pdf-export-actions">
+            <button
+              type="button"
+              className="export-pdf-button"
+              onClick={() => handleExportPdf("missing")}
+              disabled={cardsLoading || Boolean(pdfLoadingType)}
+            >
+              {pdfLoadingType === "missing"
+                ? "Generazione MancoLista..."
+                : "Esporta MancoLista"}
+            </button>
+
+            <button
+              type="button"
+              className="export-pdf-button export-pdf-button--secondary"
+              onClick={() => handleExportPdf("duplicates")}
+              disabled={cardsLoading || Boolean(pdfLoadingType)}
+            >
+              {pdfLoadingType === "duplicates"
+                ? "Generazione lista doppie..."
+                : "Esporta lista doppie"}
+            </button>
+          </div>
 
           {error && <p className="series-error">{error}</p>}
           {cardsLoading && (

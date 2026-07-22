@@ -16,7 +16,19 @@ const createSafeFilename = (value = "") => {
     .replace(/^-+|-+$/g, "");
 };
 
+const getDuplicateCards = (cards, cardsStatus) => {
+  return cards
+    .map((card) => {
+      return {
+        ...card,
+        duplicates: cardsStatus[card.id]?.duplicates || 0,
+      };
+    })
+    .filter((card) => card.duplicates > 0);
+};
+
 export const exportCollectionPdf = async ({
+  exportType,
   username,
   collectionName,
   seriesName,
@@ -43,9 +55,19 @@ export const exportCollectionPdf = async ({
     return !cardsStatus[card.id]?.owned;
   });
 
-  const duplicatesCount = Object.values(cardsStatus).reduce((total, card) => {
-    return total + (card.duplicates || 0);
+  const duplicateCards = getDuplicateCards(cards, cardsStatus);
+
+  const duplicatesCount = duplicateCards.reduce((total, card) => {
+    return total + card.duplicates;
   }, 0);
+
+  const isDuplicatesExport = exportType === "duplicates";
+
+  const documentTitle = isDuplicatesExport ? "Lista doppie" : "MancoLista";
+
+  const sectionTitle = isDuplicatesExport
+    ? `Carte doppie (${duplicateCards.length})`
+    : `Carte mancanti (${missingCards.length})`;
 
   const generatedDate = new Intl.DateTimeFormat("it-IT", {
     day: "2-digit",
@@ -54,8 +76,10 @@ export const exportCollectionPdf = async ({
   }).format(new Date());
 
   document.setProperties({
-    title: `${collectionName} - ${seriesName}`,
-    subject: "Lista carte mancanti",
+    title: `${documentTitle} - ${collectionName} - ${seriesName}`,
+    subject: isDuplicatesExport
+      ? "Elenco delle carte doppie"
+      : "Elenco delle carte mancanti",
     author: "MancoLista",
     creator: "MancoLista",
   });
@@ -70,23 +94,24 @@ export const exportCollectionPdf = async ({
 
   document.setTextColor(25, 25, 25);
   document.setFontSize(18);
-  document.text(cleanPdfText(collectionName), 15, 42);
+  document.text(cleanPdfText(documentTitle), 15, 42);
 
   document.setFontSize(13);
   document.setFont("helvetica", "normal");
-  document.text(cleanPdfText(seriesName), 15, 50);
+  document.text(cleanPdfText(collectionName), 15, 50);
+  document.text(cleanPdfText(seriesName), 15, 57);
 
   document.setTextColor(90, 90, 90);
   document.setFontSize(10);
   document.text(
     `Utente: ${cleanPdfText(username || "Utente MancoLista")}`,
     15,
-    59,
+    66,
   );
-  document.text(`Generato il: ${generatedDate}`, 15, 65);
+  document.text(`Generato il: ${generatedDate}`, 15, 72);
 
   autoTable(document, {
-    startY: 74,
+    startY: 80,
     theme: "grid",
     head: [["Possedute", "Mancanti", "Doppie", "Totale"]],
     body: [
@@ -121,18 +146,19 @@ export const exportCollectionPdf = async ({
   document.setTextColor(25, 25, 25);
   document.setFont("helvetica", "bold");
   document.setFontSize(15);
-  document.text(
-    `Carte mancanti (${missingCards.length})`,
-    15,
-    summaryTableEnd + 14,
-  );
+  document.text(sectionTitle, 15, summaryTableEnd + 14);
 
-  if (missingCards.length === 0) {
+  const exportedCards = isDuplicatesExport ? duplicateCards : missingCards;
+
+  if (exportedCards.length === 0) {
     document.setFont("helvetica", "normal");
     document.setFontSize(11);
     document.setTextColor(70, 70, 70);
+
     document.text(
-      "Complimenti: hai completato questa serie.",
+      isDuplicatesExport
+        ? "Non hai carte doppie in questa serie."
+        : "Complimenti: hai completato questa serie.",
       15,
       summaryTableEnd + 23,
     );
@@ -140,14 +166,27 @@ export const exportCollectionPdf = async ({
     autoTable(document, {
       startY: summaryTableEnd + 20,
       theme: "striped",
-      head: [["Numero", "Nome carta", "Rarita"]],
-      body: missingCards.map((card) => {
-        return [
-          `#${String(card.number).padStart(3, "0")}`,
-          cleanPdfText(card.name),
-          cleanPdfText(card.rarity || "Da verificare"),
-        ];
+
+      head: [
+        isDuplicatesExport
+          ? ["Numero", "Nome carta", "Numero doppie"]
+          : ["Numero", "Nome carta", "Rarita"],
+      ],
+
+      body: exportedCards.map((card) => {
+        return isDuplicatesExport
+          ? [
+              `#${String(card.number).padStart(3, "0")}`,
+              cleanPdfText(card.name),
+              String(card.duplicates),
+            ]
+          : [
+              `#${String(card.number).padStart(3, "0")}`,
+              cleanPdfText(card.name),
+              cleanPdfText(card.rarity || "Da verificare"),
+            ];
       }),
+
       columnStyles: {
         0: {
           cellWidth: 25,
@@ -158,8 +197,10 @@ export const exportCollectionPdf = async ({
         },
         2: {
           cellWidth: 42,
+          halign: isDuplicatesExport ? "center" : "left",
         },
       },
+
       styles: {
         font: "helvetica",
         fontSize: 9,
@@ -167,19 +208,23 @@ export const exportCollectionPdf = async ({
         overflow: "linebreak",
         textColor: [30, 30, 30],
       },
+
       headStyles: {
         fillColor: [255, 122, 0],
         textColor: [17, 17, 17],
         fontStyle: "bold",
       },
+
       alternateRowStyles: {
         fillColor: [246, 246, 246],
       },
+
       margin: {
         left: 15,
         right: 15,
         bottom: 18,
       },
+
       didDrawPage: () => {
         const pageNumber = document.getNumberOfPages();
         const pageHeight = document.internal.pageSize.getHeight();
@@ -205,7 +250,7 @@ export const exportCollectionPdf = async ({
   const filenameCollection = createSafeFilename(collectionName);
   const filenameSeries = createSafeFilename(seriesName);
 
-  document.save(
-    `mancolista-${filenameCollection}-${filenameSeries}-mancanti.pdf`,
-  );
+  const filenameType = isDuplicatesExport ? "lista-doppie" : "mancolista";
+
+  document.save(`${filenameType}-${filenameCollection}-${filenameSeries}.pdf`);
 };

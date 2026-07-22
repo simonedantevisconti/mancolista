@@ -8,9 +8,9 @@ import { useAuth } from "../hooks/useAuth";
 import "../styles/collection-detail.css";
 
 const seriesAlbumImages = {
-  alpha: "/album/universo-psichedelico-album.jpg",
-  beta: "/album/allucinazione-cosmica-album.png",
-  gamma: "/album/anomalia-galattica-album.jpg",
+  alpha: "/album/universo-psichedelico-album.webp",
+  beta: "/album/allucinazione-cosmica-album.webp",
+  gamma: "/album/anomalia-galattica-album.webp",
 };
 
 const CollectionDetail = () => {

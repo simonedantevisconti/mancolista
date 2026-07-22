@@ -5,6 +5,7 @@ import Favourites from "./pages/Favourites";
 import Login from "./pages/Login";
 import CollectionDetail from "./pages/CollectionDetail";
 import CollectionItemDetail from "./pages/CollectionItemDetail";
+import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 
@@ -27,6 +28,8 @@ function App() {
               path="/collezioni/:collectionId/:seriesId"
               element={<CollectionItemDetail />}
             />
+
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </AuthProvider>

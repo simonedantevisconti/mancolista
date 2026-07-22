@@ -14,10 +14,6 @@ const CollectionItemDetail = () => {
     return <SeriesDetail />;
   }
 
-  if (collectionData?.type === "remote") {
-    return <TcgSetDetail />;
-  }
-
   return <TcgSetDetail />;
 };
 

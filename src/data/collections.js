@@ -164,7 +164,7 @@ export const generateBrainrotCards = (seriesId) => {
       rarity: realCard?.rarity || "da-verificare",
 
       frontImage: imageFolder
-        ? `/${imageFolder}/${number}.png`
+        ? `/${imageFolder}/${number}.webp`
         : "/fronte.webp",
 
       backImage: "/retro.webp",

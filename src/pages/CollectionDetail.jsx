@@ -234,6 +234,8 @@ const CollectionDetail = () => {
                   <img
                     src={set.cover}
                     alt={set.name}
+                    loading="lazy"
+                    decoding="async"
                     onError={(event) => {
                       if (set.logo && event.currentTarget.src !== set.logo) {
                         event.currentTarget.src = set.logo;
@@ -333,6 +335,8 @@ const CollectionDetail = () => {
                 <img
                   src={seriesAlbumImages[series.id]}
                   alt={`Album ${series.name}`}
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
 

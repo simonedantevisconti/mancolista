@@ -42,7 +42,7 @@ const TcgSetDetail = () => {
   const cards = useMemo(() => {
     return setData?.cards || [];
   }, [setData]);
-  
+
   const ownedCount = Object.values(cardsStatus).filter((card) => {
     return card.owned;
   }).length;
@@ -422,7 +422,12 @@ const TcgSetDetail = () => {
                 aria-label={`Segna ${card.name}`}
               >
                 {card.image ? (
-                  <img src={card.image} alt={card.name} loading="lazy" />
+                  <img
+                    src={card.image}
+                    alt={card.name}
+                    loading="lazy"
+                    decoding="async"
+                  />
                 ) : (
                   <div className="card-placeholder">No image</div>
                 )}

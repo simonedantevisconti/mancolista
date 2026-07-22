@@ -133,7 +133,12 @@ const Homepage = () => {
               key={collection.id}
             >
               <div className="collection-logo">
-                <img src={collection.logo} alt={`Logo ${collection.name}`} />
+                <img
+                  src={collection.logo}
+                  alt={`Logo ${collection.name}`}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
 
               <div>

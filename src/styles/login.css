@@ -114,3 +114,27 @@
 .switch-auth-mode:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 620px) {
+  .login-page {
+    min-height: auto;
+    padding: 30px 0 60px;
+    place-items: start center;
+  }
+
+  .login-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .login-card h1 {
+    font-size: 36px;
+  }
+
+  .login-card input,
+  .login-card button,
+  .google-login-button {
+    min-height: 48px;
+    font-size: 16px;
+  }
+}

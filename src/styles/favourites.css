@@ -128,3 +128,39 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 700px) {
+  .favourites-page {
+    padding: 30px 0 60px;
+  }
+
+  .my-collection-card,
+  .empty-collections {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .stats-grid div {
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .stats-grid strong {
+    font-size: 24px;
+  }
+
+  .stats-grid span {
+    font-size: 11px;
+  }
+
+  .manage-collection-button,
+  .empty-collections a {
+    width: 100%;
+    min-height: 46px;
+  }
+}

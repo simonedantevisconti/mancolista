@@ -147,3 +147,67 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 900px) {
+  .homepage {
+    padding: 38px 0 64px;
+  }
+
+  .homepage-hero {
+    margin-bottom: 30px;
+  }
+
+  .homepage-hero h1 {
+    font-size: clamp(52px, 13vw, 82px);
+  }
+
+  .collection-card {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .card-button {
+    min-height: 46px;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 620px) {
+  .homepage {
+    padding: 28px 0 56px;
+  }
+
+  .homepage-hero h1 {
+    font-size: clamp(48px, 18vw, 68px);
+    margin-bottom: 16px;
+  }
+
+  .homepage-hero p {
+    font-size: 16px;
+  }
+
+  .search-box {
+    margin-top: 22px;
+  }
+
+  .search-box input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .collections-grid {
+    gap: 14px;
+  }
+
+  .collection-card {
+    padding: 18px;
+    gap: 18px;
+    border-radius: 18px;
+  }
+
+  .collection-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+  }
+}

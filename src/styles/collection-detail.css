@@ -197,3 +197,79 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 900px) {
+  .collection-detail {
+    padding: 36px 0 64px;
+  }
+
+  .page-heading {
+    margin-bottom: 26px;
+  }
+
+  .page-heading h1 {
+    font-size: clamp(38px, 10vw, 62px);
+    letter-spacing: -0.055em;
+  }
+
+  .series-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .series-card {
+    min-height: 0;
+    padding: 18px;
+    gap: 18px;
+  }
+
+  .series-card h2 {
+    font-size: 22px;
+  }
+
+  .series-counter strong {
+    font-size: 28px;
+  }
+
+  .series-album-cover {
+    margin-bottom: 4px;
+    border-radius: 16px;
+  }
+
+  .collection-set-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .collection-detail {
+    padding-top: 26px;
+  }
+
+  .series-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .series-card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .collection-summary {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .collection-summary div {
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .collection-summary strong {
+    font-size: 24px;
+  }
+
+  .collection-summary span {
+    font-size: 11px;
+  }
+}

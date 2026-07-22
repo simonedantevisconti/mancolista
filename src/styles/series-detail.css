@@ -573,3 +573,114 @@
     height: 26px;
   }
 }
+
+@media (max-width: 980px) {
+  .series-detail {
+    padding-top: 30px;
+  }
+
+  .series-filters,
+  .tcg-series-filters {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .search-field {
+    grid-column: 1 / -1;
+  }
+
+  .filter-result {
+    width: 100%;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .series-topbar {
+    gap: 22px;
+    margin-bottom: 24px;
+  }
+
+  .series-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .series-stats div {
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .series-stats strong {
+    font-size: 24px;
+  }
+
+  .series-stats span {
+    font-size: 11px;
+  }
+
+  .series-filters,
+  .tcg-series-filters {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .search-field {
+    grid-column: auto;
+  }
+
+  .search-field input,
+  .filter-field select {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .brainrot-card {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .brainrot-card:hover {
+    transform: none;
+  }
+
+  .brainrot-card-info {
+    padding-top: 10px;
+  }
+
+  .card-rarity {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+
+  .owned-toggle {
+    min-height: 44px;
+  }
+
+  .duplicates-actions button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brainrot-card {
+    width: min(100%, 280px);
+    margin: 0 auto;
+  }
+}

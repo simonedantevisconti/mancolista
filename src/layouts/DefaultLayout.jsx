@@ -1,14 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 const DefaultLayout = () => {
+  const location = useLocation();
+
   return (
     <div className="app-shell">
       <Header />
 
       <main className="main-content">
-        <Outlet />
+        <div className="page-reveal" key={location.pathname}>
+          <Outlet />
+        </div>
       </main>
 
       <Footer />

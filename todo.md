@@ -1,4 +1,5 @@
 TODO:
+-pdf compatto con mancolista / doppie unito
 -calciatori panini
 -Pokémon
 -Disney Lorcana

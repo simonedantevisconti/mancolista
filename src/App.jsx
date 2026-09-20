@@ -11,6 +11,8 @@ const Favourites = lazy(() => import("./pages/Favourites"));
 const Login = lazy(() => import("./pages/Login"));
 const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
 const CollectionItemDetail = lazy(() => import("./pages/CollectionItemDetail"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Cookie = lazy(() => import("./pages/Cookie"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const PageLoader = () => {
@@ -44,6 +46,9 @@ function App() {
                 path="/collezioni/:collectionId/:seriesId"
                 element={<CollectionItemDetail />}
               />
+
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/cookie" element={<Cookie />} />
 
               <Route path="*" element={<NotFound />} />
             </Route>

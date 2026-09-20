@@ -1,11 +1,7 @@
 TODO:
-
-
-Qui sotto stile con logo mancolista e qr che porta al sito con cta
-
+-stile png con qr code cta e logo
 -homepage mancolista per chi non ha effettuato accesso (spiega come funziona)
 -alert registrazione/login
--cookies / privacy pages
 
 Collezioni da integrare:
 -calciatori panini

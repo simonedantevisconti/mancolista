@@ -1,20 +1,15 @@
 .site-header {
   width: min(1180px, calc(100% - 32px));
   margin: 14px auto 0;
-  padding: 14px 16px;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   position: relative;
   z-index: 20;
-  border: 1px solid rgba(255, 122, 0, 0.22);
-  border-radius: 22px;
-  background:
-    linear-gradient(135deg, rgba(255, 122, 0, 0.16), rgba(255, 122, 0, 0.04)),
-    rgba(17, 17, 17, 0.92);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(14px);
+  border-radius: 16px;
+  background: var(--panel);
 }
 
 .site-header__top {
@@ -40,7 +35,7 @@
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 10px;
   background: var(--accent);
   color: #111;
   font-weight: 900;
@@ -49,13 +44,13 @@
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .main-nav a {
   color: var(--muted);
-  padding: 10px 14px;
-  border-radius: 999px;
+  padding: 10px 13px;
+  border-radius: 10px;
   transition:
     color 0.2s ease,
     background-color 0.2s ease;
@@ -66,16 +61,16 @@
 .main-nav a:hover,
 .main-nav a.active {
   color: var(--text);
-  background: var(--panel);
+  background: var(--panel-light);
 }
 
 .user-email {
   max-width: 240px;
   overflow: hidden;
   color: var(--muted);
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: var(--panel);
+  padding: 10px 13px;
+  border-radius: 10px;
+  background: var(--panel-light);
   font-size: 14px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -84,13 +79,14 @@
 .logout-button {
   min-height: 40px;
   border: 0;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--accent);
   color: #111;
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 800;
   cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
 .logout-button:hover {
@@ -99,12 +95,12 @@
 
 .menu-toggle {
   display: none;
-  width: 46px;
-  height: 46px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--panel);
-  padding: 11px;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--panel-light);
+  padding: 10px;
   cursor: pointer;
 }
 
@@ -136,7 +132,7 @@
   .site-header {
     width: min(100% - 24px, 720px);
     margin-top: 10px;
-    padding: 12px 14px;
+    padding: 12px;
     display: block;
   }
 
@@ -154,10 +150,10 @@
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 4px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     transition:
       max-height 0.3s ease,
       opacity 0.22s ease,
@@ -167,11 +163,9 @@
 
   .main-nav.is-open {
     max-height: 420px;
-    margin-top: 14px;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: var(--panel);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -181,29 +175,25 @@
   .user-email,
   .logout-button {
     width: 100%;
-    min-height: 46px;
-    border-radius: 14px;
+    min-height: 44px;
+    border-radius: 10px;
   }
 
   .main-nav a {
     display: flex;
     align-items: center;
-    padding: 12px 14px;
-  }
-
-  .main-nav a:hover,
-  .main-nav a.active {
-    background: var(--bg-soft);
+    padding: 11px 12px;
   }
 
   .user-email {
     max-width: none;
     display: flex;
     align-items: center;
+    background: transparent;
   }
 
   .logout-button {
-    margin-top: 2px;
+    margin-top: 4px;
   }
 }
 

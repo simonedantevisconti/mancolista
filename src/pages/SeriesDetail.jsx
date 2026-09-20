@@ -389,7 +389,7 @@ const SeriesDetail = () => {
             >
               {pdfLoadingType === "missing"
                 ? "Generazione MancoLista..."
-                : "Esporta MancoLista"}
+                : "Esporta mancanti"}
             </button>
 
             <button
@@ -400,7 +400,7 @@ const SeriesDetail = () => {
             >
               {pdfLoadingType === "duplicates"
                 ? "Generazione lista doppie..."
-                : "Esporta lista doppie"}
+                : "Esporta doppie"}
             </button>
           </div>
 

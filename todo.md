@@ -1,7 +1,12 @@
 TODO:
--stile png con qr code cta e logo
 -homepage mancolista per chi non ha effettuato accesso (spiega come funziona)
 -alert registrazione/login
+-qr code per link a sito
+-logo
+-stile png con qr code cta e logo
+-google search console
+-seo
+-check google dev
 
 Collezioni da integrare:
 -calciatori panini

@@ -1,22 +1,107 @@
 .site-footer {
   width: min(1180px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 32px 0;
+  margin: 48px auto 0;
+  padding: 28px;
   color: var(--muted);
   font-size: 14px;
+  border: 1px solid var(--border);
+  border-bottom: 0;
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 122, 0, 0.08),
+    rgba(255, 255, 255, 0.025)
+  );
+}
+
+.site-footer__inner,
+.site-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-footer__brand strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.site-footer__brand p,
+.site-footer__bottom p {
+  margin: 4px 0 0;
+}
+
+.site-footer__mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--accent);
+  color: #111;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.site-footer__links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-footer__links a {
+  padding: 9px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.site-footer__links a:hover,
+.site-footer__links a.active {
+  color: var(--text);
+  background: var(--panel);
+}
+
+.site-footer__bottom {
+  margin-top: 24px;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
 }
 
-.site-footer p {
-  margin: 0;
-}
-
-.site-footer a {
+.site-footer__bottom a {
   color: var(--accent);
   font-weight: 700;
-  text-decoration: none;
 }
 
-.site-footer a:hover {
-  text-decoration: underline;
+@media (max-width: 640px) {
+  .site-footer {
+    width: calc(100% - 20px);
+    padding: 22px;
+  }
+
+  .site-footer__inner,
+  .site-footer__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-footer__links {
+    width: 100%;
+  }
+
+  .site-footer__links a {
+    flex: 1;
+    text-align: center;
+    background: var(--panel);
+  }
 }

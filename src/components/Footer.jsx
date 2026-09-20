@@ -6,7 +6,14 @@ const Footer = () => {
   return (
     <footer className="site-footer">
       <p>
-        © {year} MancoLista — Developed by <span>Syndycore</span>
+        © {year} MancoLista — Developed by{" "}
+        <a
+          href="https://simonevisconti.site/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Simone Visconti
+        </a>
       </p>
     </footer>
   );

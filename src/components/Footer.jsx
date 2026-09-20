@@ -6,14 +6,10 @@ const Footer = () => {
 
   return (
     <footer className="site-footer">
-      <div className="site-footer__inner">
+      <div className="site-footer__top">
         <div className="site-footer__brand">
-          <span className="site-footer__mark">M</span>
-
-          <div>
-            <strong>MancoLista</strong>
-            <p>La tua collezione, sempre sotto controllo.</p>
-          </div>
+          <strong>MancoLista</strong>
+          <span>La tua collezione, sempre sotto controllo.</span>
         </div>
 
         <nav className="site-footer__links" aria-label="Link legali">
@@ -23,9 +19,9 @@ const Footer = () => {
       </div>
 
       <div className="site-footer__bottom">
-        <p>© {year} MancoLista</p>
+        <span>© {year} MancoLista</span>
 
-        <p>
+        <span>
           Developed by{" "}
           <a
             href="https://simonevisconti.site/"
@@ -34,7 +30,7 @@ const Footer = () => {
           >
             Simone Visconti
           </a>
-        </p>
+        </span>
       </div>
     </footer>
   );

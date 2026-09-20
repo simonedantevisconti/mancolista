@@ -11,7 +11,12 @@
   margin: 0;
 }
 
-.site-footer span {
+.site-footer a {
   color: var(--accent);
   font-weight: 700;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
 }

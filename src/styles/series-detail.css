@@ -562,7 +562,8 @@
   }
 
   .series-filters {
-    position: static;
+    position: sticky;
+    top: 12px;
     grid-template-columns: 1fr;
     padding: 14px;
   }
@@ -604,7 +605,8 @@
 
   .series-filters,
   .tcg-series-filters {
-    position: static;
+    position: sticky;
+    top: 12px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

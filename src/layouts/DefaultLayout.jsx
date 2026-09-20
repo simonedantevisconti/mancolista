@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import InstallApp from "../components/InstallApp";
 
 const DefaultLayout = () => {
   const location = useLocation();
@@ -16,6 +17,7 @@ const DefaultLayout = () => {
       </main>
 
       <Footer />
+      <InstallApp />
     </div>
   );
 };

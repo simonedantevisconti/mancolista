@@ -1,13 +1,20 @@
 .site-header {
   width: min(1180px, calc(100% - 32px));
-  margin: 0 auto;
-  padding: 22px 0;
+  margin: 14px auto 0;
+  padding: 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   position: relative;
   z-index: 20;
+  border: 1px solid rgba(255, 122, 0, 0.22);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 122, 0, 0.16), rgba(255, 122, 0, 0.04)),
+    rgba(17, 17, 17, 0.92);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(14px);
 }
 
 .site-header__top {
@@ -128,7 +135,8 @@
 @media (max-width: 860px) {
   .site-header {
     width: min(100% - 24px, 720px);
-    padding: 14px 0;
+    margin-top: 10px;
+    padding: 12px 14px;
     display: block;
   }
 

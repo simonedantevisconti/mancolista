@@ -8,13 +8,16 @@
 .login-card {
   width: min(460px, 100%);
   padding: 30px;
-  border-radius: var(--radius);
-  background: var(--panel);
+
   border: 1px solid var(--border);
+  border-radius: var(--radius);
+
+  background: var(--panel);
 }
 
 .login-card h1 {
   margin: 0 0 12px;
+
   font-size: 42px;
   letter-spacing: -0.05em;
 }
@@ -25,24 +28,30 @@
 }
 
 .login-card form {
-  margin-top: 26px;
   display: grid;
   gap: 16px;
+
+  margin-top: 26px;
 }
 
 .login-card label {
   display: grid;
   gap: 8px;
+
   color: var(--muted);
+
   font-size: 14px;
 }
 
 .login-card input {
+  padding: 14px 16px;
+
   border: 1px solid var(--border);
+  border-radius: 14px;
+
   background: var(--bg-soft);
   color: var(--text);
-  border-radius: 14px;
-  padding: 14px 16px;
+
   outline: none;
 }
 
@@ -52,11 +61,14 @@
 }
 
 .login-card button {
+  padding: 14px 16px;
+
   border: 0;
   border-radius: 14px;
+
   background: var(--accent);
   color: #111;
-  padding: 14px 16px;
+
   font-weight: 900;
 }
 
@@ -66,34 +78,45 @@
 }
 
 .login-error {
-  color: var(--danger) !important;
   margin: 0;
+
+  color: var(--danger) !important;
 }
 
 .login-separator {
   display: flex;
   align-items: center;
   gap: 12px;
+
   margin: 22px 0;
+
   color: var(--muted);
+
   font-size: 13px;
 }
 
 .login-separator::before,
 .login-separator::after {
   content: "";
+
   flex: 1;
+
   height: 1px;
+
   background: var(--border);
 }
 
 .google-login-button {
   width: 100%;
+
+  padding: 14px 16px;
+
   border: 1px solid var(--border);
   border-radius: 14px;
+
   background: var(--bg-soft);
   color: var(--text);
-  padding: 14px 16px;
+
   font-weight: 900;
 }
 
@@ -103,11 +126,15 @@
 
 .switch-auth-mode {
   width: 100%;
+
   margin-top: 14px;
+  padding: 10px;
+
   border: 0;
+
   background: transparent;
   color: var(--accent);
-  padding: 10px;
+
   font-weight: 800;
 }
 
@@ -115,15 +142,114 @@
   text-decoration: underline;
 }
 
+/* AUTH SUCCESS MODAL */
+
+.auth-success-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.72);
+
+  backdrop-filter: blur(8px);
+}
+
+.auth-success-modal {
+  width: min(420px, 100%);
+
+  padding: 32px;
+
+  border: 1px solid var(--border);
+  border-radius: 22px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  text-align: center;
+
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+
+  animation: auth-modal-in 0.25s ease-out both;
+}
+
+.auth-success-icon {
+  width: 56px;
+  height: 56px;
+
+  display: grid;
+  place-items: center;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+  color: #111;
+
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.auth-success-modal h2 {
+  margin: 0 0 10px;
+
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+
+.auth-success-modal p {
+  margin: 0 0 24px;
+
+  color: var(--muted);
+
+  line-height: 1.6;
+}
+
+.auth-success-modal button {
+  width: 100%;
+  min-height: 48px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: var(--accent);
+  color: #111;
+
+  font-weight: 900;
+}
+
+@keyframes auth-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* MOBILE */
+
 @media (max-width: 620px) {
   .login-page {
     min-height: auto;
+
     padding: 30px 0 60px;
+
     place-items: start center;
   }
 
   .login-card {
     padding: 22px 18px;
+
     border-radius: 18px;
   }
 
@@ -135,6 +261,23 @@
   .login-card button,
   .google-login-button {
     min-height: 48px;
+
     font-size: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-success-modal {
+    padding: 24px 20px;
+
+    border-radius: 18px;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-success-modal {
+    animation: none;
   }
 }

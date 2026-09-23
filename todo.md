@@ -1,5 +1,6 @@
 TODO:
--alert registrazione/login
+-login redirect to homepage
+-esporta mancolista btn (con mancanti sopra e doppie sotto)
 -qr code per link a sito
 -logo
 -stile png con qr code cta e logo

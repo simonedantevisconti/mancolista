@@ -14,25 +14,33 @@ import "../styles/login.css";
 const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
   const { user, authLoading } = useAuth();
 
   const [mode, setMode] = useState(
     searchParams.get("mode") === "signup" ? "signup" : "login",
   );
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+
   const [error, setError] = useState("");
+  const [successModal, setSuccessModal] = useState(null);
 
   const isSignup = mode === "signup";
 
   useEffect(() => {
-    if (user) {
-      navigate("/le-mie-collezioni");
+    if (authLoading) {
+      return;
     }
-  }, [user, navigate]);
+
+    if (user && !successModal && !loading && !googleLoading) {
+      navigate("/");
+    }
+  }, [user, authLoading, successModal, loading, googleLoading, navigate]);
 
   const saveUserProfile = async (firebaseUser, provider) => {
     const userRef = doc(db, "users", firebaseUser.uid);
@@ -56,16 +64,21 @@ const Login = () => {
     switch (errorCode) {
       case "auth/email-already-in-use":
         return "Questa email è già registrata. Prova ad accedere.";
+
       case "auth/invalid-email":
         return "Email non valida.";
+
       case "auth/weak-password":
         return "La password deve avere almeno 6 caratteri.";
+
       case "auth/user-not-found":
       case "auth/wrong-password":
       case "auth/invalid-credential":
         return "Email o password non corretti.";
+
       case "auth/popup-closed-by-user":
         return "Accesso con Google annullato.";
+
       default:
         return "Si è verificato un errore. Riprova.";
     }
@@ -87,7 +100,12 @@ const Login = () => {
         isSignup ? "email_signup" : "email_login",
       );
 
-      navigate("/le-mie-collezioni");
+      setSuccessModal({
+        title: isSignup ? "Registrazione completata!" : "Accesso effettuato!",
+        message: isSignup
+          ? "Il tuo account MancoLista è stato creato correttamente."
+          : "Bentornato su MancoLista!",
+      });
     } catch (error) {
       console.error(error);
       setError(getFirebaseErrorMessage(error.code));
@@ -102,11 +120,15 @@ const Login = () => {
 
     try {
       const provider = new GoogleAuthProvider();
+
       const userCredential = await signInWithPopup(auth, provider);
 
       await saveUserProfile(userCredential.user, "google");
 
-      navigate("/le-mie-collezioni");
+      setSuccessModal({
+        title: "Accesso effettuato!",
+        message: "Hai effettuato correttamente l'accesso con Google.",
+      });
     } catch (error) {
       console.error(error);
       setError(getFirebaseErrorMessage(error.code));
@@ -115,99 +137,129 @@ const Login = () => {
     }
   };
 
+  const handleSuccessClose = () => {
+    setSuccessModal(null);
+    navigate("/");
+  };
+
   if (authLoading) {
     return (
       <section className="login-page">
         <div className="login-card">
           <p className="eyebrow">Accesso personale</p>
+
           <h1>Controllo sessione...</h1>
+
           <p>Stiamo verificando se hai già effettuato l’accesso.</p>
         </div>
       </section>
     );
   }
 
-  if (user) {
-    return <Navigate to="/le-mie-collezioni" replace />;
+  if (user && !successModal && !loading && !googleLoading) {
+    return <Navigate to="/" replace />;
   }
 
   return (
-    <section className="login-page">
-      <div className="login-card">
-        <p className="eyebrow">Accesso personale</p>
+    <>
+      <section className="login-page">
+        <div className="login-card">
+          <p className="eyebrow">Accesso personale</p>
 
-        <h1>{isSignup ? "Registrati" : "Login"}</h1>
+          <h1>{isSignup ? "Registrati" : "Login"}</h1>
 
-        <p>
-          {isSignup
-            ? "Crea un account per salvare le tue carte, doppie e mancanti."
-            : "Accedi per ritrovare le tue collezioni salvate."}
-        </p>
+          <p>
+            {isSignup
+              ? "Crea un account per salvare le tue carte, doppie e mancanti."
+              : "Accedi per ritrovare le tue collezioni salvate."}
+          </p>
 
-        <form onSubmit={handleEmailAuth}>
-          <label>
-            Email
-            <input
-              type="email"
-              placeholder="La tua email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              required
-            />
-          </label>
+          <form onSubmit={handleEmailAuth}>
+            <label>
+              Email
+              <input
+                type="email"
+                placeholder="La tua email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                required
+              />
+            </label>
 
-          <label>
-            Password
-            <input
-              type="password"
-              placeholder="La tua password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              required
-              minLength={6}
-            />
-          </label>
+            <label>
+              Password
+              <input
+                type="password"
+                placeholder="La tua password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                required
+                minLength={6}
+              />
+            </label>
 
-          {error && <p className="login-error">{error}</p>}
+            {error && <p className="login-error">{error}</p>}
 
-          <button type="submit" disabled={loading || googleLoading}>
-            {loading
-              ? isSignup
-                ? "Registrazione in corso..."
-                : "Accesso in corso..."
-              : isSignup
-                ? "Registrati"
-                : "Accedi"}
+            <button type="submit" disabled={loading || googleLoading}>
+              {loading
+                ? isSignup
+                  ? "Registrazione in corso..."
+                  : "Accesso in corso..."
+                : isSignup
+                  ? "Registrati"
+                  : "Accedi"}
+            </button>
+          </form>
+
+          <div className="login-separator">
+            <span>oppure</span>
+          </div>
+
+          <button
+            type="button"
+            className="google-login-button"
+            onClick={handleGoogleLogin}
+            disabled={loading || googleLoading}
+          >
+            {googleLoading ? "Accesso Google..." : "Continua con Google"}
           </button>
-        </form>
 
-        <div className="login-separator">
-          <span>oppure</span>
+          <button
+            type="button"
+            className="switch-auth-mode"
+            onClick={() => {
+              setMode(isSignup ? "login" : "signup");
+              setError("");
+            }}
+          >
+            {isSignup
+              ? "Hai già un account? Accedi"
+              : "Non hai un account? Registrati"}
+          </button>
         </div>
+      </section>
 
-        <button
-          type="button"
-          className="google-login-button"
-          onClick={handleGoogleLogin}
-          disabled={loading || googleLoading}
-        >
-          {googleLoading ? "Accesso Google..." : "Continua con Google"}
-        </button>
+      {successModal && (
+        <div className="auth-success-overlay">
+          <div
+            className="auth-success-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="auth-success-title"
+          >
+            <div className="auth-success-icon">✓</div>
 
-        <button
-          type="button"
-          className="switch-auth-mode"
-          onClick={() => {
-            setMode(isSignup ? "login" : "signup");
-            setError("");
-          }}
-        >
-          {isSignup
-            ? "Hai già un account? Accedi"
-            : "Non hai un account? Registrati"}
-        </button>
-      </div>
-    </section>
+            <h2 id="auth-success-title">{successModal.title}</h2>
+
+            <p>{successModal.message}</p>
+
+            <button type="button" onClick={handleSuccessClose}>
+              Continua
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

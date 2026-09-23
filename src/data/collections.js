@@ -92,7 +92,7 @@ export const mainCollections = [
     totalCards: 0,
     ownedCards: 0,
     active: false,
-    logo: "/mancolista-logo.webp",
+    logo: "/loghi/pokemon.webp",
   },
 ];
 

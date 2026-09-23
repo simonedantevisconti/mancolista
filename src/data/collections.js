@@ -162,23 +162,8 @@ export const generateSquishyDumplingCards = () => {
       number: card.number,
       name: card.name || `Card ${card.number}`,
       rarity: card.rarity || "da-verificare",
-
-      /*
-       * Quando avremo le immagini reali sarà sufficiente
-       * inserirle in:
-       *
-       * public/squishy-dumpling/1.webp
-       * public/squishy-dumpling/2.webp
-       * ...
-       * public/squishy-dumpling/135.webp
-       *
-       * e cambiare questa riga in:
-       *
-       * frontImage: `/squishy-dumpling/${card.number}.webp`,
-       */
-
-      frontImage: "/fronte.webp",
-      backImage: "/retro.webp",
+      frontImage: "/squishy-retro.webp",
+      backImage: "/squishy-retro.webp",
     };
   });
 };

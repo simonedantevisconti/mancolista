@@ -31,50 +31,56 @@ const getSortableNumber = (value) => {
   return numericValue;
 };
 
-const getFilteredCards = ({ cards, cardsStatus, exportType }) => {
-  if (!Array.isArray(cards)) {
-    return [];
-  }
+const sortCardsByNumber = (cards) => {
+  return [...cards].sort((a, b) => {
+    const aValue = getCardNumberValue(a);
+    const bValue = getCardNumberValue(b);
 
-  if (exportType === "missing") {
-    return cards.filter((card) => {
-      const status = cardsStatus?.[card.id];
-      return !status?.owned;
-    });
-  }
+    const aSort = getSortableNumber(aValue);
+    const bSort = getSortableNumber(bValue);
 
-  if (exportType === "duplicates") {
-    return cards.filter((card) => {
-      const status = cardsStatus?.[card.id];
-      return Boolean(status?.owned) && (status?.duplicates || 0) > 0;
-    });
-  }
+    if (aSort !== bSort) {
+      return aSort - bSort;
+    }
 
-  return [];
+    return aValue.localeCompare(bValue, "it");
+  });
 };
 
-const getOrderedNumbers = (cards) => {
-  return [...cards]
-    .sort((a, b) => {
-      const aValue = getCardNumberValue(a);
-      const bValue = getCardNumberValue(b);
+const getMissingNumbers = (cards, cardsStatus) => {
+  return sortCardsByNumber(
+    cards.filter((card) => {
+      const status = cardsStatus?.[card.id];
+      return !status?.owned;
+    }),
+  )
+    .map((card) => getCardNumberValue(card))
+    .filter(Boolean);
+};
 
-      const aSort = getSortableNumber(aValue);
-      const bSort = getSortableNumber(bValue);
+const getDuplicateNumbers = (cards, cardsStatus) => {
+  return sortCardsByNumber(
+    cards.filter((card) => {
+      const status = cardsStatus?.[card.id];
+      return Boolean(status?.owned) && (status?.duplicates || 0) > 0;
+    }),
+  )
+    .map((card) => {
+      const number = getCardNumberValue(card);
+      const quantity = cardsStatus?.[card.id]?.duplicates || 0;
 
-      if (aSort !== bSort) {
-        return aSort - bSort;
+      if (!number) {
+        return "";
       }
 
-      return aValue.localeCompare(bValue, "it");
+      return quantity > 1 ? `${number} (x${quantity})` : number;
     })
-    .map((card) => getCardNumberValue(card))
     .filter(Boolean);
 };
 
 const buildWrappedLines = (context, values, maxWidth) => {
   if (!values.length) {
-    return ["Nessuna carta"];
+    return ["Nessuna"];
   }
 
   const lines = [];
@@ -126,22 +132,15 @@ const downloadCanvas = (canvas, fileName) => {
 };
 
 export const exportCollectionPng = async ({
-  exportType,
   collectionName,
   seriesName,
   cards,
   cardsStatus,
 }) => {
   const title = (seriesName || collectionName || "Collezione").trim();
-  const label = exportType === "duplicates" ? "Doppie" : "Mancanti";
 
-  const filteredCards = getFilteredCards({
-    cards,
-    cardsStatus,
-    exportType,
-  });
-
-  const orderedNumbers = getOrderedNumbers(filteredCards);
+  const missingNumbers = getMissingNumbers(cards, cardsStatus);
+  const duplicateNumbers = getDuplicateNumbers(cards, cardsStatus);
 
   const baseWidth = 1400;
   const paddingX = 96;
@@ -149,22 +148,44 @@ export const exportCollectionPng = async ({
   const paddingBottom = 96;
   const contentWidth = baseWidth - paddingX * 2;
 
+  const titleFontSize = 64;
+  const sectionTitleFontSize = 38;
+  const contentFontSize = 34;
+  const lineHeight = 50;
+  const sectionGap = 46;
+
   const tempCanvas = document.createElement("canvas");
   const tempContext = tempCanvas.getContext("2d");
 
-  tempContext.font = "700 34px Arial";
-  const lines = buildWrappedLines(tempContext, orderedNumbers, contentWidth);
+  tempContext.font = `700 ${contentFontSize}px Arial`;
 
-  const titleFontSize = 64;
-  const labelFontSize = 38;
-  const contentFontSize = 34;
-  const lineHeight = 50;
+  const missingLines = buildWrappedLines(
+    tempContext,
+    missingNumbers,
+    contentWidth,
+  );
 
-  const headerHeight = 170;
-  const contentHeight = lines.length * lineHeight;
+  const duplicateLines = buildWrappedLines(
+    tempContext,
+    duplicateNumbers,
+    contentWidth,
+  );
+
+  const titleBlockHeight = 110;
+  const sectionHeaderHeight = 82;
+  const missingHeight = missingLines.length * lineHeight;
+  const duplicateHeight = duplicateLines.length * lineHeight;
+
   const finalHeight = Math.max(
-    500,
-    paddingTop + headerHeight + contentHeight + paddingBottom,
+    650,
+    paddingTop +
+      titleBlockHeight +
+      sectionHeaderHeight +
+      missingHeight +
+      sectionGap +
+      sectionHeaderHeight +
+      duplicateHeight +
+      paddingBottom,
   );
 
   const scale = 2;
@@ -174,41 +195,48 @@ export const exportCollectionPng = async ({
 
   const context = canvas.getContext("2d");
   context.scale(scale, scale);
+  context.textBaseline = "top";
 
-  // Background
   context.fillStyle = "#ffffff";
   context.fillRect(0, 0, baseWidth, finalHeight);
 
-  // Title
   context.fillStyle = "#111111";
   context.font = `700 ${titleFontSize}px Arial`;
-  context.textBaseline = "top";
   context.fillText(title, paddingX, paddingTop);
 
-  // Label
-  context.fillStyle = "#ff7a00";
-  context.font = `700 ${labelFontSize}px Arial`;
-  context.fillText(label, paddingX, paddingTop + 86);
+  let y = paddingTop + titleBlockHeight;
 
-  // Divider
-  context.strokeStyle = "#ff7a00";
-  context.lineWidth = 3;
-  context.beginPath();
-  context.moveTo(paddingX, paddingTop + 142);
-  context.lineTo(baseWidth - paddingX, paddingTop + 142);
-  context.stroke();
+  const drawSection = (label, lines) => {
+    context.fillStyle = "#ff7a00";
+    context.font = `700 ${sectionTitleFontSize}px Arial`;
+    context.fillText(label, paddingX, y);
 
-  // Numbers
-  context.fillStyle = "#111111";
-  context.font = `700 ${contentFontSize}px Arial`;
+    y += 54;
 
-  let y = paddingTop + 182;
+    context.strokeStyle = "#ff7a00";
+    context.lineWidth = 3;
+    context.beginPath();
+    context.moveTo(paddingX, y);
+    context.lineTo(baseWidth - paddingX, y);
+    context.stroke();
 
-  lines.forEach((line) => {
-    context.fillText(line, paddingX, y);
-    y += lineHeight;
-  });
+    y += 28;
 
-  const fileName = `${slugify(title)}-${slugify(label)}.png`;
+    context.fillStyle = "#111111";
+    context.font = `700 ${contentFontSize}px Arial`;
+
+    lines.forEach((line) => {
+      context.fillText(line, paddingX, y);
+      y += lineHeight;
+    });
+  };
+
+  drawSection("Mancanti", missingLines);
+
+  y += sectionGap;
+
+  drawSection("Doppie", duplicateLines);
+
+  const fileName = `${slugify(title)}-mancolista.png`;
   downloadCanvas(canvas, fileName);
 };

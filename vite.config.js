@@ -87,32 +87,6 @@ export default defineConfig({
               },
             },
           },
-
-          {
-            urlPattern: ({ url }) => {
-              return (
-                url.hostname.includes("tcgdex.net") ||
-                url.hostname.includes("pokemontcg.io")
-              );
-            },
-
-            handler: "NetworkFirst",
-
-            options: {
-              cacheName: "mancolista-card-api",
-
-              networkTimeoutSeconds: 8,
-
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24,
-              },
-
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
         ],
       },
 

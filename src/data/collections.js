@@ -1,4 +1,5 @@
 import { italianBrainrotCards } from "./italianBrainrotCards";
+import { squishyDumplingCards } from "./squishyDumplingCards";
 
 export const mainCollections = [
   {
@@ -61,11 +62,13 @@ export const mainCollections = [
   {
     id: "squishy-dumpling",
     name: "Squishy Dumpling",
-    description: "Collezione Squishy Dumpling.",
-    totalCards: 0,
+    description: "Collezione Squishy Dumpling da 135 carte.",
+    totalCards: 135,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/squishy-dumpling.webp",
+    type: "static-single",
+    provider: "squishy-dumpling",
   },
   {
     id: "snoopy-un-anno-da-ricordare-2026",
@@ -147,6 +150,34 @@ export const generateBrainrotCards = (seriesId) => {
         ? `/${imageFolder}/${number}.webp`
         : "/fronte.webp",
 
+      backImage: "/retro.webp",
+    };
+  });
+};
+
+export const generateSquishyDumplingCards = () => {
+  return squishyDumplingCards.map((card) => {
+    return {
+      id: `squishy-dumpling-${card.number}`,
+      number: card.number,
+      name: card.name || `Card ${card.number}`,
+      rarity: card.rarity || "da-verificare",
+
+      /*
+       * Quando avremo le immagini reali sarà sufficiente
+       * inserirle in:
+       *
+       * public/squishy-dumpling/1.webp
+       * public/squishy-dumpling/2.webp
+       * ...
+       * public/squishy-dumpling/135.webp
+       *
+       * e cambiare questa riga in:
+       *
+       * frontImage: `/squishy-dumpling/${card.number}.webp`,
+       */
+
+      frontImage: "/fronte.webp",
       backImage: "/retro.webp",
     };
   });

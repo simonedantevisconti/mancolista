@@ -1,33 +1,47 @@
 import { useEffect, useMemo, useState } from "react";
+
 import { Link, Navigate, useParams } from "react-router-dom";
+
 import { collection, getDocs, query, where } from "firebase/firestore";
+
 import { italianBrainrotSeries, mainCollections } from "../data/collections";
+
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
+
+import SquishyDumplingDetail from "./SquishyDumplingDetail";
+
 import "../styles/collection-detail.css";
 
 const seriesAlbumImages = {
   alpha: "/album/universo-psichedelico-album.webp",
+
   beta: "/album/allucinazione-cosmica-album.webp",
+
   gamma: "/album/anomalia-galattica-album.webp",
 };
 
 const CollectionDetail = () => {
   const { collectionId } = useParams();
+
   const { user, authLoading } = useAuth();
 
   const [seriesStats, setSeriesStats] = useState({});
+
   const [statsLoading, setStatsLoading] = useState(true);
+
   const [error, setError] = useState("");
 
   const collectionData = mainCollections.find((item) => {
     return item.id === collectionId;
   });
 
-  const isStaticBrainrot = collectionData?.provider === "italian-brainrot";
+  const isItalianBrainrot = collectionData?.provider === "italian-brainrot";
+
+  const isSquishyDumpling = collectionData?.provider === "squishy-dumpling";
 
   const collectionTotals = useMemo(() => {
-    if (!isStaticBrainrot) {
+    if (!isItalianBrainrot) {
       return {
         owned: 0,
         duplicates: 0,
@@ -44,7 +58,9 @@ const CollectionDetail = () => {
 
         return {
           owned: totals.owned + stats.owned,
+
           duplicates: totals.duplicates + stats.duplicates,
+
           total: totals.total + series.totalCards,
         };
       },
@@ -54,7 +70,7 @@ const CollectionDetail = () => {
         total: 0,
       },
     );
-  }, [isStaticBrainrot, seriesStats]);
+  }, [isItalianBrainrot, seriesStats]);
 
   useEffect(() => {
     const loadStaticCollectionStats = async () => {
@@ -62,7 +78,7 @@ const CollectionDetail = () => {
         return;
       }
 
-      if (!user || !isStaticBrainrot) {
+      if (!user || !isItalianBrainrot) {
         setStatsLoading(false);
         return;
       }
@@ -75,7 +91,9 @@ const CollectionDetail = () => {
 
         const cardsQuery = query(
           cardsRef,
+
           where("collectionId", "==", collectionId),
+
           where("owned", "==", true),
         );
 
@@ -98,6 +116,7 @@ const CollectionDetail = () => {
           }
 
           nextSeriesStats[cardData.seriesId].owned += 1;
+
           nextSeriesStats[cardData.seriesId].duplicates +=
             cardData.duplicates || 0;
         });
@@ -105,6 +124,7 @@ const CollectionDetail = () => {
         setSeriesStats(nextSeriesStats);
       } catch (error) {
         console.error(error);
+
         setError("Non riesco a caricare i progressi della collezione.");
       } finally {
         setStatsLoading(false);
@@ -112,14 +132,16 @@ const CollectionDetail = () => {
     };
 
     loadStaticCollectionStats();
-  }, [authLoading, user, collectionId, isStaticBrainrot]);
+  }, [authLoading, user, collectionId, isItalianBrainrot]);
 
   if (authLoading) {
     return (
       <section className="collection-detail">
         <div className="page-heading">
           <p className="eyebrow">Caricamento</p>
+
           <h1>Controllo accesso...</h1>
+
           <p>Stiamo verificando la tua sessione.</p>
         </div>
       </section>
@@ -134,16 +156,28 @@ const CollectionDetail = () => {
     return (
       <section className="collection-detail">
         <h1>Collezione non disponibile</h1>
+
         <Link to="/">Torna alla homepage</Link>
       </section>
     );
   }
 
-  if (!isStaticBrainrot) {
+  /*
+   * Squishy Dumpling non ha serie.
+   * Apriamo direttamente le carte.
+   */
+
+  if (isSquishyDumpling) {
+    return <SquishyDumplingDetail />;
+  }
+
+  if (!isItalianBrainrot) {
     return (
       <section className="collection-detail">
         <h1>Collezione non configurata</h1>
+
         <p>Questa collezione non è ancora disponibile.</p>
+
         <Link to="/">Torna alla homepage</Link>
       </section>
     );
@@ -153,13 +187,16 @@ const CollectionDetail = () => {
     <section className="collection-detail">
       <div className="page-heading">
         <p className="eyebrow">Collezione</p>
+
         <h1>{collectionData.name}</h1>
+
         <p>
           Scegli una serie e continua a segnare le carte che possiedi, quelle
           mancanti e le doppie.
         </p>
 
         {error && <p className="collection-error">{error}</p>}
+
         {statsLoading && (
           <p className="collection-loading">Caricamento progressi...</p>
         )}
@@ -168,16 +205,19 @@ const CollectionDetail = () => {
       <div className="collection-summary">
         <div>
           <strong>{collectionTotals.owned}</strong>
+
           <span>Possedute</span>
         </div>
 
         <div>
           <strong>{collectionTotals.total - collectionTotals.owned}</strong>
+
           <span>Mancanti</span>
         </div>
 
         <div>
           <strong>{collectionTotals.duplicates}</strong>
+
           <span>Doppie</span>
         </div>
       </div>
@@ -209,6 +249,7 @@ const CollectionDetail = () => {
 
               <div>
                 <p className="series-label">{series.name}</p>
+
                 <h2>{series.subtitle}</h2>
               </div>
 
@@ -216,7 +257,9 @@ const CollectionDetail = () => {
                 <strong>
                   {stats.owned}/{series.totalCards}
                 </strong>
+
                 <span>carte possedute</span>
+
                 <span>{stats.duplicates} doppie</span>
               </div>
 

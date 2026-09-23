@@ -12,8 +12,8 @@ Collezioni da integrare:
 -Poppy playtime
 -Squishy Dumpling
 -Snoopy un anno da ricordare 2026
--Huntrix
 -K pop demon hunters
+-Pokemon (prima edizione)
 
 Nascondiamo tutte le altre non utilizzate
 

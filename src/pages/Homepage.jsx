@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { mainCollections } from "../data/collections";
 import { db } from "../firebase";
@@ -29,11 +29,8 @@ const Homepage = () => {
 
       try {
         const cardsRef = collection(db, "users", user.uid, "cards");
-
         const cardsQuery = query(cardsRef, where("owned", "==", true));
-
         const snapshot = await getDocs(cardsQuery);
-
         const nextCollectionStats = {};
 
         snapshot.docs.forEach((document) => {
@@ -93,6 +90,119 @@ const Homepage = () => {
 
     navigate(`/collezioni/${collection.id}`);
   };
+
+  if (authLoading) {
+    return (
+      <section className="homepage homepage--loading">
+        <p>Caricamento MancoLista...</p>
+      </section>
+    );
+  }
+
+  if (!user) {
+    return (
+      <section className="public-homepage">
+        <div className="public-hero">
+          <div className="public-hero__content">
+            <p className="eyebrow">La tua checklist digitale</p>
+            <h1>Tieni sotto controllo la tua collezione.</h1>
+            <p className="public-hero__lead">
+              MancoLista ti aiuta a segnare ciò che possiedi, vedere subito cosa
+              ti manca e tenere traccia delle doppie in modo semplice e veloce.
+            </p>
+
+            <div className="public-hero__actions">
+              <Link className="public-button public-button--primary" to="/login?mode=signup">
+                Crea il tuo account
+              </Link>
+              <Link className="public-button public-button--secondary" to="/login">
+                Accedi
+              </Link>
+            </div>
+
+            <p className="public-hero__note">
+              Registrazione gratuita. Le tue collezioni restano salvate nel tuo account.
+            </p>
+          </div>
+
+          <div className="public-preview" aria-label="Anteprima MancoLista">
+            <div className="public-preview__top">
+              <span>MancoLista</span>
+              <span>Italian Brainrot</span>
+            </div>
+
+            <div className="public-preview__stats">
+              <div>
+                <strong>87</strong>
+                <span>Possedute</span>
+              </div>
+              <div>
+                <strong>63</strong>
+                <span>Mancanti</span>
+              </div>
+              <div>
+                <strong>14</strong>
+                <span>Doppie</span>
+              </div>
+            </div>
+
+            <div className="public-preview__progress">
+              <span style={{ width: "58%" }} />
+            </div>
+          </div>
+        </div>
+
+        <div className="public-section">
+          <div className="public-section__heading">
+            <p className="eyebrow">Come funziona</p>
+            <h2>Tre passaggi. Nessun foglio da aggiornare.</h2>
+          </div>
+
+          <div className="public-steps">
+            <article>
+              <span>01</span>
+              <h3>Scegli la collezione</h3>
+              <p>Apri la serie che stai completando e visualizza tutte le carte.</p>
+            </article>
+
+            <article>
+              <span>02</span>
+              <h3>Segna le tue carte</h3>
+              <p>Indica con un tocco quali possiedi e quante doppie hai.</p>
+            </article>
+
+            <article>
+              <span>03</span>
+              <h3>Condividi le liste</h3>
+              <p>Esporta mancanti e doppie in PNG, pronti da inviare o condividere.</p>
+            </article>
+          </div>
+        </div>
+
+        <div className="public-benefits">
+          <div>
+            <p className="eyebrow">Sempre con te</p>
+            <h2>La tua collezione anche dal telefono.</h2>
+          </div>
+
+          <div className="public-benefits__list">
+            <p><strong>Progressi salvati</strong><span>Accedi da qualsiasi dispositivo e ritrova tutto aggiornato.</span></p>
+            <p><strong>Mancanti e doppie</strong><span>Controlla subito cosa cercare e cosa puoi scambiare.</span></p>
+            <p><strong>Installabile come app</strong><span>Aggiungi MancoLista alla schermata Home del telefono.</span></p>
+          </div>
+        </div>
+
+        <div className="public-cta">
+          <p className="eyebrow">Inizia ora</p>
+          <h2>La tua MancoLista parte da qui.</h2>
+          <p>Crea il tuo account e comincia a organizzare la collezione.</p>
+          <Link className="public-button public-button--dark" to="/login?mode=signup">
+            Registrati gratis
+          </Link>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="homepage">
@@ -162,9 +272,7 @@ const Homepage = () => {
                   <div className="progress-bar">
                     <div
                       className="progress-fill"
-                      style={{
-                        width: `${progress}%`,
-                      }}
+                      style={{ width: `${progress}%` }}
                     />
                   </div>
                 )}

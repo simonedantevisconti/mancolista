@@ -1,5 +1,4 @@
 TODO:
--homepage mancolista per chi non ha effettuato accesso (spiega come funziona)
 -alert registrazione/login
 -qr code per link a sito
 -logo

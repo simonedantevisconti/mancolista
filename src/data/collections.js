@@ -13,18 +13,6 @@ export const mainCollections = [
     provider: "italian-brainrot",
   },
   {
-    id: "pokemon",
-    name: "Pokémon",
-    description:
-      "Carte collezionabili Pokémon TCG con espansioni e immagini da TCGdex.",
-    totalCards: 0,
-    ownedCards: 0,
-    active: true,
-    logo: "/loghi/pokemon-logo.jpg",
-    type: "remote",
-    provider: "pokemon",
-  },
-  {
     id: "disney-lorcana",
     name: "Disney Lorcana",
     description: "Carte collezionabili Disney Lorcana.",

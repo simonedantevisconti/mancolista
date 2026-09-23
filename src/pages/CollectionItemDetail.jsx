@@ -1,7 +1,6 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { mainCollections } from "../data/collections";
 import SeriesDetail from "./SeriesDetail";
-import TcgSetDetail from "./TcgSetDetail";
 
 const CollectionItemDetail = () => {
   const { collectionId } = useParams();
@@ -14,7 +13,13 @@ const CollectionItemDetail = () => {
     return <SeriesDetail />;
   }
 
-  return <TcgSetDetail />;
+  return (
+    <section className="series-detail">
+      <h1>Collezione non disponibile</h1>
+      <p>Questa collezione non è ancora stata configurata.</p>
+      <Link to="/">Torna alla homepage</Link>
+    </section>
+  );
 };
 
 export default CollectionItemDetail;

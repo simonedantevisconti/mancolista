@@ -66,17 +66,16 @@ const SeriesDetail = () => {
 
   const missingCount = cards.length - ownedCount;
 
-  const handleExportPng = async (exportType) => {
+  const handleExportPng = async () => {
     if (!user || !series || exportLoadingType) {
       return;
     }
 
-    setExportLoadingType(exportType);
+    setExportLoadingType("mancolista");
     setError("");
 
     try {
       await exportCollectionPng({
-        exportType,
         collectionName: "Italian Brainrot",
         seriesName: `${series.name} - ${series.subtitle}`,
         cards,
@@ -383,23 +382,12 @@ const SeriesDetail = () => {
             <button
               type="button"
               className="export-pdf-button"
-              onClick={() => handleExportPng("missing")}
+              onClick={handleExportPng}
               disabled={cardsLoading || Boolean(exportLoadingType)}
             >
-              {exportLoadingType === "missing"
-                ? "Generazione mancanti..."
-                : "Esporta mancanti"}
-            </button>
-
-            <button
-              type="button"
-              className="export-pdf-button export-pdf-button--secondary"
-              onClick={() => handleExportPng("duplicates")}
-              disabled={cardsLoading || Boolean(exportLoadingType)}
-            >
-              {exportLoadingType === "duplicates"
-                ? "Generazione doppie..."
-                : "Esporta doppie"}
+              {exportLoadingType
+                ? "Generazione MancoLista..."
+                : "Esporta MancoLista"}
             </button>
           </div>
 

@@ -43,12 +43,14 @@ export const mainCollections = [
   },
   {
     id: "mondiali-2026",
-    name: "Mondiali 2026",
-    description: "Collezione dedicata ai Mondiali 2026.",
-    totalCards: 0,
+    name: "FIFA World Cup 2026 Panini",
+    description: "Official Sticker Collection e Update Edition.",
+    totalCards: 1100,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/mondiali-2026.webp",
+    type: "static-series",
+    provider: "world-cup-2026",
   },
   {
     id: "poppy-playtime",
@@ -145,11 +147,9 @@ export const generateBrainrotCards = (seriesId) => {
       number,
       name: realCard?.name || `Carta #${String(number).padStart(3, "0")}`,
       rarity: realCard?.rarity || "da-verificare",
-
       frontImage: imageFolder
         ? `/${imageFolder}/${number}.webp`
         : "/fronte.webp",
-
       backImage: "/retro.webp",
     };
   });

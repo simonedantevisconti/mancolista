@@ -75,11 +75,13 @@ export const mainCollections = [
   {
     id: "snoopy-un-anno-da-ricordare-2026",
     name: "Snoopy - Un anno da ricordare 2026",
-    description: "Collezione Snoopy - Un anno da ricordare 2026.",
-    totalCards: 0,
+    description: "Sticker Album da 276 figurine e 10 Card Limited Edition.",
+    totalCards: 286,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/peanuts-un-anno-da-ricordare.webp",
+    type: "static-series",
+    provider: "snoopy-2026",
   },
   {
     id: "k-pop-demon-hunters",

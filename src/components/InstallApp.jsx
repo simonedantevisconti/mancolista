@@ -11,11 +11,9 @@ const isStandaloneMode = () => {
 const InstallApp = () => {
   const [open, setOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
-  const [isInstalled, setIsInstalled] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(() => isStandaloneMode());
 
   useEffect(() => {
-    setIsInstalled(isStandaloneMode());
-
     const handleBeforeInstallPrompt = (event) => {
       event.preventDefault();
       setInstallPrompt(event);

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
@@ -32,32 +33,25 @@ const Login = () => {
 
   const isSignup = mode === "signup";
 
-  useEffect(() => {
-    if (authLoading) {
-      return;
-    }
-
-    if (user && !successModal && !loading && !googleLoading) {
-      navigate("/");
-    }
-  }, [user, authLoading, successModal, loading, googleLoading, navigate]);
-
-  const saveUserProfile = async (firebaseUser, provider) => {
+  const saveUserProfile = async (firebaseUser, provider, isNewUser = false) => {
     const userRef = doc(db, "users", firebaseUser.uid);
 
-    await setDoc(
-      userRef,
-      {
-        uid: firebaseUser.uid,
-        email: firebaseUser.email || "",
-        displayName: firebaseUser.displayName || "",
-        photoURL: firebaseUser.photoURL || "",
-        provider,
-        updatedAt: serverTimestamp(),
-        createdAt: serverTimestamp(),
-      },
-      { merge: true },
-    );
+    const userData = {
+      uid: firebaseUser.uid,
+      email: firebaseUser.email || "",
+      displayName: firebaseUser.displayName || "",
+      photoURL: firebaseUser.photoURL || "",
+      provider,
+      updatedAt: serverTimestamp(),
+    };
+
+    if (isNewUser) {
+      userData.createdAt = serverTimestamp();
+    }
+
+    await setDoc(userRef, userData, {
+      merge: true,
+    });
   };
 
   const getFirebaseErrorMessage = (errorCode) => {
@@ -79,35 +73,72 @@ const Login = () => {
       case "auth/popup-closed-by-user":
         return "Accesso con Google annullato.";
 
+      case "auth/popup-blocked":
+        return "Il browser ha bloccato il popup di Google.";
+
+      case "auth/network-request-failed":
+        return "Errore di connessione. Controlla la rete e riprova.";
+
       default:
         return "Si è verificato un errore. Riprova.";
     }
   };
 
+  const showLoginSuccess = (message = "Bentornato su MancoLista!") => {
+    setSuccessModal({
+      type: "login",
+      title: "Accesso effettuato!",
+      message,
+    });
+  };
+
+  const showRegistrationSuccess = (
+    message = "Il tuo account MancoLista è stato creato correttamente.",
+  ) => {
+    setSuccessModal({
+      type: "signup",
+      title: "Registrazione completata!",
+      message,
+    });
+  };
+
   const handleEmailAuth = async (event) => {
     event.preventDefault();
+
+    if (loading || googleLoading) {
+      return;
+    }
 
     setLoading(true);
     setError("");
 
     try {
-      const userCredential = isSignup
-        ? await createUserWithEmailAndPassword(auth, email, password)
-        : await signInWithEmailAndPassword(auth, email, password);
+      if (isSignup) {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
 
-      await saveUserProfile(
-        userCredential.user,
-        isSignup ? "email_signup" : "email_login",
+        await saveUserProfile(userCredential.user, "email_signup", true);
+
+        showRegistrationSuccess();
+
+        return;
+      }
+
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
       );
 
-      setSuccessModal({
-        title: isSignup ? "Registrazione completata!" : "Accesso effettuato!",
-        message: isSignup
-          ? "Il tuo account MancoLista è stato creato correttamente."
-          : "Bentornato su MancoLista!",
-      });
+      await saveUserProfile(userCredential.user, "email_login", false);
+
+      showLoginSuccess();
     } catch (error) {
-      console.error(error);
+      console.error("Errore autenticazione email:", error);
+
       setError(getFirebaseErrorMessage(error.code));
     } finally {
       setLoading(false);
@@ -115,6 +146,10 @@ const Login = () => {
   };
 
   const handleGoogleLogin = async () => {
+    if (loading || googleLoading) {
+      return;
+    }
+
     setGoogleLoading(true);
     setError("");
 
@@ -123,14 +158,28 @@ const Login = () => {
 
       const userCredential = await signInWithPopup(auth, provider);
 
-      await saveUserProfile(userCredential.user, "google");
+      const additionalUserInfo = getAdditionalUserInfo(userCredential);
 
-      setSuccessModal({
-        title: "Accesso effettuato!",
-        message: "Hai effettuato correttamente l'accesso con Google.",
-      });
+      const isNewGoogleUser = Boolean(additionalUserInfo?.isNewUser);
+
+      await saveUserProfile(
+        userCredential.user,
+        isNewGoogleUser ? "google_signup" : "google_login",
+        isNewGoogleUser,
+      );
+
+      if (isNewGoogleUser) {
+        showRegistrationSuccess(
+          "Il tuo account MancoLista è stato creato correttamente con Google.",
+        );
+
+        return;
+      }
+
+      showLoginSuccess("Hai effettuato correttamente l'accesso con Google.");
     } catch (error) {
-      console.error(error);
+      console.error("Errore autenticazione Google:", error);
+
       setError(getFirebaseErrorMessage(error.code));
     } finally {
       setGoogleLoading(false);
@@ -140,6 +189,13 @@ const Login = () => {
   const handleSuccessClose = () => {
     setSuccessModal(null);
     navigate("/");
+  };
+
+  const handleSwitchMode = () => {
+    setMode(isSignup ? "login" : "signup");
+    setError("");
+    setEmail("");
+    setPassword("");
   };
 
   if (authLoading) {
@@ -156,6 +212,14 @@ const Login = () => {
     );
   }
 
+  /*
+   * Se l'utente era già autenticato prima di aprire
+   * questa pagina, torna direttamente alla homepage.
+   *
+   * Se invece ha appena effettuato login/registrazione,
+   * successModal è valorizzato e il redirect viene
+   * bloccato finché non preme "Continua".
+   */
   if (user && !successModal && !loading && !googleLoading) {
     return <Navigate to="/" replace />;
   }
@@ -164,14 +228,16 @@ const Login = () => {
     <>
       <section className="login-page">
         <div className="login-card">
-          <p className="eyebrow">Accesso personale</p>
+          <p className="eyebrow">
+            {isSignup ? "Crea il tuo account" : "Accesso personale"}
+          </p>
 
           <h1>{isSignup ? "Registrati" : "Login"}</h1>
 
           <p>
             {isSignup
-              ? "Crea un account per salvare le tue carte, doppie e mancanti."
-              : "Accedi per ritrovare le tue collezioni salvate."}
+              ? "Crea un account per salvare le tue carte, le doppie e le mancanti."
+              : "Accedi per ritrovare tutte le tue collezioni salvate."}
           </p>
 
           <form onSubmit={handleEmailAuth}>
@@ -182,6 +248,7 @@ const Login = () => {
                 placeholder="La tua email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
+                autoComplete="email"
                 required
               />
             </label>
@@ -193,12 +260,17 @@ const Login = () => {
                 placeholder="La tua password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
+                autoComplete={isSignup ? "new-password" : "current-password"}
                 required
                 minLength={6}
               />
             </label>
 
-            {error && <p className="login-error">{error}</p>}
+            {error && (
+              <p className="login-error" role="alert">
+                {error}
+              </p>
+            )}
 
             <button type="submit" disabled={loading || googleLoading}>
               {loading
@@ -221,16 +293,18 @@ const Login = () => {
             onClick={handleGoogleLogin}
             disabled={loading || googleLoading}
           >
-            {googleLoading ? "Accesso Google..." : "Continua con Google"}
+            {googleLoading
+              ? "Accesso Google..."
+              : isSignup
+                ? "Registrati con Google"
+                : "Continua con Google"}
           </button>
 
           <button
             type="button"
             className="switch-auth-mode"
-            onClick={() => {
-              setMode(isSignup ? "login" : "signup");
-              setError("");
-            }}
+            onClick={handleSwitchMode}
+            disabled={loading || googleLoading}
           >
             {isSignup
               ? "Hai già un account? Accedi"
@@ -240,20 +314,31 @@ const Login = () => {
       </section>
 
       {successModal && (
-        <div className="auth-success-overlay">
+        <div className="auth-success-overlay" role="presentation">
           <div
-            className="auth-success-modal"
+            className={`auth-success-modal ${
+              successModal.type === "signup" ? "auth-success-modal--signup" : ""
+            }`}
             role="dialog"
             aria-modal="true"
             aria-labelledby="auth-success-title"
+            aria-describedby="auth-success-message"
           >
-            <div className="auth-success-icon">✓</div>
+            <div className="auth-success-icon" aria-hidden="true">
+              ✓
+            </div>
+
+            <p className="auth-success-eyebrow">
+              {successModal.type === "signup" ? "Benvenuto" : "Bentornato"}
+            </p>
 
             <h2 id="auth-success-title">{successModal.title}</h2>
 
-            <p>{successModal.message}</p>
+            <p id="auth-success-message" className="auth-success-message">
+              {successModal.message}
+            </p>
 
-            <button type="button" onClick={handleSuccessClose}>
+            <button type="button" onClick={handleSuccessClose} autoFocus>
               Continua
             </button>
           </div>

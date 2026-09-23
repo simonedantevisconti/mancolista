@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { italianBrainrotSeries, mainCollections } from "../data/collections";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
+import Snoopy2026CollectionDetail from "./Snoopy2026CollectionDetail";
 import SquishyDumplingDetail from "./SquishyDumplingDetail";
 import WorldCup2026CollectionDetail from "./WorldCup2026CollectionDetail";
 import "../styles/collection-detail.css";
@@ -28,6 +29,7 @@ const CollectionDetail = () => {
   const isItalianBrainrot = collectionData?.provider === "italian-brainrot";
   const isSquishyDumpling = collectionData?.provider === "squishy-dumpling";
   const isWorldCup2026 = collectionData?.provider === "world-cup-2026";
+  const isSnoopy2026 = collectionData?.provider === "snoopy-2026";
 
   const collectionTotals = useMemo(() => {
     if (!isItalianBrainrot) {
@@ -118,6 +120,7 @@ const CollectionDetail = () => {
 
   if (isSquishyDumpling) return <SquishyDumplingDetail />;
   if (isWorldCup2026) return <WorldCup2026CollectionDetail />;
+  if (isSnoopy2026) return <Snoopy2026CollectionDetail />;
 
   if (!isItalianBrainrot) {
     return (

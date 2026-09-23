@@ -1,3 +1,31 @@
+const QR_MATRIX = [
+  "1111111000001110001111111",
+  "1000001011001000001000001",
+  "1011101011000011101011101",
+  "1011101010010110001011101",
+  "1011101001010100101011101",
+  "1000001001110110101000001",
+  "1111111010101010101111111",
+  "0000000011110001000000000",
+  "1000001010000111111001110",
+  "1011010111000001000111110",
+  "0010101100011101101101011",
+  "1011110010111010011111001",
+  "1000111001110000101100001",
+  "1111110110001101100100010",
+  "1001011010100001010111011",
+  "1010100011101000000101101",
+  "1010111011001110111110100",
+  "0000000011000010100010000",
+  "1111111001101100101010001",
+  "1000001000110001100010001",
+  "1011101000111111111110100",
+  "1011101001101011011000011",
+  "1011101000000010100001101",
+  "1000001000010010101110001",
+  "1111111011001010100001001",
+];
+
 const slugify = (value = "") => {
   return value
     .toString()
@@ -108,6 +136,55 @@ const buildWrappedLines = (context, values, maxWidth) => {
   return lines;
 };
 
+const loadImage = (src) => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = src;
+  });
+};
+
+const drawImageContain = (context, image, x, y, maxWidth, maxHeight) => {
+  const ratio = Math.min(
+    maxWidth / image.naturalWidth,
+    maxHeight / image.naturalHeight,
+  );
+
+  const width = image.naturalWidth * ratio;
+  const height = image.naturalHeight * ratio;
+
+  context.drawImage(image, x, y + (maxHeight - height) / 2, width, height);
+};
+
+const drawQrCode = (context, x, y, size) => {
+  const quietZone = 4;
+  const matrixSize = QR_MATRIX.length;
+  const totalModules = matrixSize + quietZone * 2;
+  const moduleSize = size / totalModules;
+
+  context.fillStyle = "#ffffff";
+  context.fillRect(x, y, size, size);
+
+  context.fillStyle = "#111111";
+
+  QR_MATRIX.forEach((row, rowIndex) => {
+    [...row].forEach((module, columnIndex) => {
+      if (module !== "1") {
+        return;
+      }
+
+      context.fillRect(
+        x + (columnIndex + quietZone) * moduleSize,
+        y + (rowIndex + quietZone) * moduleSize,
+        moduleSize + 0.35,
+        moduleSize + 0.35,
+      );
+    });
+  });
+};
+
 const downloadCanvas = (canvas, fileName) => {
   canvas.toBlob(
     (blob) => {
@@ -145,7 +222,6 @@ export const exportCollectionPng = async ({
   const baseWidth = 1400;
   const paddingX = 96;
   const paddingTop = 96;
-  const paddingBottom = 96;
   const contentWidth = baseWidth - paddingX * 2;
 
   const titleFontSize = 64;
@@ -153,6 +229,7 @@ export const exportCollectionPng = async ({
   const contentFontSize = 34;
   const lineHeight = 50;
   const sectionGap = 46;
+  const footerHeight = 250;
 
   const tempCanvas = document.createElement("canvas");
   const tempContext = tempCanvas.getContext("2d");
@@ -176,17 +253,17 @@ export const exportCollectionPng = async ({
   const missingHeight = missingLines.length * lineHeight;
   const duplicateHeight = duplicateLines.length * lineHeight;
 
-  const finalHeight = Math.max(
-    650,
+  const contentHeight =
     paddingTop +
-      titleBlockHeight +
-      sectionHeaderHeight +
-      missingHeight +
-      sectionGap +
-      sectionHeaderHeight +
-      duplicateHeight +
-      paddingBottom,
-  );
+    titleBlockHeight +
+    sectionHeaderHeight +
+    missingHeight +
+    sectionGap +
+    sectionHeaderHeight +
+    duplicateHeight +
+    70;
+
+  const finalHeight = Math.max(900, contentHeight + footerHeight);
 
   const scale = 2;
   const canvas = document.createElement("canvas");
@@ -197,10 +274,16 @@ export const exportCollectionPng = async ({
   context.scale(scale, scale);
   context.textBaseline = "top";
 
-  context.fillStyle = "#ffffff";
+  // SFONDO
+  context.fillStyle = "#111111";
   context.fillRect(0, 0, baseWidth, finalHeight);
 
-  context.fillStyle = "#111111";
+  // ACCENTO SUPERIORE
+  context.fillStyle = "#ff7a00";
+  context.fillRect(0, 0, baseWidth, 16);
+
+  // TITOLO
+  context.fillStyle = "#ffffff";
   context.font = `700 ${titleFontSize}px Arial`;
   context.fillText(title, paddingX, paddingTop);
 
@@ -213,7 +296,7 @@ export const exportCollectionPng = async ({
 
     y += 54;
 
-    context.strokeStyle = "#ff7a00";
+    context.strokeStyle = "rgba(255, 122, 0, 0.75)";
     context.lineWidth = 3;
     context.beginPath();
     context.moveTo(paddingX, y);
@@ -222,7 +305,7 @@ export const exportCollectionPng = async ({
 
     y += 28;
 
-    context.fillStyle = "#111111";
+    context.fillStyle = "#ffffff";
     context.font = `700 ${contentFontSize}px Arial`;
 
     lines.forEach((line) => {
@@ -236,6 +319,80 @@ export const exportCollectionPng = async ({
   y += sectionGap;
 
   drawSection("Doppie", duplicateLines);
+
+  // FOOTER PUBBLICITARIO
+  const footerTop = finalHeight - footerHeight;
+
+  context.strokeStyle = "rgba(255, 255, 255, 0.14)";
+  context.lineWidth = 2;
+  context.beginPath();
+  context.moveTo(paddingX, footerTop);
+  context.lineTo(baseWidth - paddingX, footerTop);
+  context.stroke();
+
+  let logoImage = null;
+
+  try {
+    logoImage = await loadImage("/mancolista-logo.webp");
+  } catch (error) {
+    console.warn("Logo MancoLista non disponibile nell'export:", error);
+  }
+
+  if (logoImage) {
+    drawImageContain(
+      context,
+      logoImage,
+      paddingX,
+      footerTop + 52,
+      270,
+      82,
+    );
+  } else {
+    context.fillStyle = "#ff7a00";
+    context.font = "700 42px Arial";
+    context.fillText("MancoLista", paddingX, footerTop + 64);
+  }
+
+  context.fillStyle = "rgba(255, 255, 255, 0.68)";
+  context.font = "400 22px Arial";
+  context.fillText(
+    "La tua collezione, sempre sotto controllo.",
+    paddingX,
+    footerTop + 150,
+  );
+
+  const qrSize = 160;
+  const qrX = baseWidth - paddingX - qrSize;
+  const qrY = footerTop + 42;
+
+  drawQrCode(context, qrX, qrY, qrSize);
+
+  context.textAlign = "right";
+  context.fillStyle = "#ff7a00";
+  context.font = "700 26px Arial";
+  context.fillText(
+    "Crea la tua MancoLista",
+    qrX - 34,
+    footerTop + 68,
+  );
+
+  context.fillStyle = "#ffffff";
+  context.font = "600 21px Arial";
+  context.fillText(
+    "Scansiona il QR code",
+    qrX - 34,
+    footerTop + 110,
+  );
+
+  context.fillStyle = "rgba(255, 255, 255, 0.58)";
+  context.font = "400 19px Arial";
+  context.fillText(
+    "mancolista.site",
+    qrX - 34,
+    footerTop + 148,
+  );
+
+  context.textAlign = "left";
 
   const fileName = `${slugify(title)}-mancolista.png`;
   downloadCanvas(canvas, fileName);

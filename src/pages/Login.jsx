@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -13,9 +13,12 @@ import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user, authLoading } = useAuth();
 
-  const [mode, setMode] = useState("login");
+  const [mode, setMode] = useState(
+    searchParams.get("mode") === "signup" ? "signup" : "login",
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 

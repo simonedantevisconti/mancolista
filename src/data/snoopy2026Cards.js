@@ -35,8 +35,8 @@ const generateStickerAlbumCards = () => {
       number: String(number),
       name: `Figurina ${number}`,
       category: "album",
-      frontImage: "/retro.webp",
-      backImage: "/retro.webp",
+      frontImage: "/snoopy-retro.png",
+      backImage: "/snoopy-retro.png",
     };
   });
 

@@ -55,11 +55,13 @@ export const mainCollections = [
   {
     id: "poppy-playtime",
     name: "Poppy Playtime",
-    description: "Collezione Poppy Playtime.",
-    totalCards: 0,
+    description: "Official Card Collection da 162 card.",
+    totalCards: 162,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/poppy-playtime.webp",
+    type: "static-single",
+    provider: "poppy-playtime",
   },
   {
     id: "squishy-dumpling",

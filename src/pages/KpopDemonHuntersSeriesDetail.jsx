@@ -202,7 +202,8 @@ const KpopDemonHuntersSeriesDetail = () => {
     const matchesSearch =
       !search ||
       card.name.toLowerCase().includes(search) ||
-      String(card.number).includes(search);
+      String(card.number).includes(search) ||
+      card.code?.toLowerCase().includes(search);
     const matchesRarity =
       rarityFilter === "all" || card.rarity === rarityFilter;
     const matchesOwnership =
@@ -412,7 +413,7 @@ const KpopDemonHuntersSeriesDetail = () => {
 
               <div className="brainrot-card-info">
                 <span className="card-number">
-                  #{String(card.number).padStart(3, "0")}
+                  {card.code || `#${String(card.number).padStart(3, "0")}`}
                 </span>
 
                 <h2>{card.name}</h2>

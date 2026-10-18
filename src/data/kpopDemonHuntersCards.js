@@ -340,15 +340,72 @@ export const kayouEnergySeries1Cards = energyEditionGroups.flatMap(
   },
 );
 
-const raritySets = {
-  "kayou-mini-series-1": [
-    ["SSR", 15],
-    ["HR", 9],
-    ["LR", 8],
-    ["SP", 6],
-    ["CR", 3],
-  ],
-};
+const miniEditionGroups = [
+  {
+    rarity: "CR",
+    names: ["Rumi", "Mira", "Zoey"],
+  },
+  {
+    rarity: "SP",
+    names: ["Rumi", "Mira", "Zoey", "Rumi", "Mira", "Zoey"],
+  },
+  {
+    rarity: "LR",
+    names: ["Rumi", "Mira", "Zoey", "Jinu", "Abby", "Romance", "Mystery", "Baby"],
+  },
+  {
+    rarity: "HR",
+    names: [
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Jinu",
+      "Baby",
+      "Abby",
+      "Mystery",
+      "Romance",
+      "DERPY&SUSSIE",
+    ],
+  },
+  {
+    rarity: "SSR",
+    names: [
+      "Interrupted Snacks",
+      "Pre-show Ramyeon",
+      "In a Hurry",
+      "Carb-loading",
+      "Snacks",
+      "Saja boys",
+      "Jinu & Rumi",
+      "MiRomAbby",
+      "Zoeystery",
+      "In Denial",
+      "Zoey",
+      "Mira",
+      "Rumi",
+      "Infatuation",
+      "Mesmerized",
+    ],
+  },
+];
+
+export const kayouMiniSeries1Cards = miniEditionGroups.flatMap(
+  ({ rarity, names }) => {
+    return names.map((name, index) => {
+      const rarityNumber = String(index + 1).padStart(3, "0");
+      const code = `KPDHM01-${rarity}-${rarityNumber}`;
+
+      return {
+        id: code,
+        code,
+        name,
+        rarity,
+      };
+    });
+  },
+);
+
+const raritySets = {};
 
 const buildRarities = (seriesId, totalCards) => {
   const raritySet = raritySets[seriesId];
@@ -386,6 +443,17 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
 
   if (seriesId === "kayou-energy-series-1") {
     return kayouEnergySeries1Cards.map((card, index) => ({
+      ...card,
+      number: index + 1,
+      frontImage: `${baseFolder}/${card.code}.webp`,
+      backImage: series.coverImage,
+      fallbackImage: series.coverImage,
+      finalFallbackImage: series.fallbackImage,
+    }));
+  }
+
+  if (seriesId === "kayou-mini-series-1") {
+    return kayouMiniSeries1Cards.map((card, index) => ({
       ...card,
       number: index + 1,
       frontImage: `${baseFolder}/${card.code}.webp`,

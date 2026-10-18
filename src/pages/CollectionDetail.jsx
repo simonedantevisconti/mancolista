@@ -4,6 +4,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { italianBrainrotSeries, mainCollections } from "../data/collections";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
+import KpopDemonHuntersCollectionDetail from "./KpopDemonHuntersCollectionDetail";
 import PoppyPlaytimeDetail from "./PoppyPlaytimeDetail";
 import Snoopy2026CollectionDetail from "./Snoopy2026CollectionDetail";
 import SquishyDumplingDetail from "./SquishyDumplingDetail";
@@ -32,6 +33,8 @@ const CollectionDetail = () => {
   const isWorldCup2026 = collectionData?.provider === "world-cup-2026";
   const isSnoopy2026 = collectionData?.provider === "snoopy-2026";
   const isPoppyPlaytime = collectionData?.provider === "poppy-playtime";
+  const isKpopDemonHunters =
+    collectionData?.provider === "kpop-demon-hunters";
 
   const collectionTotals = useMemo(() => {
     if (!isItalianBrainrot) {
@@ -80,9 +83,12 @@ const CollectionDetail = () => {
 
         snapshot.docs.forEach((document) => {
           const cardData = document.data();
+
           if (!nextSeriesStats[cardData.seriesId]) return;
+
           nextSeriesStats[cardData.seriesId].owned += 1;
-          nextSeriesStats[cardData.seriesId].duplicates += cardData.duplicates || 0;
+          nextSeriesStats[cardData.seriesId].duplicates +=
+            cardData.duplicates || 0;
         });
 
         setSeriesStats(nextSeriesStats);
@@ -124,6 +130,7 @@ const CollectionDetail = () => {
   if (isPoppyPlaytime) return <PoppyPlaytimeDetail />;
   if (isWorldCup2026) return <WorldCup2026CollectionDetail />;
   if (isSnoopy2026) return <Snoopy2026CollectionDetail />;
+  if (isKpopDemonHunters) return <KpopDemonHuntersCollectionDetail />;
 
   if (!isItalianBrainrot) {
     return (
@@ -144,6 +151,7 @@ const CollectionDetail = () => {
           Scegli una serie e continua a segnare le carte che possiedi, quelle
           mancanti e le doppie.
         </p>
+
         {error && <p className="collection-error">{error}</p>}
         {statsLoading && (
           <p className="collection-loading">Caricamento progressi...</p>
@@ -155,10 +163,12 @@ const CollectionDetail = () => {
           <strong>{collectionTotals.owned}</strong>
           <span>Possedute</span>
         </div>
+
         <div>
           <strong>{collectionTotals.total - collectionTotals.owned}</strong>
           <span>Mancanti</span>
         </div>
+
         <div>
           <strong>{collectionTotals.duplicates}</strong>
           <span>Doppie</span>
@@ -167,7 +177,10 @@ const CollectionDetail = () => {
 
       <div className="series-grid">
         {italianBrainrotSeries.map((series) => {
-          const stats = seriesStats[series.id] || { owned: 0, duplicates: 0 };
+          const stats = seriesStats[series.id] || {
+            owned: 0,
+            duplicates: 0,
+          };
           const progress =
             series.totalCards > 0 ? (stats.owned / series.totalCards) * 100 : 0;
 
@@ -200,7 +213,10 @@ const CollectionDetail = () => {
               </div>
 
               <div className="progress-bar">
-                <div className="progress-fill" style={{ width: `${progress}%` }} />
+                <div
+                  className="progress-fill"
+                  style={{ width: `${progress}%` }}
+                />
               </div>
             </Link>
           );

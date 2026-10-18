@@ -5,7 +5,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "Diramix",
     totalCards: 196,
     itemLabel: "figurine",
-    coverImage: "/kpop-diramix-official.webp",
+    coverImage: "/loghi/kpop-dirammix-official.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -14,7 +14,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "Diramix",
     totalCards: 197,
     itemLabel: "figurine",
-    coverImage: "/kpop-diramix-for-the-fans.webp",
+    coverImage: "/loghi/kpop-dirammix-for-the-fans.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -23,7 +23,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "KAYOU",
     totalCards: 101,
     itemLabel: "card",
-    coverImage: "/kpop-kayou-classic-1.webp",
+    coverImage: "/loghi/kpop-kayou-classic-1.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -32,7 +32,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "KAYOU",
     totalCards: 130,
     itemLabel: "card",
-    coverImage: "/kpop-kayou-energy-1.webp",
+    coverImage: "/loghi/kpop-kayou-energy-1.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -41,7 +41,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "KAYOU",
     totalCards: 41,
     itemLabel: "mini card",
-    coverImage: "/kpop-kayou-mini-1.webp",
+    coverImage: "/loghi/kpop-kayou-mini-1.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -50,7 +50,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "Promotional Photocards",
     totalCards: 14,
     itemLabel: "photocard",
-    coverImage: "/kpop-mcdonalds.webp",
+    coverImage: "/loghi/kpop-mcdonalds.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
 ];
@@ -66,6 +66,7 @@ const raritySets = {
     ["ZR", 8],
     ["CR", 8],
   ],
+
   "kayou-energy-series-1": [
     ["SR", 18],
     ["SSR", 16],
@@ -79,6 +80,7 @@ const raritySets = {
     ["BP", 3],
     ["SE", 4],
   ],
+
   "kayou-mini-series-1": [
     ["SSR", 15],
     ["HR", 9],
@@ -101,32 +103,41 @@ const buildRarities = (seriesId, totalCards) => {
 };
 
 export const generateKpopDemonHuntersCards = (seriesId) => {
-  const series = kpopDemonHuntersSeries.find((item) => item.id === seriesId);
+  const series = kpopDemonHuntersSeries.find((item) => {
+    return item.id === seriesId;
+  });
 
   if (!series) {
     return [];
   }
 
   const rarities = buildRarities(seriesId, series.totalCards);
+
   const baseFolder = `/kpop-demon-hunters/${seriesId}`;
 
   return Array.from({ length: series.totalCards }, (_, index) => {
     const number = index + 1;
-    const paddedNumber = String(number).padStart(3, "0");
+
+    let name = `Card ${number}`;
+
+    if (seriesId === "mcdonalds-photocards") {
+      name = `Photocard ${number}`;
+    } else if (series.itemLabel === "figurine") {
+      name = `Figurina ${number}`;
+    }
 
     return {
       id: `${seriesId}-${number}`,
       number,
-      name:
-        seriesId === "mcdonalds-photocards"
-          ? `Photocard ${number}`
-          : series.itemLabel === "figurine"
-            ? `Figurina ${number}`
-            : `Card ${number}`,
+      name,
       rarity: rarities[index] || "standard",
+
       frontImage: `${baseFolder}/${number}.webp`,
+
       backImage: series.coverImage,
+
       fallbackImage: series.coverImage,
+
       finalFallbackImage: series.fallbackImage,
     };
   });

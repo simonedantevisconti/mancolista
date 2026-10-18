@@ -408,24 +408,31 @@ const KpopDemonHuntersSeriesDetail = () => {
                   </div>
 
                   <div className="card-face card-front">
-                    <img
-                      src={card.frontImage}
-                      alt={card.name}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(event) => {
-                        const image = event.currentTarget;
+                    {card.hasImage === false ? (
+                      <div className="diramix-image-placeholder">
+                        <strong>{card.code}</strong>
+                        <span>Immagine non disponibile</span>
+                      </div>
+                    ) : (
+                      <img
+                        src={card.frontImage}
+                        alt={card.name}
+                        loading="lazy"
+                        decoding="async"
+                        onError={(event) => {
+                          const image = event.currentTarget;
 
-                        if (image.dataset.fallbackApplied === "true") {
-                          image.onerror = null;
-                          image.src = card.finalFallbackImage;
-                          return;
-                        }
+                          if (image.dataset.fallbackApplied === "true") {
+                            image.onerror = null;
+                            image.src = card.finalFallbackImage;
+                            return;
+                          }
 
-                        image.dataset.fallbackApplied = "true";
-                        image.src = card.fallbackImage;
-                      }}
-                    />
+                          image.dataset.fallbackApplied = "true";
+                          image.src = card.fallbackImage;
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               </button>
@@ -445,13 +452,15 @@ const KpopDemonHuntersSeriesDetail = () => {
                   {card.rarity === "standard" ? "Standard" : card.rarity}
                 </span>
 
-                <button
-                  type="button"
-                  className="card-preview-button"
-                  onClick={() => setPreviewCard(card)}
-                >
-                  Anteprima
-                </button>
+                {card.hasImage !== false && (
+                  <button
+                    type="button"
+                    className="card-preview-button"
+                    onClick={() => setPreviewCard(card)}
+                  >
+                    Anteprima
+                  </button>
+                )}
 
                 <label className="owned-toggle">
                   <input

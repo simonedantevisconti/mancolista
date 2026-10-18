@@ -90,7 +90,7 @@ export const mainCollections = [
     name: "K-Pop Demon Hunters",
     description:
       "Diramix, KAYOU e photocards promozionali McDonald's.",
-    totalCards: 679,
+    totalCards: 678,
     ownedCards: 0,
     active: true,
     logo: "/loghi/k-pop-demon-hunter.webp",

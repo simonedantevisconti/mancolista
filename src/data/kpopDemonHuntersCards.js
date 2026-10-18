@@ -55,6 +55,24 @@ export const kpopDemonHuntersSeries = [
   },
 ];
 
+const createDiramixChecklist = (totalCards) => {
+  return Array.from({ length: totalCards }, (_, index) => {
+    const number = index + 1;
+    const code = String(number).padStart(3, "0");
+
+    return {
+      id: code,
+      code,
+      number,
+      name: `Figurina ${code}`,
+      rarity: "da-verificare",
+    };
+  });
+};
+
+export const diramixOfficialCards = createDiramixChecklist(196);
+export const diramixForTheFansCards = createDiramixChecklist(197);
+
 const classicEditionGroups = [
   {
     rarity: "CR",
@@ -421,20 +439,6 @@ export const mcdonaldsPhotocards = [
   { id: "jinu-patterns", name: "Jinu (Patterns)" },
 ];
 
-const raritySets = {};
-
-const buildRarities = (seriesId, totalCards) => {
-  const raritySet = raritySets[seriesId];
-
-  if (!raritySet) {
-    return Array.from({ length: totalCards }, () => "standard");
-  }
-
-  return raritySet.flatMap(([rarity, count]) => {
-    return Array.from({ length: count }, () => rarity);
-  });
-};
-
 export const generateKpopDemonHuntersCards = (seriesId) => {
   const series = kpopDemonHuntersSeries.find((item) => {
     return item.id === seriesId;
@@ -445,6 +449,26 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
   }
 
   const baseFolder = `/kpop-demon-hunters/${seriesId}`;
+
+  if (seriesId === "diramix-official") {
+    return diramixOfficialCards.map((card) => ({
+      ...card,
+      frontImage: `${baseFolder}/${card.code}.webp`,
+      backImage: series.coverImage,
+      fallbackImage: series.coverImage,
+      finalFallbackImage: series.fallbackImage,
+    }));
+  }
+
+  if (seriesId === "diramix-for-the-fans") {
+    return diramixForTheFansCards.map((card) => ({
+      ...card,
+      frontImage: `${baseFolder}/${card.code}.webp`,
+      backImage: series.coverImage,
+      fallbackImage: series.coverImage,
+      finalFallbackImage: series.fallbackImage,
+    }));
+  }
 
   if (seriesId === "kayou-classic-series-1") {
     return kayouClassicSeries1Cards.map((card, index) => ({
@@ -491,28 +515,5 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
     }));
   }
 
-  const rarities = buildRarities(seriesId, series.totalCards);
-
-  return Array.from({ length: series.totalCards }, (_, index) => {
-    const number = index + 1;
-
-    let name = `Card ${number}`;
-
-    if (seriesId === "mcdonalds-photocards") {
-      name = `Photocard ${number}`;
-    } else if (series.itemLabel === "figurine") {
-      name = `Figurina ${number}`;
-    }
-
-    return {
-      id: `${seriesId}-${number}`,
-      number,
-      name,
-      rarity: rarities[index] || "standard",
-      frontImage: `${baseFolder}/${number}.webp`,
-      backImage: series.coverImage,
-      fallbackImage: series.coverImage,
-      finalFallbackImage: series.fallbackImage,
-    };
-  });
+  return [];
 };

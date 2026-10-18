@@ -177,20 +177,170 @@ export const kayouClassicSeries1Cards = classicEditionGroups.flatMap(
   },
 );
 
+const energyEditionGroups = [
+  {
+    rarity: "SE",
+    names: ["Rumi", "Mira", "Zoey", "HUNTR/X"],
+  },
+  {
+    rarity: "BP",
+    names: ["Rumi", "Mira", "Zoey"],
+  },
+  {
+    rarity: "CR",
+    names: ["Rumi", "Mira", "Zoey", "Jinu", "Baby", "Abby", "Mystery", "Romance"],
+  },
+  {
+    rarity: "SP",
+    names: ["Rumi", "Mira", "Zoey", "Rumi", "Mira", "Zoey"],
+  },
+  {
+    rarity: "LR",
+    names: ["Jinu", "Baby", "Abby", "Mystery", "Romance", "SAJABOYS"],
+  },
+  {
+    rarity: "UR",
+    names: [
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Jinu",
+      "Abby",
+      "Romance",
+      "Mystery",
+      "Baby",
+      "Jinu",
+      "Abby",
+      "Romance",
+      "Mystery",
+      "Baby",
+    ],
+  },
+  {
+    rarity: "TR",
+    names: ["Rumi", "Mira", "Zoey", "Jinu", "Baby", "Abby", "Mystery", "Romance"],
+  },
+  {
+    rarity: "QR",
+    names: [
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Jinu",
+      "Baby",
+      "Abby",
+      "Mystery",
+      "Romance",
+      "DERPY",
+      "Jinu",
+      "Zoey",
+      "Rumi",
+      "Mira",
+      "HUNTR/X",
+      "BOBBY",
+      "DEMON",
+      "RUJINU",
+      "JINU",
+      "DEMON",
+      "SUSSIE",
+      "HUNTR/X",
+      "Rumi",
+      "Mira",
+      "Zoey",
+    ],
+  },
+  {
+    rarity: "HR",
+    names: [
+      "Infatuation",
+      "Gimbap",
+      "Snack Attack",
+      "Intimidate",
+      "Doctor Han",
+      "Makeup",
+      "Aunties",
+      "Sussie Bird",
+      "In Denial",
+      "Spicy Challenge",
+      "Demon",
+      "Pre-show Ramyeon",
+      "Mesmerized",
+      "Demon Abby",
+      "Demon Mystery",
+      "Demon Romance",
+      "Demon Baby",
+      "Demon Mystery",
+      "Final Battle",
+      "Zoeystery",
+      "RuJinu",
+      "MiRomAbby",
+      "Battle Face",
+      "Battle Face",
+    ],
+  },
+  {
+    rarity: "SSR",
+    names: [
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Jinu",
+      "Baby",
+      "Abby",
+      "Mystery",
+      "Romance",
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Jinu",
+      "Baby",
+      "Abby",
+      "Mystery",
+      "Romance",
+    ],
+  },
+  {
+    rarity: "SR",
+    names: [
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Rumi",
+      "Mira",
+      "Zoey",
+      "Jinu",
+      "Baby",
+      "Mystery",
+      "Romance",
+      "Abby",
+      "SUSSIE",
+      "DERPY",
+      "Bobby",
+      "CELINE",
+      "DEMON",
+      "DEMON",
+      "DEMON",
+    ],
+  },
+];
+
+export const kayouEnergySeries1Cards = energyEditionGroups.flatMap(
+  ({ rarity, names }) => {
+    return names.map((name, index) => {
+      const rarityNumber = String(index + 1).padStart(3, "0");
+      const code = `KPDH01-${rarity}-${rarityNumber}`;
+
+      return {
+        id: code,
+        code,
+        name,
+        rarity,
+      };
+    });
+  },
+);
+
 const raritySets = {
-  "kayou-energy-series-1": [
-    ["SR", 18],
-    ["SSR", 16],
-    ["HR", 24],
-    ["QR", 24],
-    ["TR", 8],
-    ["UR", 13],
-    ["LR", 6],
-    ["SP", 6],
-    ["CR", 8],
-    ["BP", 3],
-    ["SE", 4],
-  ],
   "kayou-mini-series-1": [
     ["SSR", 15],
     ["HR", 9],
@@ -225,6 +375,17 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
 
   if (seriesId === "kayou-classic-series-1") {
     return kayouClassicSeries1Cards.map((card, index) => ({
+      ...card,
+      number: index + 1,
+      frontImage: `${baseFolder}/${card.code}.webp`,
+      backImage: series.coverImage,
+      fallbackImage: series.coverImage,
+      finalFallbackImage: series.fallbackImage,
+    }));
+  }
+
+  if (seriesId === "kayou-energy-series-1") {
+    return kayouEnergySeries1Cards.map((card, index) => ({
       ...card,
       number: index + 1,
       frontImage: `${baseFolder}/${card.code}.webp`,

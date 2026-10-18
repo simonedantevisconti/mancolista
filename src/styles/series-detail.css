@@ -855,3 +855,161 @@
     padding-right: 72px;
   }
 }
+
+
+/* KPOP CARD UX */
+
+.card-preview-button {
+  width: 100%;
+  min-height: 38px;
+  margin: 0 0 12px;
+  border: 1px solid rgba(255, 122, 0, 0.4);
+  border-radius: 12px;
+  background: rgba(255, 122, 0, 0.08);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.card-preview-button:hover {
+  border-color: var(--accent);
+  background: rgba(255, 122, 0, 0.16);
+  transform: translateY(-1px);
+}
+
+.kpop-rarity {
+  font-weight: 900;
+}
+
+.kpop-rarity-r,
+.kpop-rarity-sr {
+  color: #d8d8d8;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.kpop-rarity-ssr,
+.kpop-rarity-hr,
+.kpop-rarity-qr {
+  color: #8ecbff;
+  background: rgba(142, 203, 255, 0.12);
+}
+
+.kpop-rarity-ur,
+.kpop-rarity-zr,
+.kpop-rarity-lr,
+.kpop-rarity-tr {
+  color: #d8b4fe;
+  background: rgba(216, 180, 254, 0.14);
+}
+
+.kpop-rarity-cr,
+.kpop-rarity-dcr,
+.kpop-rarity-sp,
+.kpop-rarity-se,
+.kpop-rarity-bp {
+  color: #ffd166;
+  background: rgba(255, 209, 102, 0.14);
+}
+
+.kpop-rarity-promo {
+  color: #72f1b8;
+  background: rgba(114, 241, 184, 0.14);
+}
+
+.card-preview-open {
+  overflow: hidden;
+}
+
+.card-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.84);
+  backdrop-filter: blur(12px);
+}
+
+.card-preview-modal {
+  position: relative;
+  width: min(92vw, 560px);
+  max-height: 92vh;
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  overflow: auto;
+}
+
+.card-preview-image {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 18px;
+  background: var(--bg-soft);
+}
+
+.card-preview-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.82);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.card-preview-info {
+  display: grid;
+  gap: 5px;
+}
+
+.card-preview-info span {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.card-preview-info h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.card-preview-info strong {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .card-preview-overlay {
+    padding: 12px;
+  }
+
+  .card-preview-modal {
+    width: 100%;
+    max-height: 94vh;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .card-preview-image {
+    max-height: 76vh;
+    border-radius: 14px;
+  }
+}

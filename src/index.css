@@ -23,6 +23,10 @@ body,
   margin: 0;
 }
 
+html {
+  scroll-behavior: auto !important;
+}
+
 body {
   font-family:
     Inter,

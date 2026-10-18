@@ -34,6 +34,7 @@ const KpopDemonHuntersSeriesDetail = () => {
   const [rarityFilter, setRarityFilter] = useState("all");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
   const [previewCard, setPreviewCard] = useState(null);
+  const [missingImages, setMissingImages] = useState({});
 
   const series = kpopDemonHuntersSeries.find((item) => item.id === seriesId);
   const cards = useMemo(
@@ -408,7 +409,7 @@ const KpopDemonHuntersSeriesDetail = () => {
                   </div>
 
                   <div className="card-face card-front">
-                    {card.hasImage === false ? (
+                    {missingImages[card.id] ? (
                       <div className="diramix-image-placeholder">
                         <strong>{card.code}</strong>
                         <span>Immagine non disponibile</span>
@@ -419,17 +420,11 @@ const KpopDemonHuntersSeriesDetail = () => {
                         alt={card.name}
                         loading="lazy"
                         decoding="async"
-                        onError={(event) => {
-                          const image = event.currentTarget;
-
-                          if (image.dataset.fallbackApplied === "true") {
-                            image.onerror = null;
-                            image.src = card.finalFallbackImage;
-                            return;
-                          }
-
-                          image.dataset.fallbackApplied = "true";
-                          image.src = card.fallbackImage;
+                        onError={() => {
+                          setMissingImages((current) => ({
+                            ...current,
+                            [card.id]: true,
+                          }));
                         }}
                       />
                     )}
@@ -452,7 +447,7 @@ const KpopDemonHuntersSeriesDetail = () => {
                   {card.rarity === "standard" ? "Standard" : card.rarity}
                 </span>
 
-                {card.hasImage !== false && (
+                {!missingImages[card.id] && (
                   <button
                     type="button"
                     className="card-preview-button"

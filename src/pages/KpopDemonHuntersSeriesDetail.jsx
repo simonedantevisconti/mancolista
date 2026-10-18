@@ -33,6 +33,7 @@ const KpopDemonHuntersSeriesDetail = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [rarityFilter, setRarityFilter] = useState("all");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
+  const [previewCard, setPreviewCard] = useState(null);
 
   const series = kpopDemonHuntersSeries.find((item) => item.id === seriesId);
   const cards = useMemo(
@@ -50,6 +51,24 @@ const KpopDemonHuntersSeriesDetail = () => {
     0,
   );
   const missingCount = cards.length - ownedCount;
+
+  useEffect(() => {
+    if (!previewCard) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setPreviewCard(null);
+      }
+    };
+
+    document.body.classList.add("card-preview-open");
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.classList.remove("card-preview-open");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [previewCard]);
 
   useEffect(() => {
     const loadCards = async () => {
@@ -418,9 +437,21 @@ const KpopDemonHuntersSeriesDetail = () => {
 
                 <h2>{card.name}</h2>
 
-                <span className="card-rarity">
+                <span
+                  className={`card-rarity kpop-rarity kpop-rarity-${String(card.rarity)
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-")}`}
+                >
                   {card.rarity === "standard" ? "Standard" : card.rarity}
                 </span>
+
+                <button
+                  type="button"
+                  className="card-preview-button"
+                  onClick={() => setPreviewCard(card)}
+                >
+                  Anteprima
+                </button>
 
                 <label className="owned-toggle">
                   <input
@@ -465,6 +496,62 @@ const KpopDemonHuntersSeriesDetail = () => {
           );
         })}
       </div>
+
+      {previewCard && (
+        <div
+          className="card-preview-overlay"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setPreviewCard(null);
+            }
+          }}
+        >
+          <div
+            className="card-preview-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Anteprima ${previewCard.name}`}
+          >
+            <button
+              type="button"
+              className="card-preview-close"
+              onClick={() => setPreviewCard(null)}
+              aria-label="Chiudi anteprima"
+            >
+              ×
+            </button>
+
+            <img
+              src={previewCard.frontImage}
+              alt={previewCard.name}
+              className="card-preview-image"
+              onError={(event) => {
+                const image = event.currentTarget;
+
+                if (image.dataset.fallbackApplied === "true") {
+                  image.onerror = null;
+                  image.src = previewCard.finalFallbackImage;
+                  return;
+                }
+
+                image.dataset.fallbackApplied = "true";
+                image.src = previewCard.fallbackImage;
+              }}
+            />
+
+            <div className="card-preview-info">
+              <span>{previewCard.code || `#${String(previewCard.number).padStart(3, "0")}`}</span>
+              <h2>{previewCard.name}</h2>
+              <strong>
+                {previewCard.rarity === "standard"
+                  ? "Standard"
+                  : previewCard.rarity}
+              </strong>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

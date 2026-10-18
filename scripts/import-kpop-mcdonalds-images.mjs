@@ -43,6 +43,7 @@ const main = async () => {
 
   let converted = 0;
   let skipped = 0;
+  let invalid = 0;
   const missing = [];
 
   for (let index = 0; index < mcdonaldsPhotocards.length; index += 1) {
@@ -69,19 +70,32 @@ const main = async () => {
       continue;
     }
 
-    await sharp(inputPath)
-      .rotate()
-      .webp({ quality: 88 })
-      .toFile(outputPath);
+    try {
+      const metadata = await sharp(inputPath).metadata();
 
-    console.log(
-      `[OK] ${path.basename(inputPath)} → ${card.id}.webp (${card.name})`,
-    );
-    converted += 1;
+      if (!metadata.format) {
+        throw new Error("formato immagine non riconosciuto");
+      }
+
+      await sharp(inputPath)
+        .rotate()
+        .webp({ quality: 88 })
+        .toFile(outputPath);
+
+      console.log(
+        `[OK] ${path.basename(inputPath)} [${metadata.format}] → ${card.id}.webp (${card.name})`,
+      );
+      converted += 1;
+    } catch (error) {
+      console.error(
+        `[ERR] ${path.basename(inputPath)} — ${card.name}: ${error.message}`,
+      );
+      invalid += 1;
+    }
   }
 
   console.log(
-    `\nCompletato. Convertite: ${converted}. Già presenti: ${skipped}. Mancanti: ${missing.length}.`,
+    `\nCompletato. Convertite: ${converted}. Già presenti: ${skipped}. Mancanti: ${missing.length}. Non valide: ${invalid}.`,
   );
 
   if (missing.length > 0) {
@@ -93,6 +107,9 @@ const main = async () => {
       );
     }
 
+  }
+
+  if (missing.length > 0 || invalid > 0) {
     process.exitCode = 1;
   }
 };

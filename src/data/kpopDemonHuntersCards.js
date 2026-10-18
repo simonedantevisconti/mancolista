@@ -66,6 +66,7 @@ const createDiramixChecklist = (numericCount) => {
       number,
       name: `Figurina ${code}`,
       rarity: "da-verificare",
+      hasImage: false,
     };
   });
 
@@ -75,6 +76,7 @@ const createDiramixChecklist = (numericCount) => {
     number: numericCount + index + 1,
     name: `Figurina ${code}`,
     rarity: "da-verificare",
+    hasImage: false,
   }));
 
   return [...numericCards, ...letterCards];
@@ -459,6 +461,7 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
     return diramixOfficialCards.map((card) => ({
       ...card,
       frontImage: `${baseFolder}/${card.code}.webp`,
+      hasImage: card.hasImage,
       backImage: series.coverImage,
       fallbackImage: series.coverImage,
       finalFallbackImage: series.fallbackImage,

@@ -88,11 +88,14 @@ export const mainCollections = [
   {
     id: "k-pop-demon-hunters",
     name: "K-Pop Demon Hunters",
-    description: "Collezione K-Pop Demon Hunters.",
-    totalCards: 0,
+    description:
+      "Diramix, KAYOU e photocards promozionali McDonald's.",
+    totalCards: 679,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/k-pop-demon-hunter.webp",
+    type: "static-series",
+    provider: "kpop-demon-hunters",
   },
   {
     id: "pokemon-prima-edizione",

@@ -55,8 +55,8 @@ export const kpopDemonHuntersSeries = [
   },
 ];
 
-const createDiramixChecklist = (totalCards) => {
-  return Array.from({ length: totalCards }, (_, index) => {
+const createDiramixChecklist = (numericCount) => {
+  const numericCards = Array.from({ length: numericCount }, (_, index) => {
     const number = index + 1;
     const code = String(number).padStart(3, "0");
 
@@ -68,10 +68,20 @@ const createDiramixChecklist = (totalCards) => {
       rarity: "da-verificare",
     };
   });
+
+  const letterCards = ["A", "B", "C", "D", "E", "F"].map((code, index) => ({
+    id: code,
+    code,
+    number: numericCount + index + 1,
+    name: `Figurina ${code}`,
+    rarity: "da-verificare",
+  }));
+
+  return [...numericCards, ...letterCards];
 };
 
-export const diramixOfficialCards = createDiramixChecklist(196);
-export const diramixForTheFansCards = createDiramixChecklist(197);
+export const diramixOfficialCards = createDiramixChecklist(190);
+export const diramixForTheFansCards = createDiramixChecklist(191);
 
 const classicEditionGroups = [
   {

@@ -19,6 +19,13 @@ const decodeHtml = (value) =>
     .replaceAll("&#x2F;", "/")
     .replaceAll("&#47;", "/");
 
+const normalizeLabel = (value) =>
+  value
+    .toLowerCase()
+    .replaceAll("&amp;", "&")
+    .replace(/\s+/g, " ")
+    .trim();
+
 const extractCardImages = (html) => {
   const imageRegex = /<img\b[^>]*>/gi;
   const images = [];
@@ -34,12 +41,36 @@ const extractCardImages = (html) => {
     const alt = decodeHtml(altMatch?.[1] || "").trim();
 
     if (!src.includes("static-sg.kayouofficial.com")) continue;
-    if (!alt || alt === "Series 1" || alt === "KAYOU") continue;
+    if (!alt) continue;
 
     images.push({ src, alt });
   }
 
-  return images;
+  const selected = [];
+  let cursor = 0;
+
+  for (const card of kayouMiniSeries1Cards) {
+    const expected = normalizeLabel(card.name);
+    let foundIndex = -1;
+
+    for (let index = cursor; index < images.length; index += 1) {
+      if (normalizeLabel(images[index].alt) === expected) {
+        foundIndex = index;
+        break;
+      }
+    }
+
+    if (foundIndex === -1) {
+      throw new Error(
+        `Immagine non trovata in ordine per ${card.code} — ${card.name}`,
+      );
+    }
+
+    selected.push(images[foundIndex]);
+    cursor = foundIndex + 1;
+  }
+
+  return selected;
 };
 
 const downloadImage = async (url, outputPath) => {
@@ -80,7 +111,7 @@ const main = async () => {
 
   if (images.length !== kayouMiniSeries1Cards.length) {
     throw new Error(
-      `Trovate ${images.length} immagini card, attese ${kayouMiniSeries1Cards.length}. Download annullato per evitare abbinamenti errati.`,
+      `Abbinate ${images.length} immagini card, attese ${kayouMiniSeries1Cards.length}. Download annullato per evitare abbinamenti errati.`,
     );
   }
 

@@ -75,7 +75,7 @@ export const diramixForTheFansCards = createDiramixChecklist(197);
 
 const classicEditionGroups = [
   {
-    rarity: "DCR",
+    rarity: "CR",
     names: ["Rumi", "Mira", "Zoey", "Jinu", "Baby", "Abby", "Mystery", "Romance"],
   },
   {
@@ -205,7 +205,7 @@ const energyEditionGroups = [
     names: ["Rumi", "Mira", "Zoey"],
   },
   {
-    rarity: "CR",
+    rarity: "DCR",
     names: ["Rumi", "Mira", "Zoey", "Jinu", "Baby", "Abby", "Mystery", "Romance"],
   },
   {

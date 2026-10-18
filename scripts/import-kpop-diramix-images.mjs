@@ -28,6 +28,7 @@ const supportedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".avif"];
 const findInputFile = async (inputDir, card) => {
   const candidates = [
     card.code,
+    card.code.toLowerCase(),
     String(card.number),
     String(card.number).padStart(2, "0"),
     String(card.number).padStart(3, "0"),

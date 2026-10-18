@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "images:webp": "node scripts/convert-images-to-webp.mjs",
     "pwa:icons": "node scripts/generate-pwa-icons.mjs",
-    "kpop:images": "node scripts/download-kpop-kayou-images.mjs"
+    "kpop:images": "node scripts/download-kpop-kayou-images.mjs",
+    "kpop:mini-images": "node scripts/download-kpop-mini-images.mjs"
   },
   "dependencies": {
     "firebase": "^12.14.0",

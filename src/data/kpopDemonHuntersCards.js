@@ -48,7 +48,7 @@ export const kpopDemonHuntersSeries = [
     id: "mcdonalds-photocards",
     name: "McDonald's x KPop Demon Hunters",
     subtitle: "Promotional Photocards",
-    totalCards: 13,
+    totalCards: 8,
     itemLabel: "photocard",
     coverImage: "/loghi/kpop-mcdonalds.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
@@ -424,19 +424,14 @@ export const kayouMiniSeries1Cards = miniEditionGroups.flatMap(
 );
 
 export const mcdonaldsPhotocards = [
-  { id: "rumi", name: "Rumi" },
-  { id: "mira", name: "Mira" },
-  { id: "zoey", name: "Zoey" },
-  { id: "huntrix", name: "Huntrix" },
-  { id: "rumi-patterns", name: "Rumi (Patterns)" },
-  { id: "rumi-jinu", name: "Rumi / Jinu" },
-  { id: "saja-boys", name: "Saja Boys" },
-  { id: "jinu", name: "Jinu" },
-  { id: "romance-saja", name: "Romance Saja" },
-  { id: "mystery-saja", name: "Mystery Saja" },
-  { id: "abby-saja", name: "Abby Saja" },
   { id: "baby-saja", name: "Baby Saja" },
-  { id: "jinu-patterns", name: "Jinu (Patterns)" },
+  { id: "rumi", name: "Rumi" },
+  { id: "jinu", name: "Jinu" },
+  { id: "zoey", name: "Zoey" },
+  { id: "mystery-saja", name: "Mystery Saja" },
+  { id: "romance-saja", name: "Romance Saja" },
+  { id: "abby-saja", name: "Abby Saja" },
+  { id: "mira", name: "Mira" },
 ];
 
 export const generateKpopDemonHuntersCards = (seriesId) => {

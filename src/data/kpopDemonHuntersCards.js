@@ -5,7 +5,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "Diramix",
     totalCards: 196,
     itemLabel: "figurine",
-    coverImage: "/kpop-diramix-official.webp",
+    coverImage: "/loghi/kpop-dirammix-official.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -14,7 +14,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "Diramix",
     totalCards: 197,
     itemLabel: "figurine",
-    coverImage: "/kpop-diramix-for-the-fans.webp",
+    coverImage: "/loghi/kpop-dirammix-for-the-fans.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -23,7 +23,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "KAYOU",
     totalCards: 101,
     itemLabel: "card",
-    coverImage: "/kpop-kayou-classic-1.webp",
+    coverImage: "/loghi/kpop-kayou-classic-1.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -32,7 +32,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "KAYOU",
     totalCards: 130,
     itemLabel: "card",
-    coverImage: "/kpop-kayou-energy-1.webp",
+    coverImage: "/loghi/kpop-kayou-energy-1.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -41,7 +41,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "KAYOU",
     totalCards: 41,
     itemLabel: "mini card",
-    coverImage: "/kpop-kayou-mini-1.webp",
+    coverImage: "/loghi/kpop-kayou-mini-1.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
   {
@@ -50,7 +50,7 @@ export const kpopDemonHuntersSeries = [
     subtitle: "Promotional Photocards",
     totalCards: 14,
     itemLabel: "photocard",
-    coverImage: "/kpop-mcdonalds.webp",
+    coverImage: "/loghi/kpop-mcdonalds.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
   },
 ];
@@ -112,7 +112,6 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
 
   return Array.from({ length: series.totalCards }, (_, index) => {
     const number = index + 1;
-    const paddedNumber = String(number).padStart(3, "0");
 
     return {
       id: `${seriesId}-${number}`,

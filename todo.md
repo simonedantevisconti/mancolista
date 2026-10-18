@@ -1,4 +1,6 @@
 TODO:
+-database imgs
+-menu fix in alto con tasto return in mobile
 -google search console
 -seo
 -check google dev

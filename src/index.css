@@ -101,21 +101,18 @@ button {
   }
 }
 
-
 /* PAGE REVEAL */
 .page-reveal {
-  animation: page-reveal 0.45s ease-out both;
+  animation: page-reveal 0.22s ease-out both;
 }
 
 @keyframes page-reveal {
   from {
     opacity: 0;
-    transform: translateY(12px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

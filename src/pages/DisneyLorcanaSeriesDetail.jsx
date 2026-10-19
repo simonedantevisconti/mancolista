@@ -12,6 +12,7 @@ import DisneyLorcanaReignOfJafarDetail from "./DisneyLorcanaReignOfJafarDetail";
 import DisneyLorcanaFabledDetail from "./DisneyLorcanaFabledDetail";
 import DisneyLorcanaWhispersInTheWellDetail from "./DisneyLorcanaWhispersInTheWellDetail";
 import DisneyLorcanaWinterspellDetail from "./DisneyLorcanaWinterspellDetail";
+import DisneyLorcanaWildsUnknownDetail from "./DisneyLorcanaWildsUnknownDetail";
 
 import "../styles/series-detail.css";
 
@@ -73,6 +74,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "winterspell") {
     return <DisneyLorcanaWinterspellDetail />;
+  }
+
+  if (series.id === "wilds-unknown") {
+    return <DisneyLorcanaWildsUnknownDetail />;
   }
 
   return (

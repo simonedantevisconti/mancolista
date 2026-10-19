@@ -43,7 +43,6 @@ const OnePieceRomanceDawnDetail = () => {
       code: card.code,
       color: card.color,
       rarity: card.rarity,
-    color: card.color,
       frontImage: `/one-piece-card-game/romance-dawn/${card.number}.webp`,
       backImage: FALLBACK_IMAGE,
       fallbackImage: FALLBACK_IMAGE,
@@ -205,6 +204,7 @@ const OnePieceRomanceDawnDetail = () => {
     const matchesSearch =
       !search ||
       card.name.toLowerCase().includes(search) ||
+      card.code.toLowerCase().includes(search) ||
       String(card.number).includes(search);
     const matchesOwnership =
       ownershipFilter === "all" ||
@@ -261,8 +261,8 @@ const OnePieceRomanceDawnDetail = () => {
           <p className="eyebrow">One Piece Card Game</p>
           <h1>Romance Dawn</h1>
           <p>
-            Romance Dawn da 204 carte. Se l'immagine della carta non è disponibile,
-            viene mostrato automaticamente un fronte con numero e nome.
+            Romance Dawn (OP-01) da 121 carte. Se l'immagine della carta non è disponibile,
+            viene mostrato automaticamente un fronte con codice e nome.
           </p>
 
           <div className="pdf-export-actions">

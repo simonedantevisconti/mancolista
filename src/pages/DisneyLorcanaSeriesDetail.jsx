@@ -13,6 +13,7 @@ import DisneyLorcanaFabledDetail from "./DisneyLorcanaFabledDetail";
 import DisneyLorcanaWhispersInTheWellDetail from "./DisneyLorcanaWhispersInTheWellDetail";
 import DisneyLorcanaWinterspellDetail from "./DisneyLorcanaWinterspellDetail";
 import DisneyLorcanaWildsUnknownDetail from "./DisneyLorcanaWildsUnknownDetail";
+import DisneyLorcanaAttackOfTheVineDetail from "./DisneyLorcanaAttackOfTheVineDetail";
 
 import "../styles/series-detail.css";
 
@@ -78,6 +79,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "wilds-unknown") {
     return <DisneyLorcanaWildsUnknownDetail />;
+  }
+
+  if (series.id === "attack-of-the-vine") {
+    return <DisneyLorcanaAttackOfTheVineDetail />;
   }
 
   return (

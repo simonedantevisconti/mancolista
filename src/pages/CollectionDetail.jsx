@@ -5,7 +5,7 @@ import { italianBrainrotSeries, mainCollections } from "../data/collections";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import CalciatoriPanini2627Detail from "./CalciatoriPanini2627Detail";
-import DisneyLorcanaDetail from "./DisneyLorcanaDetail";
+import DisneyLorcanaCollectionDetail from "./DisneyLorcanaCollectionDetail";
 import KpopDemonHuntersCollectionDetail from "./KpopDemonHuntersCollectionDetail";
 import OnePieceRomanceDawnDetail from "./OnePieceRomanceDawnDetail";
 import PoppyPlaytimeDetail from "./PoppyPlaytimeDetail";
@@ -138,7 +138,7 @@ const CollectionDetail = () => {
   }
 
   if (isCalciatoriPanini2627) return <CalciatoriPanini2627Detail />;
-  if (isDisneyLorcana) return <DisneyLorcanaDetail />;
+  if (isDisneyLorcana) return <DisneyLorcanaCollectionDetail />;
   if (isSquishyDumpling) return <SquishyDumplingDetail />;
   if (isPoppyPlaytime) return <PoppyPlaytimeDetail />;
   if (isPokemonPrimaEdizione) return <PokemonPrimaEdizioneDetail />;

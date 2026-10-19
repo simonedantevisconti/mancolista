@@ -6,7 +6,7 @@ export const disneyLorcanaCollections = [
     setNumber: 1,
     totalCards: 204,
     configured: true,
-    coverImage: "/disney-lorcana/disney-lorcana-the-first-chapter.webp",
+    coverImage: "/disney-locarna/disney-lorcana-the-first-chapter.webp",
   },
   {
     id: "rise-of-the-floodborn",
@@ -15,7 +15,7 @@ export const disneyLorcanaCollections = [
     setNumber: 2,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-rise-of-the-floodborn.webp",
+    coverImage: "/disney-locarna/disney-lorcana-rise-of-the-floodborn.webp",
   },
   {
     id: "into-the-inklands",
@@ -24,7 +24,7 @@ export const disneyLorcanaCollections = [
     setNumber: 3,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-into-the-inklands.webp",
+    coverImage: "/disney-locarna/disney-lorcana-into-the-inklands.webp",
   },
   {
     id: "ursulas-return",
@@ -33,7 +33,7 @@ export const disneyLorcanaCollections = [
     setNumber: 4,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-ursulas-return.webp",
+    coverImage: "/disney-locarna/disney-lorcana-ursulas-return.webp",
   },
   {
     id: "shimmering-skies",
@@ -42,7 +42,7 @@ export const disneyLorcanaCollections = [
     setNumber: 5,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-shimmering-skies.webp",
+    coverImage: "/disney-locarna/disney-lorcana-shimmering-skies.webp",
   },
   {
     id: "azurite-sea",
@@ -51,7 +51,7 @@ export const disneyLorcanaCollections = [
     setNumber: 6,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-azurite-sea.webp",
+    coverImage: "/disney-locarna/disney-lorcana-azurite-sea.webp",
   },
   {
     id: "archazias-island",
@@ -60,7 +60,7 @@ export const disneyLorcanaCollections = [
     setNumber: 7,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-archazias-island.webp",
+    coverImage: "/disney-locarna/disney-lorcana-archazias-island.webp",
   },
   {
     id: "reign-of-jafar",
@@ -69,7 +69,7 @@ export const disneyLorcanaCollections = [
     setNumber: 8,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-reign-of-jafar.webp",
+    coverImage: "/disney-locarna/disney-lorcana-reign-of-jafar.webp",
   },
   {
     id: "fabled",
@@ -78,7 +78,7 @@ export const disneyLorcanaCollections = [
     setNumber: 9,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-fabled.webp",
+    coverImage: "/disney-locarna/disney-lorcana-fabled.webp",
   },
   {
     id: "whispers-in-the-well",
@@ -87,7 +87,7 @@ export const disneyLorcanaCollections = [
     setNumber: 10,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-whispers-in-the-well.webp",
+    coverImage: "/disney-locarna/disney-lorcana-whispers-in-the-well.webp",
   },
   {
     id: "winterspell",
@@ -96,7 +96,7 @@ export const disneyLorcanaCollections = [
     setNumber: 11,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-winterspell.webp",
+    coverImage: "/disney-locarna/disney-lorcana-winterspell.webp",
   },
   {
     id: "wilds-unknown",
@@ -105,7 +105,7 @@ export const disneyLorcanaCollections = [
     setNumber: 12,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-wilds-unknown.webp",
+    coverImage: "/disney-locarna/disney-lorcana-wilds-unknown.webp",
   },
   {
     id: "attack-of-the-vine",
@@ -114,7 +114,7 @@ export const disneyLorcanaCollections = [
     setNumber: 13,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-attack-of-the-vine.webp",
+    coverImage: "/disney-locarna/disney-lorcana-attack-of-the-vine.webp",
   },
   {
     id: "hyperia-city",
@@ -123,7 +123,7 @@ export const disneyLorcanaCollections = [
     setNumber: 14,
     totalCards: 0,
     configured: false,
-    coverImage: "/disney-lorcana/disney-lorcana-hyperia-city.webp",
+    coverImage: "/disney-locarna/disney-lorcana-hyperia-city.webp",
   },
 ];
 

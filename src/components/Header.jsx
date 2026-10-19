@@ -5,7 +5,7 @@ import "../styles/header.css";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, authLoading, logout } = useAuth();
+  const { user, authLoading, logout, userRevision } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -65,9 +65,15 @@ const Header = () => {
 
         {!authLoading && user && (
           <>
-            <span className="user-email" title={user.email}>
-              {user.email}
-            </span>
+            <NavLink
+              to="/impostazioni"
+              className="user-email"
+              title={user.email}
+              onClick={closeMenu}
+              data-user-revision={userRevision}
+            >
+              {user.displayName || user.email}
+            </NavLink>
 
             <button
               type="button"

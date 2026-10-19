@@ -28,8 +28,8 @@ export const mainCollections = [
   {
     id: "disney-lorcana",
     name: "Disney Lorcana",
-    description: "Prime sette espansioni Disney Lorcana configurate.",
-    totalCards: 1428,
+    description: "Prime otto espansioni Disney Lorcana configurate.",
+    totalCards: 1632,
     ownedCards: 0,
     active: true,
     logo: "/loghi/disney-logo.png",

@@ -34,6 +34,7 @@ const Account = () => {
   const [profileMessage, setProfileMessage] = useState("");
   const [profileError, setProfileError] = useState("");
 
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordSaving, setPasswordSaving] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
@@ -119,8 +120,13 @@ const Account = () => {
   const handlePasswordChange = async (event) => {
     event.preventDefault();
 
+    if (!currentPassword) {
+      setPasswordError("Inserisci la password attuale.");
+      return;
+    }
+
     if (newPassword.length < 6) {
-      setPasswordError("La password deve avere almeno 6 caratteri.");
+      setPasswordError("La nuova password deve avere almeno 6 caratteri.");
       return;
     }
 
@@ -129,16 +135,25 @@ const Account = () => {
     setPasswordMessage("");
 
     try {
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        currentPassword,
+      );
+
+      await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
+
+      setCurrentPassword("");
       setNewPassword("");
       setPasswordMessage("Password aggiornata correttamente.");
     } catch (error) {
       console.error(error);
 
-      if (error.code === "auth/requires-recent-login") {
-        setPasswordError(
-          "Per sicurezza devi effettuare nuovamente il login prima di cambiare password.",
-        );
+      if (
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/invalid-credential"
+      ) {
+        setPasswordError("La password attuale non è corretta.");
       } else {
         setPasswordError("Non riesco ad aggiornare la password. Riprova.");
       }
@@ -289,6 +304,16 @@ const Account = () => {
 
           {hasPasswordProvider ? (
             <form onSubmit={handlePasswordChange} className="account-form">
+              <label htmlFor="account-current-password">Password attuale</label>
+              <input
+                id="account-current-password"
+                type="password"
+                autoComplete="current-password"
+                value={currentPassword}
+                onChange={(event) => setCurrentPassword(event.target.value)}
+                placeholder="Password attuale"
+              />
+
               <label htmlFor="account-new-password">Nuova password</label>
               <input
                 id="account-new-password"

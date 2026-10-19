@@ -5,6 +5,7 @@ import { italianBrainrotSeries, mainCollections } from "../data/collections";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import CalciatoriPanini2627Detail from "./CalciatoriPanini2627Detail";
+import DisneyLorcanaDetail from "./DisneyLorcanaDetail";
 import KpopDemonHuntersCollectionDetail from "./KpopDemonHuntersCollectionDetail";
 import PoppyPlaytimeDetail from "./PoppyPlaytimeDetail";
 import PokemonPrimaEdizioneDetail from "./PokemonPrimaEdizioneDetail";
@@ -33,6 +34,7 @@ const CollectionDetail = () => {
   const isItalianBrainrot = collectionData?.provider === "italian-brainrot";
   const isCalciatoriPanini2627 =
     collectionData?.provider === "calciatori-panini-2026-2027";
+  const isDisneyLorcana = collectionData?.provider === "disney-lorcana";
   const isSquishyDumpling = collectionData?.provider === "squishy-dumpling";
   const isWorldCup2026 = collectionData?.provider === "world-cup-2026";
   const isSnoopy2026 = collectionData?.provider === "snoopy-2026";
@@ -133,6 +135,7 @@ const CollectionDetail = () => {
   }
 
   if (isCalciatoriPanini2627) return <CalciatoriPanini2627Detail />;
+  if (isDisneyLorcana) return <DisneyLorcanaDetail />;
   if (isSquishyDumpling) return <SquishyDumplingDetail />;
   if (isPoppyPlaytime) return <PoppyPlaytimeDetail />;
   if (isPokemonPrimaEdizione) return <PokemonPrimaEdizioneDetail />;

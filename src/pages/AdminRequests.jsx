@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
 import {
   collection,
+  doc,
   getDocs,
   serverTimestamp,
   updateDoc,
@@ -72,24 +73,19 @@ const AdminRequests = () => {
     setError("");
 
     try {
-      await updateDoc(request.ref || { path: "" }, {});
-    } catch {
-      try {
-        const { doc } = await import("firebase/firestore");
-        await updateDoc(doc(db, "collectionRequests", request.id), {
-          status: nextStatus,
-          updatedAt: serverTimestamp(),
-        });
+      await updateDoc(doc(db, "collectionRequests", request.id), {
+        status: nextStatus,
+        updatedAt: serverTimestamp(),
+      });
 
-        setRequests((current) =>
-          current.map((item) =>
-            item.id === request.id ? { ...item, status: nextStatus } : item,
-          ),
-        );
-      } catch (saveError) {
-        console.error(saveError);
-        setError("Non riesco ad aggiornare lo stato della richiesta.");
-      }
+      setRequests((current) =>
+        current.map((item) =>
+          item.id === request.id ? { ...item, status: nextStatus } : item,
+        ),
+      );
+    } catch (saveError) {
+      console.error(saveError);
+      setError("Non riesco ad aggiornare lo stato della richiesta.");
     } finally {
       setSavingId("");
     }

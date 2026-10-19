@@ -14,6 +14,7 @@ import DisneyLorcanaWhispersInTheWellDetail from "./DisneyLorcanaWhispersInTheWe
 import DisneyLorcanaWinterspellDetail from "./DisneyLorcanaWinterspellDetail";
 import DisneyLorcanaWildsUnknownDetail from "./DisneyLorcanaWildsUnknownDetail";
 import DisneyLorcanaAttackOfTheVineDetail from "./DisneyLorcanaAttackOfTheVineDetail";
+import DisneyLorcanaHyperiaCityDetail from "./DisneyLorcanaHyperiaCityDetail";
 
 import "../styles/series-detail.css";
 
@@ -83,6 +84,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "attack-of-the-vine") {
     return <DisneyLorcanaAttackOfTheVineDetail />;
+  }
+
+  if (series.id === "hyperia-city") {
+    return <DisneyLorcanaHyperiaCityDetail />;
   }
 
   return (

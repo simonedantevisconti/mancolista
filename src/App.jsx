@@ -10,6 +10,7 @@ import "./index.css";
 const Homepage = lazy(() => import("./pages/Homepage"));
 const Favourites = lazy(() => import("./pages/Favourites"));
 const Login = lazy(() => import("./pages/Login"));
+const Account = lazy(() => import("./pages/Account"));
 const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
 const CollectionItemDetail = lazy(() => import("./pages/CollectionItemDetail"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -37,6 +38,7 @@ function App() {
             <Route element={<DefaultLayout />}>
               <Route path="/" element={<Homepage />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/impostazioni" element={<Account />} />
 
               <Route path="/le-mie-collezioni" element={<Favourites />} />
 

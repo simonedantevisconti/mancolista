@@ -102,11 +102,13 @@ export const mainCollections = [
   {
     id: "pokemon-prima-edizione",
     name: "Pokémon - Prima Edizione",
-    description: "Collezione Pokémon Prima Edizione.",
-    totalCards: 0,
+    description: "Base Set Pokémon da 102 carte.",
+    totalCards: 102,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/pokemon.webp",
+    type: "static-single",
+    provider: "pokemon-prima-edizione",
   },
 ];
 

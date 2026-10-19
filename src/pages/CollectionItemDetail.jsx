@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { mainCollections } from "../data/collections";
+import DisneyLorcanaSeriesDetail from "./DisneyLorcanaSeriesDetail";
 import KpopDemonHuntersSeriesDetail from "./KpopDemonHuntersSeriesDetail";
 import SeriesDetail from "./SeriesDetail";
 import Snoopy2026SeriesDetail from "./Snoopy2026SeriesDetail";
@@ -26,6 +27,10 @@ const CollectionItemDetail = () => {
 
   if (collectionData?.provider === "kpop-demon-hunters") {
     return <KpopDemonHuntersSeriesDetail />;
+  }
+
+  if (collectionData?.provider === "disney-lorcana") {
+    return <DisneyLorcanaSeriesDetail />;
   }
 
   return (

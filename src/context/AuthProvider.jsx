@@ -6,6 +6,7 @@ import { AuthContext } from "./auth-context";
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [userRevision, setUserRevision] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
@@ -20,6 +21,13 @@ export const AuthProvider = ({ children }) => {
     await signOut(auth);
   };
 
+  const refreshUser = async () => {
+    if (!auth.currentUser) return;
+
+    await auth.currentUser.reload();
+    setUserRevision((current) => current + 1);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -27,6 +35,8 @@ export const AuthProvider = ({ children }) => {
         authLoading,
         isLoggedIn: Boolean(user),
         logout,
+        refreshUser,
+        userRevision,
       }}
     >
       {children}

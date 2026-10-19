@@ -33,6 +33,7 @@ const CalciatoriPanini2627Detail = () => {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
+  const [missingImages, setMissingImages] = useState({});
 
   const cards = useMemo(() => {
     return calciatoriPanini2627Cards.map((card) => ({
@@ -234,11 +235,6 @@ const CalciatoriPanini2627Detail = () => {
     }
   };
 
-  const handleImageError = (event, card) => {
-    if (event.currentTarget.src.endsWith(card.fallbackImage)) return;
-    event.currentTarget.src = card.fallbackImage;
-  };
-
   if (authLoading) {
     return (
       <section className="series-detail">
@@ -364,13 +360,25 @@ const CalciatoriPanini2627Detail = () => {
                   </div>
 
                   <div className="card-face card-front">
-                    <img
-                      src={card.frontImage}
-                      alt={card.name}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(event) => handleImageError(event, card)}
-                    />
+                    {missingImages[card.id] ? (
+                      <div className="calciatori-card-placeholder">
+                        <strong>#{String(card.number).padStart(3, "0")}</strong>
+                        <span>{card.name}</span>
+                      </div>
+                    ) : (
+                      <img
+                        src={card.frontImage}
+                        alt={card.name}
+                        loading="lazy"
+                        decoding="async"
+                        onError={() => {
+                          setMissingImages((current) => ({
+                            ...current,
+                            [card.id]: true,
+                          }));
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               </button>

@@ -9,7 +9,7 @@ import { useAuth } from "../hooks/useAuth";
 import "../styles/collection-detail.css";
 
 const COLLECTION_ID = "disney-lorcana";
-const FALLBACK_IMAGE = "/loghi/disney-logo.png";
+const FALLBACK_IMAGE = "/disney-locarna/disney-locarna-card.webp";
 
 const DisneyLorcanaCollectionDetail = () => {
   const { user, authLoading } = useAuth();

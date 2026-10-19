@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import {
   addDoc,
@@ -18,11 +18,7 @@ const initialForm = {
   collectionName: "",
   publisher: "",
   type: "Carte",
-  series: "",
-  estimatedCards: "",
-  referenceUrl: "",
   notes: "",
-  notifyWhenAdded: true,
 };
 
 const RequestCollection = () => {
@@ -69,13 +65,6 @@ const RequestCollection = () => {
     setForm((current) => ({ ...current, [field]: value }));
   };
 
-  const normalizedEstimatedCards = useMemo(() => {
-    if (!form.estimatedCards) return null;
-
-    const parsed = Number.parseInt(form.estimatedCards, 10);
-    return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
-  }, [form.estimatedCards]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -100,11 +89,7 @@ const RequestCollection = () => {
         collectionName,
         publisher: form.publisher.trim(),
         type: form.type,
-        series: form.series.trim(),
-        estimatedCards: normalizedEstimatedCards,
-        referenceUrl: form.referenceUrl.trim(),
         notes: form.notes.trim(),
-        notifyWhenAdded: Boolean(form.notifyWhenAdded),
         status: "pending",
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
@@ -190,46 +175,6 @@ const RequestCollection = () => {
             </label>
           </div>
 
-          <div className="request-form__row">
-            <label>
-              Serie / espansione
-              <input
-                type="text"
-                value={form.series}
-                onChange={(event) => updateField("series", event.target.value)}
-                placeholder="Facoltativo"
-                maxLength={100}
-              />
-            </label>
-
-            <label>
-              Numero carte
-              <input
-                type="number"
-                min="1"
-                max="10000"
-                value={form.estimatedCards}
-                onChange={(event) =>
-                  updateField("estimatedCards", event.target.value)
-                }
-                placeholder="Se lo conosci"
-              />
-            </label>
-          </div>
-
-          <label>
-            Link ufficiale o pagina di riferimento
-            <input
-              type="url"
-              value={form.referenceUrl}
-              onChange={(event) =>
-                updateField("referenceUrl", event.target.value)
-              }
-              placeholder="https://..."
-              maxLength={500}
-            />
-          </label>
-
           <label>
             Note
             <textarea
@@ -239,17 +184,6 @@ const RequestCollection = () => {
               placeholder="Aggiungi eventuali informazioni utili..."
               maxLength={1000}
             />
-          </label>
-
-          <label className="request-checkbox">
-            <input
-              type="checkbox"
-              checked={form.notifyWhenAdded}
-              onChange={(event) =>
-                updateField("notifyWhenAdded", event.target.checked)
-              }
-            />
-            <span>Vorrei essere avvisato quando la collezione viene aggiunta.</span>
           </label>
 
           {error && <p className="request-error">{error}</p>}

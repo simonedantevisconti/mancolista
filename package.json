@@ -13,7 +13,8 @@
     "kpop:images": "node scripts/download-kpop-kayou-images.mjs",
     "kpop:mini-images": "node scripts/download-kpop-mini-images.mjs",
     "kpop:mcd-images": "node scripts/import-kpop-mcdonalds-images.mjs",
-    "kpop:diramix-images": "node scripts/import-kpop-diramix-images.mjs"
+    "kpop:diramix-images": "node scripts/import-kpop-diramix-images.mjs",
+    "kpop:check-images": "node scripts/check-kpop-images.mjs"
   },
   "dependencies": {
     "firebase": "^12.14.0",

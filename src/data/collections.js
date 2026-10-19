@@ -28,8 +28,8 @@ export const mainCollections = [
   {
     id: "disney-lorcana",
     name: "Disney Lorcana",
-    description: "The First Chapter, set principale da 204 carte.",
-    totalCards: 204,
+    description: "Il Primo Capitolo e L’Ascesa degli Imbevuti.",
+    totalCards: 408,
     ownedCards: 0,
     active: true,
     logo: "/loghi/disney-logo.png",

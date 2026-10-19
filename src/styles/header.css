@@ -64,7 +64,7 @@
   background: rgba(17, 17, 17, 0.1);
 }
 
-.user-email {
+ .user-email {
   max-width: 240px;
   overflow: hidden;
   color: rgba(17, 17, 17, 0.72);
@@ -75,6 +75,14 @@
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.main-nav .user-email:hover,
+.main-nav .user-email.active {
+  color: #111;
+  background: rgba(17, 17, 17, 0.14);
 }
 
 .logout-button {

@@ -21,7 +21,7 @@ import "../styles/series-detail.css";
 
 const COLLECTION_ID = "disney-lorcana";
 const SERIES_ID = "the-first-chapter";
-const FALLBACK_IMAGE = "/loghi/disney-logo.png";
+const FALLBACK_IMAGE = "/disney-locarna/disney-locarna-card.webp";
 
 const DisneyLorcanaDetail = () => {
   const { user, authLoading } = useAuth();
@@ -42,7 +42,7 @@ const DisneyLorcanaDetail = () => {
       name: card.name,
       ink: card.ink,
       rarity: card.ink,
-      frontImage: `/disney-lorcana/the-first-chapter/${card.number}.webp`,
+      frontImage: `/disney-locarna/the-first-chapter/${card.number}.webp`,
       backImage: FALLBACK_IMAGE,
       fallbackImage: FALLBACK_IMAGE,
     }));

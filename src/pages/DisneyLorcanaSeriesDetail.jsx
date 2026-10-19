@@ -7,6 +7,7 @@ import DisneyLorcanaIntoInklandsDetail from "./DisneyLorcanaIntoInklandsDetail";
 import DisneyLorcanaUrsulasReturnDetail from "./DisneyLorcanaUrsulasReturnDetail";
 import DisneyLorcanaShimmeringSkiesDetail from "./DisneyLorcanaShimmeringSkiesDetail";
 import DisneyLorcanaAzuriteSeaDetail from "./DisneyLorcanaAzuriteSeaDetail";
+import DisneyLorcanaArchaziasIslandDetail from "./DisneyLorcanaArchaziasIslandDetail";
 
 import "../styles/series-detail.css";
 
@@ -48,6 +49,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "azurite-sea") {
     return <DisneyLorcanaAzuriteSeaDetail />;
+  }
+
+  if (series.id === "archazias-island") {
+    return <DisneyLorcanaArchaziasIslandDetail />;
   }
 
   return (

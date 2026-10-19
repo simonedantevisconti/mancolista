@@ -1,0 +1,263 @@
+/* ACCOUNT PAGE */
+
+.account-page {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 56px 0 80px;
+}
+
+.account-heading {
+  max-width: 720px;
+  margin-bottom: 28px;
+}
+
+.account-heading h1 {
+  margin: 0 0 12px;
+  font-size: clamp(36px, 6vw, 58px);
+  letter-spacing: -0.06em;
+}
+
+.account-heading > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.account-card {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--panel);
+}
+
+.account-card--wide {
+  grid-column: 1 / -1;
+}
+
+.account-card__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.account-card__icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  font-size: 20px;
+}
+
+.account-card h2 {
+  margin: 0 0 5px;
+  font-size: 22px;
+  letter-spacing: -0.035em;
+}
+
+.account-card__heading p,
+.account-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.account-form {
+  display: grid;
+  gap: 10px;
+}
+
+.account-form label,
+.account-delete-panel label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.account-form input,
+.account-delete-panel input {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 15px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: var(--bg-soft);
+  color: var(--text);
+  outline: none;
+}
+
+.account-form input:focus,
+.account-delete-panel input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.account-form button {
+  min-height: 46px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--accent);
+  color: #111;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.account-form button:disabled,
+.account-danger-button:disabled,
+.account-secondary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.account-success,
+.account-error {
+  margin: 2px 0 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.account-success {
+  color: #32c875;
+}
+
+.account-error {
+  color: var(--danger);
+}
+
+.account-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+.account-info > div {
+  min-width: 0;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-info > div:nth-child(odd) {
+  border-right: 1px solid var(--border);
+}
+
+.account-info > div:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.account-info dt {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.account-info dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-weight: 750;
+}
+
+.account-uid {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+.account-card--danger {
+  border-color: rgba(255, 80, 80, 0.35);
+}
+
+.account-danger-button,
+.account-secondary-button {
+  min-height: 44px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.account-danger-button {
+  border: 1px solid rgba(255, 80, 80, 0.35);
+  background: rgba(255, 80, 80, 0.1);
+  color: #ff6b6b;
+}
+
+.account-secondary-button {
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--text);
+}
+
+.account-delete-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.account-delete-panel > p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.account-delete-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+@media (max-width: 760px) {
+  .account-page {
+    padding: 32px 0 60px;
+  }
+
+  .account-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account-card--wide {
+    grid-column: auto;
+  }
+
+  .account-card {
+    padding: 20px 16px;
+  }
+
+  .account-info {
+    grid-template-columns: 1fr;
+  }
+
+  .account-info > div,
+  .account-info > div:nth-child(odd),
+  .account-info > div:nth-last-child(-n + 2) {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .account-info > div:last-child {
+    border-bottom: 0;
+  }
+
+  .account-delete-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

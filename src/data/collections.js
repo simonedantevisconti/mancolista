@@ -28,8 +28,8 @@ export const mainCollections = [
   {
     id: "disney-lorcana",
     name: "Disney Lorcana",
-    description: "Il Primo Capitolo, L’Ascesa degli Imbevuti e Nelle Terre d’Inchiostro.",
-    totalCards: 612,
+    description: "Prime quattro espansioni Disney Lorcana configurate.",
+    totalCards: 816,
     ownedCards: 0,
     active: true,
     logo: "/loghi/disney-logo.png",

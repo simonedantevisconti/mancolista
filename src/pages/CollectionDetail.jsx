@@ -7,6 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import CalciatoriPanini2627Detail from "./CalciatoriPanini2627Detail";
 import KpopDemonHuntersCollectionDetail from "./KpopDemonHuntersCollectionDetail";
 import PoppyPlaytimeDetail from "./PoppyPlaytimeDetail";
+import PokemonPrimaEdizioneDetail from "./PokemonPrimaEdizioneDetail";
 import Snoopy2026CollectionDetail from "./Snoopy2026CollectionDetail";
 import SquishyDumplingDetail from "./SquishyDumplingDetail";
 import WorldCup2026CollectionDetail from "./WorldCup2026CollectionDetail";
@@ -36,6 +37,8 @@ const CollectionDetail = () => {
   const isWorldCup2026 = collectionData?.provider === "world-cup-2026";
   const isSnoopy2026 = collectionData?.provider === "snoopy-2026";
   const isPoppyPlaytime = collectionData?.provider === "poppy-playtime";
+  const isPokemonPrimaEdizione =
+    collectionData?.provider === "pokemon-prima-edizione";
   const isKpopDemonHunters =
     collectionData?.provider === "kpop-demon-hunters";
 
@@ -132,6 +135,7 @@ const CollectionDetail = () => {
   if (isCalciatoriPanini2627) return <CalciatoriPanini2627Detail />;
   if (isSquishyDumpling) return <SquishyDumplingDetail />;
   if (isPoppyPlaytime) return <PoppyPlaytimeDetail />;
+  if (isPokemonPrimaEdizione) return <PokemonPrimaEdizioneDetail />;
   if (isWorldCup2026) return <WorldCup2026CollectionDetail />;
   if (isSnoopy2026) return <Snoopy2026CollectionDetail />;
   if (isKpopDemonHunters) return <KpopDemonHuntersCollectionDetail />;

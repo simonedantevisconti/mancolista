@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { disneyLorcanaCollections } from "../data/disneyLorcanaCards";
 import DisneyLorcanaDetail from "./DisneyLorcanaDetail";
 import DisneyLorcanaRiseFloodbornDetail from "./DisneyLorcanaRiseFloodbornDetail";
+import DisneyLorcanaIntoInklandsDetail from "./DisneyLorcanaIntoInklandsDetail";
 
 import "../styles/series-detail.css";
 
@@ -28,6 +29,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "rise-of-the-floodborn") {
     return <DisneyLorcanaRiseFloodbornDetail />;
+  }
+
+  if (series.id === "into-the-inklands") {
+    return <DisneyLorcanaIntoInklandsDetail />;
   }
 
   return (

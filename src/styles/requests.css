@@ -182,15 +182,16 @@
     var(--panel);
 }
 
-.collection-request-card__icon {
-  width: 86px;
-  height: 86px;
+ .collection-request-card__icon {
+  width: 110px;
+  height: 110px;
   display: grid;
   place-items: center;
   border: 1px dashed rgba(255, 122, 0, 0.55);
-  border-radius: 22px;
+  border-radius: 28px;
   color: var(--accent);
-  font-size: 42px;
+  font-size: 62px;
+  line-height: 1;
   font-weight: 300;
 }
 

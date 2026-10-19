@@ -6,6 +6,7 @@ import DisneyLorcanaRiseFloodbornDetail from "./DisneyLorcanaRiseFloodbornDetail
 import DisneyLorcanaIntoInklandsDetail from "./DisneyLorcanaIntoInklandsDetail";
 import DisneyLorcanaUrsulasReturnDetail from "./DisneyLorcanaUrsulasReturnDetail";
 import DisneyLorcanaShimmeringSkiesDetail from "./DisneyLorcanaShimmeringSkiesDetail";
+import DisneyLorcanaAzuriteSeaDetail from "./DisneyLorcanaAzuriteSeaDetail";
 
 import "../styles/series-detail.css";
 
@@ -43,6 +44,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "shimmering-skies") {
     return <DisneyLorcanaShimmeringSkiesDetail />;
+  }
+
+  if (series.id === "azurite-sea") {
+    return <DisneyLorcanaAzuriteSeaDetail />;
   }
 
   return (

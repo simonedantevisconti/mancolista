@@ -39,11 +39,13 @@ export const mainCollections = [
   {
     id: "one-piece-card-game",
     name: "One Piece Card Game",
-    description: "Carte collezionabili One Piece Card Game.",
-    totalCards: 0,
+    description: "Romance Dawn OP-01, set principale da 121 carte.",
+    totalCards: 121,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/one-piece-logo.png",
+    type: "static-single",
+    provider: "one-piece-card-game",
   },
   {
     id: "mondiali-2026",

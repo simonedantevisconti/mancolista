@@ -4,6 +4,7 @@ import { disneyLorcanaCollections } from "../data/disneyLorcanaCards";
 import DisneyLorcanaDetail from "./DisneyLorcanaDetail";
 import DisneyLorcanaRiseFloodbornDetail from "./DisneyLorcanaRiseFloodbornDetail";
 import DisneyLorcanaIntoInklandsDetail from "./DisneyLorcanaIntoInklandsDetail";
+import DisneyLorcanaUrsulasReturnDetail from "./DisneyLorcanaUrsulasReturnDetail";
 
 import "../styles/series-detail.css";
 
@@ -33,6 +34,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "into-the-inklands") {
     return <DisneyLorcanaIntoInklandsDetail />;
+  }
+
+  if (series.id === "ursulas-return") {
+    return <DisneyLorcanaUrsulasReturnDetail />;
   }
 
   return (

@@ -1070,3 +1070,32 @@
   font-weight: 800;
   line-height: 1.35;
 }
+
+
+/* POKEMON PLACEHOLDER */
+
+.pokemon-card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+  background:
+    radial-gradient(circle at top, rgba(255, 122, 0, 0.14), transparent 48%),
+    var(--bg-soft);
+}
+
+.pokemon-card-placeholder strong {
+  color: var(--accent);
+  font-size: clamp(28px, 5vw, 42px);
+  letter-spacing: 0.05em;
+}
+
+.pokemon-card-placeholder span {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.35;
+}

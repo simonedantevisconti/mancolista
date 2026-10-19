@@ -7,6 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import CalciatoriPanini2627Detail from "./CalciatoriPanini2627Detail";
 import DisneyLorcanaDetail from "./DisneyLorcanaDetail";
 import KpopDemonHuntersCollectionDetail from "./KpopDemonHuntersCollectionDetail";
+import OnePieceRomanceDawnDetail from "./OnePieceRomanceDawnDetail";
 import PoppyPlaytimeDetail from "./PoppyPlaytimeDetail";
 import PokemonPrimaEdizioneDetail from "./PokemonPrimaEdizioneDetail";
 import Snoopy2026CollectionDetail from "./Snoopy2026CollectionDetail";
@@ -43,6 +44,8 @@ const CollectionDetail = () => {
     collectionData?.provider === "pokemon-prima-edizione";
   const isKpopDemonHunters =
     collectionData?.provider === "kpop-demon-hunters";
+  const isOnePieceCardGame =
+    collectionData?.provider === "one-piece-card-game";
 
   const collectionTotals = useMemo(() => {
     if (!isItalianBrainrot) {
@@ -142,6 +145,7 @@ const CollectionDetail = () => {
   if (isWorldCup2026) return <WorldCup2026CollectionDetail />;
   if (isSnoopy2026) return <Snoopy2026CollectionDetail />;
   if (isKpopDemonHunters) return <KpopDemonHuntersCollectionDetail />;
+  if (isOnePieceCardGame) return <OnePieceRomanceDawnDetail />;
 
   if (!isItalianBrainrot) {
     return (

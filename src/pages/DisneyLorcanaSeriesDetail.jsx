@@ -9,6 +9,7 @@ import DisneyLorcanaShimmeringSkiesDetail from "./DisneyLorcanaShimmeringSkiesDe
 import DisneyLorcanaAzuriteSeaDetail from "./DisneyLorcanaAzuriteSeaDetail";
 import DisneyLorcanaArchaziasIslandDetail from "./DisneyLorcanaArchaziasIslandDetail";
 import DisneyLorcanaReignOfJafarDetail from "./DisneyLorcanaReignOfJafarDetail";
+import DisneyLorcanaFabledDetail from "./DisneyLorcanaFabledDetail";
 
 import "../styles/series-detail.css";
 
@@ -58,6 +59,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "reign-of-jafar") {
     return <DisneyLorcanaReignOfJafarDetail />;
+  }
+
+  if (series.id === "fabled") {
+    return <DisneyLorcanaFabledDetail />;
   }
 
   return (

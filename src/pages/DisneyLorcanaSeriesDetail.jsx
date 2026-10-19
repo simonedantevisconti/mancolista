@@ -11,6 +11,7 @@ import DisneyLorcanaArchaziasIslandDetail from "./DisneyLorcanaArchaziasIslandDe
 import DisneyLorcanaReignOfJafarDetail from "./DisneyLorcanaReignOfJafarDetail";
 import DisneyLorcanaFabledDetail from "./DisneyLorcanaFabledDetail";
 import DisneyLorcanaWhispersInTheWellDetail from "./DisneyLorcanaWhispersInTheWellDetail";
+import DisneyLorcanaWinterspellDetail from "./DisneyLorcanaWinterspellDetail";
 
 import "../styles/series-detail.css";
 
@@ -68,6 +69,10 @@ const DisneyLorcanaSeriesDetail = () => {
 
   if (series.id === "whispers-in-the-well") {
     return <DisneyLorcanaWhispersInTheWellDetail />;
+  }
+
+  if (series.id === "winterspell") {
+    return <DisneyLorcanaWinterspellDetail />;
   }
 
   return (

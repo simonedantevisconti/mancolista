@@ -28,8 +28,8 @@ export const mainCollections = [
   {
     id: "disney-lorcana",
     name: "Disney Lorcana",
-    description: "Il Primo Capitolo e L’Ascesa degli Imbevuti.",
-    totalCards: 408,
+    description: "Il Primo Capitolo, L’Ascesa degli Imbevuti e Nelle Terre d’Inchiostro.",
+    totalCards: 612,
     ownedCards: 0,
     active: true,
     logo: "/loghi/disney-logo.png",

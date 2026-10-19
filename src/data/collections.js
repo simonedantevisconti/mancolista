@@ -28,11 +28,13 @@ export const mainCollections = [
   {
     id: "disney-lorcana",
     name: "Disney Lorcana",
-    description: "Carte collezionabili Disney Lorcana.",
-    totalCards: 0,
+    description: "The First Chapter, set principale da 204 carte.",
+    totalCards: 204,
     ownedCards: 0,
-    active: false,
+    active: true,
     logo: "/loghi/disney-logo.png",
+    type: "static-single",
+    provider: "disney-lorcana",
   },
   {
     id: "one-piece-card-game",

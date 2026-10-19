@@ -222,7 +222,7 @@ const DisneyLorcanaDetail = () => {
     try {
       await exportCollectionPng({
         collectionName: "Disney Lorcana",
-        seriesName: "The First Chapter",
+        seriesName: "Il Primo Capitolo",
         cards,
         cardsStatus,
       });
@@ -249,14 +249,14 @@ const DisneyLorcanaDetail = () => {
     <section className="series-detail">
       <div className="series-topbar">
         <div>
-          <Link className="back-link" to="/">
-            ← Torna alle collezioni
+          <Link className="back-link" to="/collezioni/disney-lorcana">
+            ← Torna alle espansioni
           </Link>
 
           <p className="eyebrow">Disney Lorcana</p>
-          <h1>The First Chapter</h1>
+          <h1>Il Primo Capitolo</h1>
           <p>
-            The First Chapter da 204 carte. Se l'immagine della carta non è disponibile,
+            Il Primo Capitolo da 204 carte. Se l'immagine della carta non è disponibile,
             viene mostrato automaticamente un fronte con numero e nome.
           </p>
 

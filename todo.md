@@ -1,4 +1,5 @@
 TODO:
+-mc donald x huntrix tutte le carte
 -database imgs
 -menu fix in alto con tasto return in mobile
 -google search console

@@ -11,6 +11,8 @@ const Homepage = lazy(() => import("./pages/Homepage"));
 const Favourites = lazy(() => import("./pages/Favourites"));
 const Login = lazy(() => import("./pages/Login"));
 const Account = lazy(() => import("./pages/Account"));
+const RequestCollection = lazy(() => import("./pages/RequestCollection"));
+const AdminRequests = lazy(() => import("./pages/AdminRequests"));
 const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
 const CollectionItemDetail = lazy(() => import("./pages/CollectionItemDetail"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -39,6 +41,8 @@ function App() {
               <Route path="/" element={<Homepage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/impostazioni" element={<Account />} />
+              <Route path="/richiedi-collezione" element={<RequestCollection />} />
+              <Route path="/admin/richieste" element={<AdminRequests />} />
 
               <Route path="/le-mie-collezioni" element={<Favourites />} />
 

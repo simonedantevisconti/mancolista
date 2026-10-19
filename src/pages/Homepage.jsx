@@ -289,6 +289,22 @@ const Homepage = () => {
             </article>
           );
         })}
+
+        <article className="collection-card collection-request-card">
+          <div className="collection-request-card__icon" aria-hidden="true">+</div>
+
+          <div>
+            <h2>Non trovi la tua collezione?</h2>
+            <p>
+              Suggeriscila a MancoLista. Inviaci i dettagli e valuteremo di
+              aggiungerla tra le collezioni disponibili.
+            </p>
+          </div>
+
+          <Link className="card-button" to="/richiedi-collezione">
+            Richiedi una collezione
+          </Link>
+        </article>
       </div>
     </section>
   );

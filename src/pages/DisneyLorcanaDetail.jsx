@@ -12,7 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 
-import { disneyLorcanaFirstChapterCards } from "../data/disneyLorcanaFirstChapterCards";
+import { disneyLorcanaFirstChapterCards } from "../data/disneyLorcanaCards";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -256,7 +256,7 @@ const DisneyLorcanaDetail = () => {
           <p className="eyebrow">Disney Lorcana</p>
           <h1>The First Chapter</h1>
           <p>
-            The First Chapter da 102 carte. Se l'immagine della carta non è disponibile,
+            The First Chapter da 204 carte. Se l'immagine della carta non è disponibile,
             viene mostrato automaticamente un fronte con numero e nome.
           </p>
 

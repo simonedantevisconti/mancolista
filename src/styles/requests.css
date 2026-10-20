@@ -289,6 +289,10 @@
   background: var(--border);
 }
 
+.admin-request-details--compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .admin-request-details > div {
   min-width: 0;
   padding: 13px;

@@ -500,6 +500,10 @@
   grid-template-columns: minmax(220px, 1fr) 180px auto;
 }
 
+.tcg-series-filters:has(> .filter-field + .filter-field) {
+  grid-template-columns: minmax(220px, 1fr) 180px 180px auto;
+}
+
 .tcg-card-image-button {
   display: block;
   width: 100%;

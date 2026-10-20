@@ -24,6 +24,21 @@ const COLLECTION_ID = "pokemon-prima-edizione";
 const SERIES_ID = "base-set";
 const FALLBACK_IMAGE = "/loghi/pokemon.webp";
 
+const rarityLabels = {
+  "holo-rare": "Rara olografica",
+  rare: "Rara",
+  uncommon: "Non comune",
+  common: "Comune",
+};
+
+const rarityOptions = [
+  { value: "all", label: "Tutte" },
+  { value: "holo-rare", label: "Rara olografica" },
+  { value: "rare", label: "Rara" },
+  { value: "uncommon", label: "Non comune" },
+  { value: "common", label: "Comune" },
+];
+
 const PokemonPrimaEdizioneDetail = () => {
   const { user, authLoading } = useAuth();
   const [cardsStatus, setCardsStatus] = useState({});
@@ -33,6 +48,7 @@ const PokemonPrimaEdizioneDetail = () => {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
+  const [rarityFilter, setRarityFilter] = useState("all");
   const [missingImages, setMissingImages] = useState({});
 
   const cards = useMemo(() => {
@@ -207,8 +223,10 @@ const PokemonPrimaEdizioneDetail = () => {
       ownershipFilter === "all" ||
       (ownershipFilter === "owned" && isOwned) ||
       (ownershipFilter === "missing" && !isOwned);
+    const matchesRarity =
+      rarityFilter === "all" || card.rarity === rarityFilter;
 
-    return matchesSearch && matchesOwnership;
+    return matchesSearch && matchesOwnership && matchesRarity;
   });
 
   const handleExport = async () => {
@@ -293,6 +311,16 @@ const PokemonPrimaEdizioneDetail = () => {
         </div>
 
         <div className="filter-field">
+          <label htmlFor="pokemon-rarity">Rarità</label>
+          <CustomSelect
+            value={rarityFilter}
+            onChange={setRarityFilter}
+            ariaLabel="Seleziona rarità"
+            options={rarityOptions}
+          />
+        </div>
+
+        <div className="filter-field">
           <label htmlFor="pokemon-status">Stato</label>
           <CustomSelect
             value={ownershipFilter}
@@ -315,7 +343,7 @@ const PokemonPrimaEdizioneDetail = () => {
       {filteredCards.length === 0 && (
         <div className="empty-cards-message">
           <h2>Nessuna carta trovata</h2>
-          <p>Prova a cambiare ricerca o stato.</p>
+          <p>Prova a cambiare ricerca, rarità o stato.</p>
         </div>
       )}
 
@@ -378,7 +406,9 @@ const PokemonPrimaEdizioneDetail = () => {
                 </span>
                 <h2>{card.name}</h2>
 
-                <span className="card-rarity">{card.rarity}</span>
+                <span className="card-rarity">
+                  {rarityLabels[card.rarity] || card.rarity}
+                </span>
 
                 <label className="owned-toggle">
                   <input

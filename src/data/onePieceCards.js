@@ -1,3 +1,30 @@
+
+export const onePieceSeries = [
+  { id: "romance-dawn", code: "OP-01", name: "Romance Dawn", totalCards: 121, coverImage: "/one-piece/op-01.webp", cardBackImage: "/one-piece/op-01-card.webp", configured: true },
+  { id: "paramount-war", code: "OP-02", name: "Paramount War", totalCards: 0, coverImage: "/one-piece/op-02.webp", cardBackImage: "/one-piece/op-02-card.webp" },
+  { id: "pillars-of-strength", code: "OP-03", name: "Pillars of Strength", totalCards: 0, coverImage: "/one-piece/op-03.webp", cardBackImage: "/one-piece/op-03-card.webp" },
+  { id: "kingdoms-of-intrigue", code: "OP-04", name: "Kingdoms of Intrigue", totalCards: 0, coverImage: "/one-piece/op-04.webp", cardBackImage: "/one-piece/op-04-card.webp" },
+  { id: "awakening-of-the-new-era", code: "OP-05", name: "Awakening of the New Era", totalCards: 0, coverImage: "/one-piece/op-05.webp", cardBackImage: "/one-piece/op-05-card.webp" },
+  { id: "wings-of-the-captain", code: "OP-06", name: "Wings of the Captain", totalCards: 0, coverImage: "/one-piece/op-06.webp", cardBackImage: "/one-piece/op-06-card.webp" },
+  { id: "500-years-in-the-future", code: "OP-07", name: "500 Years in the Future", totalCards: 0, coverImage: "/one-piece/op-07.webp", cardBackImage: "/one-piece/op-07-card.webp" },
+  { id: "two-legends", code: "OP-08", name: "Two Legends", totalCards: 0, coverImage: "/one-piece/op-08.webp", cardBackImage: "/one-piece/op-08-card.webp" },
+  { id: "emperors-in-the-new-world", code: "OP-09", name: "Emperors in the New World", totalCards: 0, coverImage: "/one-piece/op-09.webp", cardBackImage: "/one-piece/op-09-card.webp" },
+  { id: "royal-blood", code: "OP-10", name: "Royal Blood", totalCards: 0, coverImage: "/one-piece/op-10.webp", cardBackImage: "/one-piece/op-10-card.webp" },
+  { id: "a-fist-of-divine-speed", code: "OP-11", name: "A Fist of Divine Speed", totalCards: 0, coverImage: "/one-piece/op-11.webp", cardBackImage: "/one-piece/op-11-card.webp" },
+  { id: "legacy-of-the-master", code: "OP-12", name: "Legacy of the Master", totalCards: 0, coverImage: "/one-piece/op-12.webp", cardBackImage: "/one-piece/op-12-card.webp" },
+  { id: "carrying-on-his-will", code: "OP-13", name: "Carrying On His Will", totalCards: 0, coverImage: "/one-piece/op-13.webp", cardBackImage: "/one-piece/op-13-card.webp" },
+  { id: "the-azure-seas-seven", code: "OP-14", name: "The Azure Sea's Seven", totalCards: 0, coverImage: "/one-piece/op-14.webp", cardBackImage: "/one-piece/op-14-card.webp" },
+  { id: "adventure-on-kamis-island", code: "OP-15", name: "Adventure on KAMI's Island", totalCards: 0, coverImage: "/one-piece/op-15.webp", cardBackImage: "/one-piece/op-15-card.webp" },
+  { id: "the-time-of-battle", code: "OP-16", name: "The Time of Battle", totalCards: 0, coverImage: "/one-piece/op-16.webp", cardBackImage: "/one-piece/op-16-card.webp" },
+  { id: "the-worlds-strongest-warriors", code: "OP-17", name: "The World's Strongest Warriors", totalCards: 0, coverImage: "/one-piece/op-17.webp", cardBackImage: "/one-piece/op-17-card.webp" },
+  { id: "memorial-collection", code: "EB-01", name: "Memorial Collection", totalCards: 0, coverImage: "/one-piece/op-18.webp", cardBackImage: "/one-piece/op-18-card.webp" },
+  { id: "anime-25th-collection", code: "EB-02", name: "Anime 25th Collection", totalCards: 0, coverImage: "/one-piece/op-19.webp", cardBackImage: "/one-piece/op-19-card.webp" },
+  { id: "one-piece-heroines-edition", code: "EB-03", name: "ONE PIECE Heroines Edition", totalCards: 0, coverImage: "/one-piece/op-20.webp", cardBackImage: "/one-piece/op-20-card.webp" },
+  { id: "egghead-crisis", code: "EB-04", name: "Egghead Crisis", totalCards: 0, coverImage: "/one-piece/op-21.webp", cardBackImage: "/one-piece/op-21-card.webp" },
+  { id: "one-piece-card-the-best", code: "PRB-01", name: "ONE PIECE CARD THE BEST", totalCards: 0, coverImage: "/one-piece/op-22.webp", cardBackImage: "/one-piece/op-22-card.webp" },
+  { id: "one-piece-card-the-best-vol-2", code: "PRB-02", name: "ONE PIECE CARD THE BEST vol.2", totalCards: 0, coverImage: "/one-piece/op-23.webp", cardBackImage: "/one-piece/op-23-card.webp" },
+];
+
 export const onePieceCollections = [
   // Booster Pack principali
   {

@@ -24,7 +24,7 @@ const Footer = () => {
         <span>
           Developed by{" "}
           <a
-            href="https://simonevisconti.site/"
+            href="https://simonevisconti.space/"
             target="_blank"
             rel="noopener noreferrer"
           >

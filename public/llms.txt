@@ -31,7 +31,7 @@ Lingua: italiano.
 - [Home](https://mancolista.site/)
 - [Privacy](https://mancolista.site/privacy)
 - [Cookie policy](https://mancolista.site/cookie)
-- [Catalogo strutturato delle collezioni](https://mancolista.site/ai-catalog.json)
+- [Catalogo strutturato delle collezioni](https://mancolista.site/collection-catalog.json)
 - [Sitemap](https://mancolista.site/sitemap.xml)
 
 Le pagine delle collezioni richiedono un account; il catalogo JSON descrive le collezioni configurate, ma non fornisce dati degli utenti.

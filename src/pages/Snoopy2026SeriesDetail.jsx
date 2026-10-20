@@ -15,6 +15,7 @@ import {
   generateSnoopy2026Cards,
   snoopy2026Series,
 } from "../data/snoopy2026Cards";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -308,31 +309,28 @@ const Snoopy2026SeriesDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="snoopy-category">Categoria</label>
-          <select
-            id="snoopy-category"
+          <CustomSelect
             value={categoryFilter}
-            onChange={(event) => setCategoryFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            {categories.map((category) => (
-              <option value={category} key={category}>
-                {categoryLabels[category] || category}
-              </option>
-            ))}
-          </select>
+            onChange={setCategoryFilter}
+            ariaLabel="Seleziona categoria"
+            options={[
+              { value: "all", label: "Tutte" },
+            ]}
+          />
         </div>
 
         <div className="filter-field">
           <label htmlFor="snoopy-status">Stato</label>
-          <select
-            id="snoopy-status"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona stato"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

@@ -38,7 +38,6 @@ const Snoopy2026SeriesDetail = () => {
   const [exportLoading, setExportLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
 
   const series = snoopy2026Series.find((item) => item.id === seriesId);
@@ -51,9 +50,6 @@ const Snoopy2026SeriesDetail = () => {
   );
   const missingCount = cards.length - ownedCount;
 
-  const categories = useMemo(() => {
-    return [...new Set(cards.map((card) => card.category))];
-  }, [cards]);
 
   useEffect(() => {
     const loadCards = async () => {
@@ -200,14 +196,12 @@ const Snoopy2026SeriesDetail = () => {
       !search ||
       card.name.toLowerCase().includes(search) ||
       String(card.number).toLowerCase().includes(search);
-    const matchesCategory =
-      categoryFilter === "all" || card.category === categoryFilter;
     const matchesOwnership =
       ownershipFilter === "all" ||
       (ownershipFilter === "owned" && isOwned) ||
       (ownershipFilter === "missing" && !isOwned);
 
-    return matchesSearch && matchesCategory && matchesOwnership;
+    return matchesSearch && matchesOwnership;
   });
 
   const handleExport = async () => {
@@ -308,18 +302,6 @@ const Snoopy2026SeriesDetail = () => {
         </div>
 
         <div className="filter-field">
-          <label htmlFor="snoopy-category">Categoria</label>
-          <CustomSelect
-            value={categoryFilter}
-            onChange={setCategoryFilter}
-            ariaLabel="Seleziona categoria"
-            options={[
-              { value: "all", label: "Tutte" },
-            ]}
-          />
-        </div>
-
-        <div className="filter-field">
           <label htmlFor="snoopy-status">Stato</label>
           <CustomSelect
             value={ownershipFilter}
@@ -342,7 +324,7 @@ const Snoopy2026SeriesDetail = () => {
       {filteredCards.length === 0 && (
         <div className="empty-cards-message">
           <h2>Nessun elemento trovato</h2>
-          <p>Prova a cambiare ricerca, categoria o stato.</p>
+          <p>Prova a cambiare ricerca o stato.</p>
         </div>
       )}
 

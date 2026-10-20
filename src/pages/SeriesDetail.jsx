@@ -19,6 +19,7 @@ import {
   getRarityClassName,
   getRarityLabel,
 } from "../data/italianBrainrotCards";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/series-detail.css";
@@ -429,31 +430,33 @@ const SeriesDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="rarity-filter">Rarità</label>
-          <select
-            id="rarity-filter"
+          <CustomSelect
             value={rarityFilter}
-            onChange={(event) => setRarityFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="niente-di-che">Niente di che</option>
-            <option value="cosi-cosi">Così così</option>
-            <option value="bella">Bella</option>
-            <option value="fighissima">Fighissima</option>
-            <option value="polygon">Polygon</option>
-          </select>
+            onChange={setRarityFilter}
+            ariaLabel="Seleziona rarità"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "niente-di-che", label: "Niente di che" },
+              { value: "cosi-cosi", label: "Così così" },
+              { value: "bella", label: "Bella" },
+              { value: "fighissima", label: "Fighissima" },
+              { value: "polygon", label: "Polygon" },
+            ]}
+          />
         </div>
 
         <div className="filter-field">
           <label htmlFor="ownership-filter">Stato</label>
-          <select
-            id="ownership-filter"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona filtro"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

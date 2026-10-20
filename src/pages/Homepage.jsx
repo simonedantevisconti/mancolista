@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
 import { mainCollections } from "../data/collections";
-import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/homepage.css";
 
@@ -28,6 +26,10 @@ const Homepage = () => {
       setStatsLoading(true);
 
       try {
+        const [{ collection, getDocs, query, where }, { db }] = await Promise.all([
+          import("firebase/firestore"),
+          import("../firebase"),
+        ]);
         const cardsRef = collection(db, "users", user.uid, "cards");
         const cardsQuery = query(cardsRef, where("owned", "==", true));
         const snapshot = await getDocs(cardsQuery);

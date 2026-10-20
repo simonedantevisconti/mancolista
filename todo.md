@@ -5,6 +5,7 @@ TODO:
 -google search console
 -seo
 -check google dev
+-marketplace?
 
 Collezioni da integrare:
 -Italian Brainrot (Universo psichedelico - Allucinazione Cosmica - Anomalia Galattica)

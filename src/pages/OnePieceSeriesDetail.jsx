@@ -16,6 +16,9 @@ import CustomSelect from "../components/CustomSelect";
 import {
   onePieceParamountWarCards,
   onePiecePillarsOfStrengthCards,
+  onePieceKingdomsOfIntrigueCards,
+  onePieceAwakeningOfTheNewEraCards,
+  onePieceWingsOfTheCaptainCards,
   onePieceSeries,
 } from "../data/onePieceCards";
 import { db } from "../firebase";
@@ -51,6 +54,9 @@ const rarityOptions = [
 const cardsBySeries = {
   "paramount-war": onePieceParamountWarCards,
   "pillars-of-strength": onePiecePillarsOfStrengthCards,
+  "kingdoms-of-intrigue": onePieceKingdomsOfIntrigueCards,
+  "awakening-of-the-new-era": onePieceAwakeningOfTheNewEraCards,
+  "wings-of-the-captain": onePieceWingsOfTheCaptainCards,
 };
 
 const OnePieceSeriesDetail = () => {

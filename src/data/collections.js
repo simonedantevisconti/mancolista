@@ -39,12 +39,12 @@ export const mainCollections = [
   {
     id: "one-piece-card-game",
     name: "One Piece Card Game",
-    description: "Romance Dawn OP-01, set principale da 121 carte.",
+    description: "23 collezioni One Piece Card Game, a partire da Romance Dawn.",
     totalCards: 121,
     ownedCards: 0,
     active: true,
     logo: "/loghi/one-piece-logo.png",
-    type: "static-single",
+    type: "static-series",
     provider: "one-piece-card-game",
   },
   {

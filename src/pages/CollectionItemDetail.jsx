@@ -3,6 +3,7 @@ import { mainCollections } from "../data/collections";
 import DisneyLorcanaSeriesDetail from "./DisneyLorcanaSeriesDetail";
 import KpopDemonHuntersSeriesDetail from "./KpopDemonHuntersSeriesDetail";
 import OnePieceRomanceDawnDetail from "./OnePieceRomanceDawnDetail";
+import OnePieceSeriesDetail from "./OnePieceSeriesDetail";
 import { onePieceSeries } from "../data/onePieceCards";
 import SeriesDetail from "./SeriesDetail";
 import Snoopy2026SeriesDetail from "./Snoopy2026SeriesDetail";
@@ -41,6 +42,10 @@ const CollectionItemDetail = () => {
     }
 
     const series = onePieceSeries.find((item) => item.id === seriesId);
+
+    if (series?.configured) {
+      return <OnePieceSeriesDetail />;
+    }
 
     return (
       <section className="series-detail">

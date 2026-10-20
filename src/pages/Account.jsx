@@ -18,7 +18,6 @@ import {
   query,
   serverTimestamp,
   setDoc,
-  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -46,7 +45,6 @@ const Account = () => {
   const [requests, setRequests] = useState([]);
   const [requestsLoading, setRequestsLoading] = useState(true);
   const [requestsError, setRequestsError] = useState("");
-  const [savingRequestId, setSavingRequestId] = useState("");
 
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
@@ -61,12 +59,6 @@ const Account = () => {
 
   const hasPasswordProvider = providerIds.includes("password");
   const hasGoogleProvider = providerIds.includes("google.com");
-  const isAdmin = Boolean(
-    user &&
-      import.meta.env.VITE_ADMIN_UID &&
-      user.uid === import.meta.env.VITE_ADMIN_UID,
-  );
-
   const requestStatusLabels = {
     pending: "In attesa",
     approved: "Approvata",
@@ -96,7 +88,7 @@ const Account = () => {
     };
 
     loadProfile();
-  }, [authLoading, user, isAdmin]);
+  }, [authLoading, user]);
 
   useEffect(() => {
     const loadRequests = async () => {
@@ -106,10 +98,10 @@ const Account = () => {
       setRequestsError("");
 
       try {
-        const requestsRef = collection(db, "collectionRequests");
-        const requestsQuery = isAdmin
-          ? requestsRef
-          : query(requestsRef, where("userId", "==", user.uid));
+        const requestsQuery = query(
+          collection(db, "collectionRequests"),
+          where("userId", "==", user.uid),
+        );
         const snapshot = await getDocs(requestsQuery);
         const nextRequests = snapshot.docs.map((requestDocument) => ({
           id: requestDocument.id,
@@ -125,45 +117,14 @@ const Account = () => {
         setRequests(nextRequests);
       } catch (error) {
         console.error(error);
-        setRequestsError(
-          isAdmin
-            ? "Non riesco a caricare le richieste."
-            : "Non riesco a caricare le tue richieste.",
-        );
+        setRequestsError("Non riesco a caricare le tue richieste.");
       } finally {
         setRequestsLoading(false);
       }
     };
 
     loadRequests();
-  }, [authLoading, user, isAdmin]);
-
-  const handleRequestStatusChange = async (requestId, nextStatus) => {
-    if (!isAdmin) return;
-
-    setSavingRequestId(requestId);
-    setRequestsError("");
-
-    try {
-      await updateDoc(doc(db, "collectionRequests", requestId), {
-        status: nextStatus,
-        updatedAt: serverTimestamp(),
-      });
-
-      setRequests((current) =>
-        current.map((request) =>
-          request.id === requestId
-            ? { ...request, status: nextStatus }
-            : request,
-        ),
-      );
-    } catch (error) {
-      console.error(error);
-      setRequestsError("Non riesco ad aggiornare lo stato della richiesta.");
-    } finally {
-      setSavingRequestId("");
-    }
-  };
+  }, [authLoading, user]);
 
   const handleUsernameSave = async (event) => {
     event.preventDefault();
@@ -481,12 +442,8 @@ const Account = () => {
           <div className="account-card__heading">
             <span className="account-card__icon" aria-hidden="true">📨</span>
             <div>
-              <h2>{isAdmin ? "Richieste utenti" : "Richieste"}</h2>
-              <p>
-                {isAdmin
-                  ? "Visualizza tutte le richieste e aggiornane lo stato."
-                  : "Controlla le collezioni che hai suggerito e il loro stato."}
-              </p>
+              <h2>Le mie richieste</h2>
+              <p>Controlla le collezioni che hai suggerito e il loro stato.</p>
             </div>
           </div>
 
@@ -496,11 +453,7 @@ const Account = () => {
             <p className="account-error">{requestsError}</p>
           ) : requests.length === 0 ? (
             <div className="account-requests-empty">
-              <p>
-                {isAdmin
-                  ? "Non ci sono ancora richieste."
-                  : "Non hai ancora inviato richieste."}
-              </p>
+              <p>Non hai ancora inviato richieste.</p>
             </div>
           ) : (
             <div className="account-requests-list">
@@ -515,35 +468,12 @@ const Account = () => {
                       </p>
                     </div>
 
-                    {isAdmin ? (
-                      <select
-                        className="account-request-select"
-                        value={request.status || "pending"}
-                        disabled={savingRequestId === request.id}
-                        onChange={(event) =>
-                          handleRequestStatusChange(request.id, event.target.value)
-                        }
-                      >
-                        <option value="pending">In attesa</option>
-                        <option value="approved">Approvata</option>
-                        <option value="rejected">Rifiutata</option>
-                        <option value="added">Aggiunta</option>
-                      </select>
-                    ) : (
-                      <span
-                        className={`account-request-status account-request-status--${request.status || "pending"}`}
-                      >
-                        {requestStatusLabels[request.status] || "In attesa"}
-                      </span>
-                    )}
+                    <span
+                      className={`account-request-status account-request-status--${request.status || "pending"}`}
+                    >
+                      {requestStatusLabels[request.status] || "In attesa"}
+                    </span>
                   </div>
-
-                  {isAdmin && (
-                    <div className="account-request-user">
-                      <span>{request.username || "Utente"}</span>
-                      <span>{request.userEmail || "Email non disponibile"}</span>
-                    </div>
-                  )}
 
                   {request.notes && (
                     <p className="account-request-notes">{request.notes}</p>

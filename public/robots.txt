@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /impostazioni
+Disallow: /le-mie-collezioni
+Disallow: /richieste
+Disallow: /richiedi-collezione
+Disallow: /collezioni/
+
+Sitemap: https://mancolista.site/sitemap.xml

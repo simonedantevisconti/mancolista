@@ -7,7 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import CalciatoriPanini2627Detail from "./CalciatoriPanini2627Detail";
 import DisneyLorcanaCollectionDetail from "./DisneyLorcanaCollectionDetail";
 import KpopDemonHuntersCollectionDetail from "./KpopDemonHuntersCollectionDetail";
-import OnePieceRomanceDawnDetail from "./OnePieceRomanceDawnDetail";
+import OnePieceCollectionDetail from "./OnePieceCollectionDetail";
 import PoppyPlaytimeDetail from "./PoppyPlaytimeDetail";
 import PokemonPrimaEdizioneDetail from "./PokemonPrimaEdizioneDetail";
 import Snoopy2026CollectionDetail from "./Snoopy2026CollectionDetail";
@@ -145,7 +145,7 @@ const CollectionDetail = () => {
   if (isWorldCup2026) return <WorldCup2026CollectionDetail />;
   if (isSnoopy2026) return <Snoopy2026CollectionDetail />;
   if (isKpopDemonHunters) return <KpopDemonHuntersCollectionDetail />;
-  if (isOnePieceCardGame) return <OnePieceRomanceDawnDetail />;
+  if (isOnePieceCardGame) return <OnePieceCollectionDetail />;
 
   if (!isItalianBrainrot) {
     return (

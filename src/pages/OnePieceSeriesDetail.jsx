@@ -28,6 +28,9 @@ import {
   onePieceCarryingOnHisWillCards,
   onePieceTheAzureSeasSevenCards,
   onePieceAdventureOnKamisIslandCards,
+  onePieceTheTimeOfBattleCards,
+  onePieceTheWorldsStrongestWarriorsCards,
+  onePieceMemorialCollectionCards,
   onePieceSeries,
 } from "../data/onePieceCards";
 import { db } from "../firebase";
@@ -75,6 +78,9 @@ const cardsBySeries = {
   "carrying-on-his-will": onePieceCarryingOnHisWillCards,
   "the-azure-seas-seven": onePieceTheAzureSeasSevenCards,
   "adventure-on-kamis-island": onePieceAdventureOnKamisIslandCards,
+  "the-time-of-battle": onePieceTheTimeOfBattleCards,
+  "the-worlds-strongest-warriors": onePieceTheWorldsStrongestWarriorsCards,
+  "memorial-collection": onePieceMemorialCollectionCards,
 };
 
 const OnePieceSeriesDetail = () => {

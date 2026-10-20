@@ -224,6 +224,80 @@
   margin-top: 4px;
 }
 
+/* ACCOUNT REQUESTS */
+
+.account-requests-list {
+  display: grid;
+  gap: 12px;
+}
+
+.account-request-item {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-soft);
+}
+
+.account-request-item__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.account-request-item h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.account-request-item__top p,
+.account-request-notes,
+.account-requests-empty p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.account-request-status {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.account-request-status--pending {
+  color: var(--accent);
+}
+
+.account-request-status--approved {
+  color: #55c7ff;
+}
+
+.account-request-status--added {
+  color: #32c875;
+}
+
+.account-request-status--rejected {
+  color: #ff6b6b;
+}
+
+.account-request-notes {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.account-requests-empty {
+  padding: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+}
+
 @media (max-width: 760px) {
   .account-page {
     padding: 32px 0 60px;
@@ -259,5 +333,9 @@
   .account-delete-actions {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .account-request-item__top {
+    flex-direction: column;
   }
 }

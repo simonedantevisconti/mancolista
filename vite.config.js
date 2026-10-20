@@ -66,7 +66,7 @@ export default defineConfig({
 
         navigateFallback: "/index.html",
         navigateFallbackDenylist: [
-          /^\\/(?:ai-catalog\\.json|robots\\.txt|sitemap\\.xml|llms\\.txt)$/,
+          /^\/(?:ai-catalog\.json|robots\.txt|sitemap\.xml|llms\.txt)$/,
         ],
 
         runtimeCaching: [

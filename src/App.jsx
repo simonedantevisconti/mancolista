@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import ScrollToTop from "./components/ScrollToTop";
+import RouteSeo from "./components/RouteSeo";
 import { AuthProvider } from "./context/AuthProvider";
 import DefaultLayout from "./layouts/DefaultLayout";
 
@@ -33,6 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <RouteSeo />
 
       <AuthProvider>
         <Suspense fallback={<PageLoader />}>

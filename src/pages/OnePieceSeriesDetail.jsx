@@ -31,6 +31,9 @@ import {
   onePieceTheTimeOfBattleCards,
   onePieceTheWorldsStrongestWarriorsCards,
   onePieceMemorialCollectionCards,
+  onePieceAnime25thCollectionCards,
+  onePieceHeroinesEditionCards,
+  onePieceEggheadCrisisCards,
   onePieceSeries,
 } from "../data/onePieceCards";
 import { db } from "../firebase";
@@ -81,6 +84,9 @@ const cardsBySeries = {
   "the-time-of-battle": onePieceTheTimeOfBattleCards,
   "the-worlds-strongest-warriors": onePieceTheWorldsStrongestWarriorsCards,
   "memorial-collection": onePieceMemorialCollectionCards,
+  "anime-25th-collection": onePieceAnime25thCollectionCards,
+  "one-piece-heroines-edition": onePieceHeroinesEditionCards,
+  "egghead-crisis": onePieceEggheadCrisisCards,
 };
 
 const OnePieceSeriesDetail = () => {

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "../styles/custom-select.css";
 
 const CustomSelect = ({
   value,

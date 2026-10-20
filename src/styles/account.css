@@ -286,6 +286,33 @@
   color: #ff6b6b;
 }
 
+.account-request-select {
+  width: 160px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--text);
+  font-weight: 800;
+  outline: none;
+}
+
+.account-request-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.account-request-user {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .account-request-notes {
   margin-top: 12px;
   padding-top: 12px;
@@ -337,5 +364,9 @@
 
   .account-request-item__top {
     flex-direction: column;
+  }
+
+  .account-request-select {
+    width: 100%;
   }
 }

@@ -19,6 +19,9 @@ import {
   onePieceKingdomsOfIntrigueCards,
   onePieceAwakeningOfTheNewEraCards,
   onePieceWingsOfTheCaptainCards,
+  onePiece500YearsInTheFutureCards,
+  onePieceTwoLegendsCards,
+  onePieceEmperorsInTheNewWorldCards,
   onePieceSeries,
 } from "../data/onePieceCards";
 import { db } from "../firebase";
@@ -57,6 +60,9 @@ const cardsBySeries = {
   "kingdoms-of-intrigue": onePieceKingdomsOfIntrigueCards,
   "awakening-of-the-new-era": onePieceAwakeningOfTheNewEraCards,
   "wings-of-the-captain": onePieceWingsOfTheCaptainCards,
+  "500-years-in-the-future": onePiece500YearsInTheFutureCards,
+  "two-legends": onePieceTwoLegendsCards,
+  "emperors-in-the-new-world": onePieceEmperorsInTheNewWorldCards,
 };
 
 const OnePieceSeriesDetail = () => {

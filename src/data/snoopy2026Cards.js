@@ -48,8 +48,8 @@ const generateStickerAlbumCards = () => {
       number,
       name: `Figurina ${number}`,
       category: "poster",
-      frontImage: "/retro.webp",
-      backImage: "/retro.webp",
+      frontImage: "/snoopy-retro.png",
+      backImage: "/snoopy-retro.png",
     };
   });
 
@@ -67,8 +67,8 @@ export const generateSnoopy2026Cards = (seriesId) => {
       number: card.number,
       name: card.name,
       category: "limited-edition",
-      frontImage: "/retro.webp",
-      backImage: "/retro.webp",
+      frontImage: "/snoopy-retro.png",
+      backImage: "/snoopy-retro.png",
     }));
   }
 

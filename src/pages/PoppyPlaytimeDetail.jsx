@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { poppyPlaytimeCards } from "../data/poppyPlaytimeCards";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -301,15 +302,16 @@ const PoppyPlaytimeDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="poppy-status">Stato</label>
-          <select
-            id="poppy-status"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona stato"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

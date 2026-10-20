@@ -65,6 +65,9 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest,woff,woff2}"],
 
         navigateFallback: "/index.html",
+        navigateFallbackDenylist: [
+          /^\\/(?:ai-catalog\\.json|robots\\.txt|sitemap\\.xml|llms\\.txt)$/,
+        ],
 
         runtimeCaching: [
           {

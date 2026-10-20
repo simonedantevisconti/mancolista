@@ -25,6 +25,9 @@ import {
   onePieceRoyalBloodCards,
   onePieceAFistOfDivineSpeedCards,
   onePieceLegacyOfTheMasterCards,
+  onePieceCarryingOnHisWillCards,
+  onePieceTheAzureSeasSevenCards,
+  onePieceAdventureOnKamisIslandCards,
   onePieceSeries,
 } from "../data/onePieceCards";
 import { db } from "../firebase";
@@ -69,6 +72,9 @@ const cardsBySeries = {
   "royal-blood": onePieceRoyalBloodCards,
   "a-fist-of-divine-speed": onePieceAFistOfDivineSpeedCards,
   "legacy-of-the-master": onePieceLegacyOfTheMasterCards,
+  "carrying-on-his-will": onePieceCarryingOnHisWillCards,
+  "the-azure-seas-seven": onePieceTheAzureSeasSevenCards,
+  "adventure-on-kamis-island": onePieceAdventureOnKamisIslandCards,
 };
 
 const OnePieceSeriesDetail = () => {

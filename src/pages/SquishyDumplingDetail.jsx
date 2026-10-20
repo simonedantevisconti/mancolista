@@ -428,12 +428,9 @@ const SquishyDumplingDetail = () => {
                   </div>
 
                   <div className="card-face card-front">
-                    <img
-                      src={card.frontImage}
-                      alt={card.name}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <div className="squishy-card-placeholder">
+                      <strong>{card.number}</strong>
+                    </div>
                   </div>
                 </div>
               </button>

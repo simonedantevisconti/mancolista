@@ -8,6 +8,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 
@@ -124,17 +125,15 @@ const AdminRequests = () => {
       <div className="admin-request-toolbar">
         <label>
           Stato
-          <select
+          <CustomSelect
             value={statusFilter}
-            onChange={(event) => setStatusFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            {STATUS_OPTIONS.map((option) => (
-              <option value={option.value} key={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+            onChange={setStatusFilter}
+            ariaLabel="Filtra richieste per stato"
+            options={[
+              { value: "all", label: "Tutte" },
+              ...STATUS_OPTIONS,
+            ]}
+          />
         </label>
 
         <strong>{filteredRequests.length} richieste</strong>

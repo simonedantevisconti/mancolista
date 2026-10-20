@@ -15,6 +15,7 @@ import {
   generateKpopDemonHuntersCards,
   kpopDemonHuntersSeries,
 } from "../data/kpopDemonHuntersCards";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -335,31 +336,28 @@ const KpopDemonHuntersSeriesDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="kpop-rarity">Rarità</label>
-          <select
-            id="kpop-rarity"
+          <CustomSelect
             value={rarityFilter}
-            onChange={(event) => setRarityFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            {rarities.map((rarity) => (
-              <option value={rarity} key={rarity}>
-                {rarity === "standard" ? "Standard" : rarity}
-              </option>
-            ))}
-          </select>
+            onChange={setRarityFilter}
+            ariaLabel="Seleziona rarità"
+            options={[
+              { value: "all", label: "Tutte" },
+            ]}
+          />
         </div>
 
         <div className="filter-field">
           <label htmlFor="kpop-status">Stato</label>
-          <select
-            id="kpop-status"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona stato"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

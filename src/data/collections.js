@@ -39,8 +39,8 @@ export const mainCollections = [
   {
     id: "one-piece-card-game",
     name: "One Piece Card Game",
-    description: "23 collezioni One Piece Card Game, a partire da Romance Dawn.",
-    totalCards: 121,
+    description: "Romance Dawn, Paramount War e Pillars of Strength già configurate.",
+    totalCards: 365,
     ownedCards: 0,
     active: true,
     logo: "/loghi/one-piece-logo.png",

@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { generateSquishyDumplingCards } from "../data/collections";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -384,31 +385,33 @@ const SquishyDumplingDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="rarity-filter">Rarità</label>
-          <select
-            id="rarity-filter"
+          <CustomSelect
             value={rarityFilter}
-            onChange={(event) => setRarityFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="da-verificare">Da verificare</option>
-            <option value="rare">Rare</option>
-            <option value="ultra-rare">Ultra Rare</option>
-            <option value="rare-mystery">Rare Mystery</option>
-            <option value="rare-crystal">Rare Crystal</option>
-          </select>
+            onChange={setRarityFilter}
+            ariaLabel="Seleziona rarità"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "da-verificare", label: "Da verificare" },
+              { value: "rare", label: "Rare" },
+              { value: "ultra-rare", label: "Ultra Rare" },
+              { value: "rare-mystery", label: "Rare Mystery" },
+              { value: "rare-crystal", label: "Rare Crystal" },
+            ]}
+          />
         </div>
 
         <div className="filter-field">
           <label htmlFor="ownership-filter">Stato</label>
-          <select
-            id="ownership-filter"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona filtro"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

@@ -1,0 +1,256 @@
+{
+  "name": "MancoLista",
+  "url": "https://mancolista.site/",
+  "language": "it",
+  "description": "Applicazione web per gestire carte e figurine da collezione, carte mancanti e doppie.",
+  "type": "web_application",
+  "catalogVersion": "1.0",
+  "lastUpdated": "2026-10-21",
+  "access": {
+    "publicPages": [
+      "/",
+      "/privacy",
+      "/cookie"
+    ],
+    "collectionsRequireAuthentication": true
+  },
+  "features": [
+    "Gestione carte possedute",
+    "Carte mancanti",
+    "Carte doppie",
+    "Ricerca e filtri delle carte",
+    "Esportazione delle liste dove disponibile"
+  ],
+  "collections": [
+    {
+      "id": "italian-brainrot",
+      "name": "Italian Brainrot",
+      "totalCards": 450,
+      "authenticatedUrl": "https://mancolista.site/collezioni/italian-brainrot"
+    },
+    {
+      "id": "calciatori-panini-2026-2027",
+      "name": "Calciatori Panini 2026-2027",
+      "totalCards": 609,
+      "authenticatedUrl": "https://mancolista.site/collezioni/calciatori-panini-2026-2027"
+    },
+    {
+      "id": "disney-lorcana",
+      "name": "Disney Lorcana",
+      "totalCards": 2860,
+      "authenticatedUrl": "https://mancolista.site/collezioni/disney-lorcana"
+    },
+    {
+      "id": "one-piece-card-game",
+      "name": "One Piece Card Game",
+      "totalCards": 2562,
+      "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game",
+      "series": [
+        {
+          "id": "romance-dawn",
+          "code": "OP-01",
+          "name": "Romance Dawn",
+          "totalCards": 121,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/romance-dawn"
+        },
+        {
+          "id": "paramount-war",
+          "code": "OP-02",
+          "name": "Paramount War",
+          "totalCards": 121,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/paramount-war"
+        },
+        {
+          "id": "pillars-of-strength",
+          "code": "OP-03",
+          "name": "Pillars of Strength",
+          "totalCards": 123,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/pillars-of-strength"
+        },
+        {
+          "id": "kingdoms-of-intrigue",
+          "code": "OP-04",
+          "name": "Kingdoms of Intrigue",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/kingdoms-of-intrigue"
+        },
+        {
+          "id": "awakening-of-the-new-era",
+          "code": "OP-05",
+          "name": "Awakening of the New Era",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/awakening-of-the-new-era"
+        },
+        {
+          "id": "wings-of-the-captain",
+          "code": "OP-06",
+          "name": "Wings of the Captain",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/wings-of-the-captain"
+        },
+        {
+          "id": "500-years-in-the-future",
+          "code": "OP-07",
+          "name": "500 Years in the Future",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/500-years-in-the-future"
+        },
+        {
+          "id": "two-legends",
+          "code": "OP-08",
+          "name": "Two Legends",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/two-legends"
+        },
+        {
+          "id": "emperors-in-the-new-world",
+          "code": "OP-09",
+          "name": "Emperors in the New World",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/emperors-in-the-new-world"
+        },
+        {
+          "id": "royal-blood",
+          "code": "OP-10",
+          "name": "Royal Blood",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/royal-blood"
+        },
+        {
+          "id": "a-fist-of-divine-speed",
+          "code": "OP-11",
+          "name": "A Fist of Divine Speed",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/a-fist-of-divine-speed"
+        },
+        {
+          "id": "legacy-of-the-master",
+          "code": "OP-12",
+          "name": "Legacy of the Master",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/legacy-of-the-master"
+        },
+        {
+          "id": "carrying-on-his-will",
+          "code": "OP-13",
+          "name": "Carrying On His Will",
+          "totalCards": 120,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/carrying-on-his-will"
+        },
+        {
+          "id": "the-azure-seas-seven",
+          "code": "OP-14",
+          "name": "The Azure Sea's Seven",
+          "totalCards": 120,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/the-azure-seas-seven"
+        },
+        {
+          "id": "adventure-on-kamis-island",
+          "code": "OP-15",
+          "name": "Adventure on KAMI's Island",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/adventure-on-kamis-island"
+        },
+        {
+          "id": "the-time-of-battle",
+          "code": "OP-16",
+          "name": "The Time of Battle",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/the-time-of-battle"
+        },
+        {
+          "id": "the-worlds-strongest-warriors",
+          "code": "OP-17",
+          "name": "The World's Strongest Warriors",
+          "totalCards": 119,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/the-worlds-strongest-warriors"
+        },
+        {
+          "id": "memorial-collection",
+          "code": "EB-01",
+          "name": "Memorial Collection",
+          "totalCards": 61,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/memorial-collection"
+        },
+        {
+          "id": "anime-25th-collection",
+          "code": "EB-02",
+          "name": "Anime 25th Collection",
+          "totalCards": 61,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/anime-25th-collection"
+        },
+        {
+          "id": "one-piece-heroines-edition",
+          "code": "EB-03",
+          "name": "ONE PIECE Heroines Edition",
+          "totalCards": 62,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/one-piece-heroines-edition"
+        },
+        {
+          "id": "egghead-crisis",
+          "code": "EB-04",
+          "name": "Egghead Crisis",
+          "totalCards": 61,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/egghead-crisis"
+        },
+        {
+          "id": "one-piece-card-the-best",
+          "code": "PRB-01",
+          "name": "ONE PIECE CARD THE BEST",
+          "totalCards": 111,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/one-piece-card-the-best"
+        },
+        {
+          "id": "one-piece-card-the-best-vol-2",
+          "code": "PRB-02",
+          "name": "ONE PIECE CARD THE BEST vol.2",
+          "totalCards": 173,
+          "authenticatedUrl": "https://mancolista.site/collezioni/one-piece-card-game/one-piece-card-the-best-vol-2"
+        }
+      ]
+    },
+    {
+      "id": "mondiali-2026",
+      "name": "FIFA World Cup 2026 Panini",
+      "totalCards": 1100,
+      "authenticatedUrl": "https://mancolista.site/collezioni/mondiali-2026"
+    },
+    {
+      "id": "poppy-playtime",
+      "name": "Poppy Playtime",
+      "totalCards": 162,
+      "authenticatedUrl": "https://mancolista.site/collezioni/poppy-playtime"
+    },
+    {
+      "id": "squishy-dumpling",
+      "name": "Squishy Dumpling",
+      "totalCards": 135,
+      "authenticatedUrl": "https://mancolista.site/collezioni/squishy-dumpling"
+    },
+    {
+      "id": "snoopy-un-anno-da-ricordare-2026",
+      "name": "Snoopy - Un anno da ricordare 2026",
+      "totalCards": 286,
+      "authenticatedUrl": "https://mancolista.site/collezioni/snoopy-un-anno-da-ricordare-2026"
+    },
+    {
+      "id": "k-pop-demon-hunters",
+      "name": "K-Pop Demon Hunters",
+      "totalCards": 673,
+      "authenticatedUrl": "https://mancolista.site/collezioni/k-pop-demon-hunters"
+    },
+    {
+      "id": "pokemon-prima-edizione",
+      "name": "Pokémon - Prima Edizione",
+      "totalCards": 102,
+      "authenticatedUrl": "https://mancolista.site/collezioni/pokemon-prima-edizione"
+    }
+  ],
+  "resources": {
+    "sitemap": "https://mancolista.site/sitemap.xml",
+    "robots": "https://mancolista.site/robots.txt",
+    "llms": "https://mancolista.site/llms.txt",
+    "privacy": "https://mancolista.site/privacy",
+    "cookies": "https://mancolista.site/cookie"
+  }
+}

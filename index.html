@@ -2,40 +2,64 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <meta
-      name="description"
-      content="Gestisci le tue collezioni di carte, controlla le carte mancanti e organizza le doppie con MancoLista."
-    />
-
-    <title>MancoLista</title>
-
-    <!-- FAVICON E ICONE APP -->
+    <title>MancoLista | Carte mancanti, doppie e collezioni online</title>
+    <meta name="description" content="Gestisci le tue collezioni di carte e figurine con MancoLista: segna le possedute, trova le mancanti, conta le doppie e condividi le tue liste." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="MancoLista" />
+    <meta name="application-name" content="MancoLista" />
+    <link rel="canonical" href="https://mancolista.site/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="MancoLista" />
+    <meta property="og:title" content="MancoLista | Carte mancanti, doppie e collezioni online" />
+    <meta property="og:description" content="Tieni traccia delle carte che possiedi, delle mancanti e delle doppie. Organizza le tue collezioni con MancoLista." />
+    <meta property="og:url" content="https://mancolista.site/" />
+    <meta property="og:image" content="https://mancolista.site/pwa-512x512.png" />
+    <meta property="og:image:alt" content="Logo MancoLista" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="MancoLista | Carte mancanti, doppie e collezioni online" />
+    <meta name="twitter:description" content="Organizza carte e figurine, segna mancanti e doppie e condividi le tue liste." />
+    <meta name="twitter:image" content="https://mancolista.site/pwa-512x512.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-
-    <!-- PWA -->
     <meta name="theme-color" content="#ff7a00" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="MancoLista" />
-
-    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Imprima&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />  </head>
+    <link href="https://fonts.googleapis.com/css2?family=Imprima&family=Sansita:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "MancoLista",
+        "url": "https://mancolista.site/",
+        "description": "Web app per gestire collezioni di carte e figurine, segnare carte possedute, mancanti e doppie.",
+        "applicationCategory": "EntertainmentApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "it",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "featureList": [
+          "Checklist delle carte possedute",
+          "Gestione delle carte mancanti",
+          "Conteggio delle carte doppie",
+          "Collezioni di carte e figurine",
+          "Esportazione delle liste"
+        ]
+      }
+    </script>
+  </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>  </body>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

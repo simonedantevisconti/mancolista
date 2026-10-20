@@ -227,11 +227,6 @@ const PoppyPlaytimeDetail = () => {
     }
   };
 
-  const handleImageError = (event, card) => {
-    if (event.currentTarget.src.endsWith(card.fallbackImage)) return;
-    event.currentTarget.src = card.fallbackImage;
-  };
-
   if (authLoading) {
     return (
       <section className="series-detail">
@@ -357,13 +352,9 @@ const PoppyPlaytimeDetail = () => {
                   </div>
 
                   <div className="card-face card-front">
-                    <img
-                      src={card.frontImage}
-                      alt={card.name}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(event) => handleImageError(event, card)}
-                    />
+                    <div className="poppy-card-placeholder">
+                      <strong>#{String(card.number).padStart(3, "0")}</strong>
+                    </div>
                   </div>
                 </div>
               </button>

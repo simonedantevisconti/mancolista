@@ -39,8 +39,8 @@ export const mainCollections = [
   {
     id: "one-piece-card-game",
     name: "One Piece Card Game",
-    description: "Prime quindici espansioni One Piece Card Game già configurate.",
-    totalCards: 1795,
+    description: "Prime diciotto espansioni One Piece Card Game già configurate.",
+    totalCards: 2094,
     ownedCards: 0,
     active: true,
     logo: "/loghi/one-piece-logo.png",

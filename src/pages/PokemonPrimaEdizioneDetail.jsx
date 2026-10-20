@@ -57,7 +57,7 @@ const PokemonPrimaEdizioneDetail = () => {
       number: card.number,
       name: card.name,
       rarity: card.rarity,
-      frontImage: `/pokemon-prima-edizione/${card.number}.webp`,
+      frontImage: `/pokemon-prima-edizione/${String(card.number).padStart(3, "0")}.png`,
       backImage: FALLBACK_IMAGE,
       fallbackImage: FALLBACK_IMAGE,
     }));

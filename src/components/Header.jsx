@@ -71,7 +71,7 @@ const Header = () => {
         {!authLoading && user && (
           <>
             {isAdmin && (
-              <NavLink to="/impostazioni#richieste" onClick={closeMenu}>
+              <NavLink to="/richieste" onClick={closeMenu}>
                 Richieste
               </NavLink>
             )}

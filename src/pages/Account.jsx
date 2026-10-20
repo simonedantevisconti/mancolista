@@ -15,8 +15,10 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   serverTimestamp,
   setDoc,
+  where,
 } from "firebase/firestore";
 
 import { db } from "../firebase";
@@ -40,6 +42,10 @@ const Account = () => {
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const [requests, setRequests] = useState([]);
+  const [requestsLoading, setRequestsLoading] = useState(true);
+  const [requestsError, setRequestsError] = useState("");
+
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
@@ -53,6 +59,13 @@ const Account = () => {
 
   const hasPasswordProvider = providerIds.includes("password");
   const hasGoogleProvider = providerIds.includes("google.com");
+
+  const requestStatusLabels = {
+    pending: "In attesa",
+    approved: "Approvata",
+    rejected: "Rifiutata",
+    added: "Aggiunta",
+  };
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -76,6 +89,42 @@ const Account = () => {
     };
 
     loadProfile();
+  }, [authLoading, user]);
+
+  useEffect(() => {
+    const loadRequests = async () => {
+      if (authLoading || !user) return;
+
+      setRequestsLoading(true);
+      setRequestsError("");
+
+      try {
+        const requestsQuery = query(
+          collection(db, "collectionRequests"),
+          where("userId", "==", user.uid),
+        );
+        const snapshot = await getDocs(requestsQuery);
+        const nextRequests = snapshot.docs.map((requestDocument) => ({
+          id: requestDocument.id,
+          ...requestDocument.data(),
+        }));
+
+        nextRequests.sort((first, second) => {
+          const firstTime = first.createdAt?.toMillis?.() || 0;
+          const secondTime = second.createdAt?.toMillis?.() || 0;
+          return secondTime - firstTime;
+        });
+
+        setRequests(nextRequests);
+      } catch (error) {
+        console.error(error);
+        setRequestsError("Non riesco a caricare le tue richieste.");
+      } finally {
+        setRequestsLoading(false);
+      }
+    };
+
+    loadRequests();
   }, [authLoading, user]);
 
   const handleUsernameSave = async (event) => {
@@ -385,6 +434,52 @@ const Account = () => {
               <dd className="account-uid">{user.uid}</dd>
             </div>
           </dl>
+        </article>
+
+        <article className="account-card account-card--wide">
+          <div className="account-card__heading">
+            <span className="account-card__icon" aria-hidden="true">📨</span>
+            <div>
+              <h2>Richieste</h2>
+              <p>Controlla le collezioni che hai suggerito e il loro stato.</p>
+            </div>
+          </div>
+
+          {requestsLoading ? (
+            <p className="account-note">Caricamento richieste...</p>
+          ) : requestsError ? (
+            <p className="account-error">{requestsError}</p>
+          ) : requests.length === 0 ? (
+            <div className="account-requests-empty">
+              <p>Non hai ancora inviato richieste.</p>
+            </div>
+          ) : (
+            <div className="account-requests-list">
+              {requests.map((request) => (
+                <article className="account-request-item" key={request.id}>
+                  <div className="account-request-item__top">
+                    <div>
+                      <h3>{request.collectionName}</h3>
+                      <p>
+                        {request.publisher || "Marca / editore non indicato"}
+                        {request.type ? ` · ${request.type}` : ""}
+                      </p>
+                    </div>
+
+                    <span
+                      className={`account-request-status account-request-status--${request.status || "pending"}`}
+                    >
+                      {requestStatusLabels[request.status] || "In attesa"}
+                    </span>
+                  </div>
+
+                  {request.notes && (
+                    <p className="account-request-notes">{request.notes}</p>
+                  )}
+                </article>
+              ))}
+            </div>
+          )}
         </article>
 
         <article className="account-card account-card--danger account-card--wide">

@@ -2,12 +2,14 @@ import { Link, useParams } from "react-router-dom";
 import { mainCollections } from "../data/collections";
 import DisneyLorcanaSeriesDetail from "./DisneyLorcanaSeriesDetail";
 import KpopDemonHuntersSeriesDetail from "./KpopDemonHuntersSeriesDetail";
+import OnePieceRomanceDawnDetail from "./OnePieceRomanceDawnDetail";
+import { onePieceSeries } from "../data/onePieceCards";
 import SeriesDetail from "./SeriesDetail";
 import Snoopy2026SeriesDetail from "./Snoopy2026SeriesDetail";
 import WorldCup2026SeriesDetail from "./WorldCup2026SeriesDetail";
 
 const CollectionItemDetail = () => {
-  const { collectionId } = useParams();
+  const { collectionId, seriesId } = useParams();
 
   const collectionData = mainCollections.find((collection) => {
     return collection.id === collectionId;
@@ -31,6 +33,25 @@ const CollectionItemDetail = () => {
 
   if (collectionData?.provider === "disney-lorcana") {
     return <DisneyLorcanaSeriesDetail />;
+  }
+
+  if (collectionData?.provider === "one-piece-card-game") {
+    if (seriesId === "romance-dawn") {
+      return <OnePieceRomanceDawnDetail />;
+    }
+
+    const series = onePieceSeries.find((item) => item.id === seriesId);
+
+    return (
+      <section className="series-detail">
+        <Link className="back-link" to="/collezioni/one-piece-card-game">
+          ← Torna alle collezioni
+        </Link>
+        <p className="eyebrow">{series?.code || "One Piece Card Game"}</p>
+        <h1>{series?.name || "Collezione non disponibile"}</h1>
+        <p>Questa collezione è pronta e verrà popolata con le carte nel prossimo passaggio.</p>
+      </section>
+    );
   }
 
   return (

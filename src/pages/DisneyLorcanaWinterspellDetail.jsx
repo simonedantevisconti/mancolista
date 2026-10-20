@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { disneyLorcanaWinterspellCards } from "../data/disneyLorcanaCards";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -296,32 +297,34 @@ const DisneyLorcanaWinterspellDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="lorcana-ink">Inchiostro</label>
-          <select
-            id="lorcana-ink"
+          <CustomSelect
             value={inkFilter}
-            onChange={(event) => setInkFilter(event.target.value)}
-          >
-            <option value="all">Tutti</option>
-            <option value="amber">Ambra</option>
-            <option value="amethyst">Ametista</option>
-            <option value="emerald">Smeraldo</option>
-            <option value="ruby">Rubino</option>
-            <option value="sapphire">Zaffiro</option>
-            <option value="steel">Acciaio</option>
-          </select>
+            onChange={setInkFilter}
+            ariaLabel="Seleziona inchiostro"
+            options={[
+              { value: "all", label: "Tutti" },
+              { value: "amber", label: "Ambra" },
+              { value: "amethyst", label: "Ametista" },
+              { value: "emerald", label: "Smeraldo" },
+              { value: "ruby", label: "Rubino" },
+              { value: "sapphire", label: "Zaffiro" },
+              { value: "steel", label: "Acciaio" },
+            ]}
+          />
         </div>
 
         <div className="filter-field">
           <label htmlFor="lorcana-status">Stato</label>
-          <select
-            id="lorcana-status"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona stato"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

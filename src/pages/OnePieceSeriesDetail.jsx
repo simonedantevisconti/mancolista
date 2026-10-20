@@ -22,6 +22,9 @@ import {
   onePiece500YearsInTheFutureCards,
   onePieceTwoLegendsCards,
   onePieceEmperorsInTheNewWorldCards,
+  onePieceRoyalBloodCards,
+  onePieceAFistOfDivineSpeedCards,
+  onePieceLegacyOfTheMasterCards,
   onePieceSeries,
 } from "../data/onePieceCards";
 import { db } from "../firebase";
@@ -63,6 +66,9 @@ const cardsBySeries = {
   "500-years-in-the-future": onePiece500YearsInTheFutureCards,
   "two-legends": onePieceTwoLegendsCards,
   "emperors-in-the-new-world": onePieceEmperorsInTheNewWorldCards,
+  "royal-blood": onePieceRoyalBloodCards,
+  "a-fist-of-divine-speed": onePieceAFistOfDivineSpeedCards,
+  "legacy-of-the-master": onePieceLegacyOfTheMasterCards,
 };
 
 const OnePieceSeriesDetail = () => {

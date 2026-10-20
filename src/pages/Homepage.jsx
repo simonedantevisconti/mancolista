@@ -208,7 +208,7 @@ const Homepage = () => {
     <section className="homepage">
       <div className="homepage-hero">
         <p className="eyebrow">La tua checklist digitale</p>
-        <h1>MancoLista</h1>
+        <h1>Manco<span style={{ color: "var(--accent)" }}>Lista</span></h1>
         <p>
           Organizza le tue collezioni, segna le carte che hai, controlla le
           doppie e scopri quelle che ti mancano.

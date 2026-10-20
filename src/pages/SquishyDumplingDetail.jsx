@@ -23,14 +23,6 @@ import "../styles/series-detail.css";
 const COLLECTION_ID = "squishy-dumpling";
 const SERIES_ID = "base";
 
-const rarityLabels = {
-  "da-verificare": "Da verificare",
-  rare: "Rare",
-  "ultra-rare": "Ultra Rare",
-  "rare-mystery": "Rare Mystery",
-  "rare-crystal": "Rare Crystal",
-};
-
 const SquishyDumplingDetail = () => {
   const { user, authLoading } = useAuth();
 
@@ -40,7 +32,6 @@ const SquishyDumplingDetail = () => {
   const [exportLoading, setExportLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [rarityFilter, setRarityFilter] = useState("all");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
 
   const cards = useMemo(() => {
@@ -294,15 +285,12 @@ const SquishyDumplingDetail = () => {
       card.name.toLowerCase().includes(normalizedSearch) ||
       String(card.number).includes(normalizedSearch);
 
-    const matchesRarity =
-      rarityFilter === "all" || card.rarity === rarityFilter;
-
     const matchesOwnership =
       ownershipFilter === "all" ||
       (ownershipFilter === "owned" && isOwned) ||
       (ownershipFilter === "missing" && !isOwned);
 
-    return matchesSearch && matchesRarity && matchesOwnership;
+    return matchesSearch && matchesOwnership;
   });
 
   if (authLoading) {
@@ -384,23 +372,6 @@ const SquishyDumplingDetail = () => {
         </div>
 
         <div className="filter-field">
-          <label htmlFor="rarity-filter">Rarità</label>
-          <CustomSelect
-            value={rarityFilter}
-            onChange={setRarityFilter}
-            ariaLabel="Seleziona rarità"
-            options={[
-              { value: "all", label: "Tutte" },
-              { value: "da-verificare", label: "Da verificare" },
-              { value: "rare", label: "Rare" },
-              { value: "ultra-rare", label: "Ultra Rare" },
-              { value: "rare-mystery", label: "Rare Mystery" },
-              { value: "rare-crystal", label: "Rare Crystal" },
-            ]}
-          />
-        </div>
-
-        <div className="filter-field">
           <label htmlFor="ownership-filter">Stato</label>
           <CustomSelect
             value={ownershipFilter}
@@ -423,7 +394,7 @@ const SquishyDumplingDetail = () => {
       {filteredCards.length === 0 && (
         <div className="empty-cards-message">
           <h2>Nessuna carta trovata</h2>
-          <p>Prova a cambiare ricerca, rarità o stato della carta.</p>
+          <p>Prova a cambiare ricerca o stato della carta.</p>
         </div>
       )}
 
@@ -473,10 +444,6 @@ const SquishyDumplingDetail = () => {
                 </span>
 
                 <h2>{card.name}</h2>
-
-                <span className="card-rarity">
-                  {rarityLabels[card.rarity] || card.rarity}
-                </span>
 
                 <label className="owned-toggle">
                   <input

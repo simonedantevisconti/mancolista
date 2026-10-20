@@ -24,6 +24,15 @@ const COLLECTION_ID = "one-piece-card-game";
 const SERIES_ID = "romance-dawn";
 const FALLBACK_IMAGE = "/one-piece/op-01-card.webp";
 
+const rarityLabels = {
+  L: "Leader",
+  SEC: "Segreta",
+  SR: "Super Rara",
+  R: "Rara",
+  UC: "Non Comune",
+  C: "Comune",
+};
+
 const OnePieceRomanceDawnDetail = () => {
   const { user, authLoading } = useAuth();
   const [cardsStatus, setCardsStatus] = useState({});
@@ -33,7 +42,7 @@ const OnePieceRomanceDawnDetail = () => {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
-  const [colorFilter, setColorFilter] = useState("all");
+  const [rarityFilter, setRarityFilter] = useState("all");
   const [missingImages, setMissingImages] = useState({});
 
   const cards = useMemo(() => {
@@ -211,12 +220,10 @@ const OnePieceRomanceDawnDetail = () => {
       ownershipFilter === "all" ||
       (ownershipFilter === "owned" && isOwned) ||
       (ownershipFilter === "missing" && !isOwned);
-    const matchesColor =
-      colorFilter === "all" ||
-      card.color === colorFilter ||
-      card.color.split("-").includes(colorFilter);
+    const matchesRarity =
+      rarityFilter === "all" || card.rarity === rarityFilter;
 
-    return matchesSearch && matchesOwnership && matchesColor;
+    return matchesSearch && matchesOwnership && matchesRarity;
   });
 
   const handleExport = async () => {
@@ -301,17 +308,19 @@ const OnePieceRomanceDawnDetail = () => {
         </div>
 
         <div className="filter-field">
-          <label htmlFor="one-piece-color">Colore</label>
+          <label htmlFor="one-piece-rarity">Rarità</label>
           <CustomSelect
-            value={colorFilter}
-            onChange={setColorFilter}
-            ariaLabel="Seleziona filtro"
+            value={rarityFilter}
+            onChange={setRarityFilter}
+            ariaLabel="Seleziona rarità"
             options={[
-              { value: "all", label: "Tutti" },
-              { value: "red", label: "Rosso" },
-              { value: "green", label: "Verde" },
-              { value: "blue", label: "Blu" },
-              { value: "purple", label: "Viola" },
+              { value: "all", label: "Tutte" },
+              { value: "L", label: "Leader (L)" },
+              { value: "SEC", label: "Segreta (SEC)" },
+              { value: "SR", label: "Super Rara (SR)" },
+              { value: "R", label: "Rara (R)" },
+              { value: "UC", label: "Non Comune (UC)" },
+              { value: "C", label: "Comune (C)" },
             ]}
           />
         </div>
@@ -339,7 +348,7 @@ const OnePieceRomanceDawnDetail = () => {
       {filteredCards.length === 0 && (
         <div className="empty-cards-message">
           <h2>Nessuna carta trovata</h2>
-          <p>Prova a cambiare ricerca, colore o stato.</p>
+          <p>Prova a cambiare ricerca, rarità o stato.</p>
         </div>
       )}
 
@@ -402,7 +411,7 @@ const OnePieceRomanceDawnDetail = () => {
                 </span>
                 <h2>{card.name}</h2>
 
-                <span className="card-rarity">{card.rarity}</span>
+                <span className="card-rarity">{rarityLabels[card.rarity] || card.rarity}</span>
 
                 <label className="owned-toggle">
                   <input

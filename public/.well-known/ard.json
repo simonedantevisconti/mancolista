@@ -1,0 +1,21 @@
+{
+  "entries": [
+    {
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:mancolista.site:catalog:collections",
+      "displayName": "MancoLista - Catalogo delle collezioni",
+      "type": "application/ai-catalog+json",
+      "url": "https://mancolista.site/ai-catalog.json",
+      "description": "Catalogo informativo delle collezioni di carte e figurine supportate da MancoLista. Le funzioni di gestione richiedono accesso; non è un agente autonomo né offre API per operazioni automatiche.",
+      "representativeQueries": [
+        "Quali collezioni di carte sono presenti su MancoLista?",
+        "Quante espansioni One Piece sono disponibili su MancoLista?",
+        "Dove trovo la lista delle collezioni supportate da MancoLista?"
+      ],
+      "capabilities": [
+        "collection-discovery",
+        "card-catalog"
+      ]
+    }
+  ]
+}

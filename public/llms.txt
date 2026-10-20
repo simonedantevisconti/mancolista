@@ -1,0 +1,37 @@
+# MancoLista
+
+> MancoLista è una web app italiana per tenere traccia di carte e figurine da collezione, segnare quelle possedute, le mancanti e le doppie.
+
+Sito ufficiale: https://mancolista.site/
+Lingua: italiano.
+
+## Funzionalità
+
+- Gestione personale delle collezioni di carte e figurine.
+- Monitoraggio delle carte possedute, mancanti e doppie.
+- Ricerca e filtri nelle serie supportate.
+- Esportazione delle liste dove prevista dall'applicazione.
+- Le pagine di dettaglio delle collezioni e i dati personali richiedono autenticazione.
+
+## Collezioni disponibili
+
+- Italian Brainrot (450 carte configurate)
+- Calciatori Panini 2026-2027 (609 carte configurate)
+- Disney Lorcana (2860 carte configurate)
+- One Piece Card Game (2562 carte configurate)
+- FIFA World Cup 2026 Panini (1100 carte configurate)
+- Poppy Playtime (162 carte configurate)
+- Squishy Dumpling (135 carte configurate)
+- Snoopy - Un anno da ricordare 2026 (286 carte configurate)
+- K-Pop Demon Hunters (673 carte configurate)
+- Pokémon - Prima Edizione (102 carte configurate)
+
+## Risorse pubbliche
+
+- [Home](https://mancolista.site/)
+- [Privacy](https://mancolista.site/privacy)
+- [Cookie policy](https://mancolista.site/cookie)
+- [Catalogo strutturato delle collezioni](https://mancolista.site/ai-catalog.json)
+- [Sitemap](https://mancolista.site/sitemap.xml)
+
+Le pagine delle collezioni richiedono un account; il catalogo JSON descrive le collezioni configurate, ma non fornisce dati degli utenti.

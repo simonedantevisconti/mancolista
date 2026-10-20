@@ -11,6 +11,7 @@
   border: 1px solid #e8e8e8;
   border-radius: 24px;
   background-color: #ffffff;
+  color: #171717;
   text-align: center;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 }
@@ -25,6 +26,11 @@
 
 .not-found-card h1 {
   margin: 10px 0 14px;
+  color: #171717;
+}
+
+.not-found-card .eyebrow {
+  color: #ff7a00;
 }
 
 .not-found-card > p:not(.not-found-code):not(.eyebrow) {

@@ -8,11 +8,6 @@ const Header = () => {
   const { user, authLoading, logout, userRevision } = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const isAdmin = Boolean(
-    user &&
-      import.meta.env.VITE_ADMIN_UID &&
-      user.uid === import.meta.env.VITE_ADMIN_UID,
-  );
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -70,11 +65,6 @@ const Header = () => {
 
         {!authLoading && user && (
           <>
-            {isAdmin && (
-              <NavLink to="/admin/richieste" onClick={closeMenu}>
-                Richieste
-              </NavLink>
-            )}
 
             <NavLink
               to="/impostazioni"

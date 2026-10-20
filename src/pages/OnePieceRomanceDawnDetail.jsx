@@ -22,7 +22,7 @@ import "../styles/series-detail.css";
 
 const COLLECTION_ID = "one-piece-card-game";
 const SERIES_ID = "romance-dawn";
-const FALLBACK_IMAGE = "/loghi/one-piece-logo.png";
+const FALLBACK_IMAGE = "/one-piece/op-01-card.webp";
 
 const OnePieceRomanceDawnDetail = () => {
   const { user, authLoading } = useAuth();
@@ -255,7 +255,7 @@ const OnePieceRomanceDawnDetail = () => {
     <section className="series-detail">
       <div className="series-topbar">
         <div>
-          <Link className="back-link" to="/">
+          <Link className="back-link" to="/collezioni/one-piece-card-game">
             ← Torna alle collezioni
           </Link>
 

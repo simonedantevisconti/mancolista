@@ -52,9 +52,14 @@ function RouteSeo() {
     setMeta('meta[name="twitter:description"]', ["name", "twitter:description"], page.description);
 
     const url = BASE_URL + normalizedPath;
-    const canonical = document.head.querySelector('link[rel="canonical"]');
+    let canonical = document.head.querySelector('link[rel="canonical"]');
     if (page.indexable) {
-      if (canonical) canonical.setAttribute("href", url);
+      if (!canonical) {
+        canonical = document.createElement("link");
+        canonical.rel = "canonical";
+        document.head.appendChild(canonical);
+      }
+      canonical.setAttribute("href", url);
       setMeta('meta[property="og:url"]', ["property", "og:url"], url);
     } else {
       canonical?.remove();

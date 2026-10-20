@@ -474,7 +474,10 @@ const Account = () => {
           </dl>
         </article>
 
-        <article className="account-card account-card--wide">
+        <article
+          id="richieste"
+          className="account-card account-card--wide"
+        >
           <div className="account-card__heading">
             <span className="account-card__icon" aria-hidden="true">📨</span>
             <div>

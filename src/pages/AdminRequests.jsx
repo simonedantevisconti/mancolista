@@ -27,6 +27,7 @@ const AdminRequests = () => {
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [openStatusId, setOpenStatusId] = useState("");
   const [error, setError] = useState("");
 
   const adminUid = import.meta.env.VITE_ADMIN_UID || "";
@@ -89,6 +90,7 @@ const AdminRequests = () => {
             : request,
         ),
       );
+      setOpenStatusId("");
     } catch (saveError) {
       console.error(saveError);
       setError("Non riesco ad aggiornare lo stato della richiesta.");
@@ -165,19 +167,64 @@ const AdminRequests = () => {
                 </p>
               </div>
 
-              <select
-                value={request.status || "pending"}
-                disabled={savingId === request.id}
-                onChange={(event) =>
-                  handleStatusChange(request.id, event.target.value)
-                }
-              >
-                {STATUS_OPTIONS.map((option) => (
-                  <option value={option.value} key={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+              <div className="status-dropdown">
+                <button
+                  type="button"
+                  className={`status-dropdown__trigger status-dropdown__trigger--${request.status || "pending"}`}
+                  aria-haspopup="listbox"
+                  aria-expanded={openStatusId === request.id}
+                  disabled={savingId === request.id}
+                  onClick={() =>
+                    setOpenStatusId((current) =>
+                      current === request.id ? "" : request.id,
+                    )
+                  }
+                >
+                  <span className="status-dropdown__dot" aria-hidden="true" />
+                  <span>
+                    {STATUS_OPTIONS.find(
+                      (option) =>
+                        option.value === (request.status || "pending"),
+                    )?.label || "In attesa"}
+                  </span>
+                  <span className="status-dropdown__chevron" aria-hidden="true">
+                    {openStatusId === request.id ? "▲" : "▼"}
+                  </span>
+                </button>
+
+                {openStatusId === request.id && (
+                  <div className="status-dropdown__menu" role="listbox">
+                    {STATUS_OPTIONS.map((option) => (
+                      <button
+                        type="button"
+                        key={option.value}
+                        role="option"
+                        aria-selected={
+                          option.value === (request.status || "pending")
+                        }
+                        className={`status-dropdown__option status-dropdown__option--${option.value}`}
+                        onClick={() =>
+                          handleStatusChange(request.id, option.value)
+                        }
+                      >
+                        <span
+                          className="status-dropdown__dot"
+                          aria-hidden="true"
+                        />
+                        <span>{option.label}</span>
+                        {option.value === (request.status || "pending") && (
+                          <span
+                            className="status-dropdown__check"
+                            aria-hidden="true"
+                          >
+                            ✓
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <dl className="admin-request-details admin-request-details--compact">

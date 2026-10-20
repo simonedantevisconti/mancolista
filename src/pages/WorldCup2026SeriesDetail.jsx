@@ -40,7 +40,6 @@ const WorldCup2026SeriesDetail = () => {
   const [exportLoading, setExportLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("all");
   const [ownershipFilter, setOwnershipFilter] = useState("all");
 
   const series = worldCup2026Series.find((item) => item.id === seriesId);
@@ -53,9 +52,6 @@ const WorldCup2026SeriesDetail = () => {
   );
   const missingCount = cards.length - ownedCount;
 
-  const categories = useMemo(() => {
-    return [...new Set(cards.map((card) => card.category))];
-  }, [cards]);
 
   useEffect(() => {
     const loadCards = async () => {
@@ -204,14 +200,12 @@ const WorldCup2026SeriesDetail = () => {
       card.name.toLowerCase().includes(search) ||
       String(card.number).toLowerCase().includes(search) ||
       card.team?.toLowerCase().includes(search);
-    const matchesCategory =
-      categoryFilter === "all" || card.category === categoryFilter;
     const matchesOwnership =
       ownershipFilter === "all" ||
       (ownershipFilter === "owned" && isOwned) ||
       (ownershipFilter === "missing" && !isOwned);
 
-    return matchesSearch && matchesCategory && matchesOwnership;
+    return matchesSearch && matchesOwnership;
   });
 
   const handleExport = async () => {
@@ -312,18 +306,6 @@ const WorldCup2026SeriesDetail = () => {
         </div>
 
         <div className="filter-field">
-          <label htmlFor="world-cup-category">Categoria</label>
-          <CustomSelect
-            value={categoryFilter}
-            onChange={setCategoryFilter}
-            ariaLabel="Seleziona categoria"
-            options={[
-              { value: "all", label: "Tutte" },
-            ]}
-          />
-        </div>
-
-        <div className="filter-field">
           <label htmlFor="world-cup-status">Stato</label>
           <CustomSelect
             value={ownershipFilter}
@@ -346,7 +328,7 @@ const WorldCup2026SeriesDetail = () => {
       {filteredCards.length === 0 && (
         <div className="empty-cards-message">
           <h2>Nessuna figurina trovata</h2>
-          <p>Prova a cambiare ricerca, categoria o stato.</p>
+          <p>Prova a cambiare ricerca o stato.</p>
         </div>
       )}
 

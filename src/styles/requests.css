@@ -183,14 +183,14 @@
 }
 
  .collection-request-card__icon {
-  width: 110px;
-  height: 110px;
+  width: 150px;
+  height: 150px;
   display: grid;
   place-items: center;
   border: 1px dashed rgba(255, 122, 0, 0.55);
-  border-radius: 28px;
+  border-radius: 34px;
   color: var(--accent);
-  font-size: 62px;
+  font-size: 92px;
   line-height: 1;
   font-weight: 300;
 }

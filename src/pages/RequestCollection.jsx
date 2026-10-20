@@ -9,6 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 
@@ -163,15 +164,17 @@ const RequestCollection = () => {
 
             <label>
               Tipo
-              <select
+              <CustomSelect
                 value={form.type}
-                onChange={(event) => updateField("type", event.target.value)}
-              >
-                <option>Carte</option>
-                <option>Figurine</option>
-                <option>Trading Card Game</option>
-                <option>Altro</option>
-              </select>
+                onChange={(value) => updateField("type", value)}
+                ariaLabel="Seleziona il tipo di collezione"
+                options={[
+                  { value: "Carte", label: "Carte" },
+                  { value: "Figurine", label: "Figurine" },
+                  { value: "Trading Card Game", label: "Trading Card Game" },
+                  { value: "Altro", label: "Altro" },
+                ]}
+              />
             </label>
           </div>
 

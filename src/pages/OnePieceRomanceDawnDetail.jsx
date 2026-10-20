@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 
 import { onePieceRomanceDawnCards } from "../data/onePieceCards";
+import CustomSelect from "../components/CustomSelect";
 import { db } from "../firebase";
 import { useAuth } from "../hooks/useAuth";
 import { exportCollectionPng } from "../utils/exportCollectionPng";
@@ -301,30 +302,32 @@ const OnePieceRomanceDawnDetail = () => {
 
         <div className="filter-field">
           <label htmlFor="one-piece-color">Colore</label>
-          <select
-            id="one-piece-color"
+          <CustomSelect
             value={colorFilter}
-            onChange={(event) => setColorFilter(event.target.value)}
-          >
-            <option value="all">Tutti</option>
-            <option value="red">Rosso</option>
-            <option value="green">Verde</option>
-            <option value="blue">Blu</option>
-            <option value="purple">Viola</option>
-          </select>
+            onChange={setColorFilter}
+            ariaLabel="Seleziona filtro"
+            options={[
+              { value: "all", label: "Tutti" },
+              { value: "red", label: "Rosso" },
+              { value: "green", label: "Verde" },
+              { value: "blue", label: "Blu" },
+              { value: "purple", label: "Viola" },
+            ]}
+          />
         </div>
 
         <div className="filter-field">
           <label htmlFor="one-piece-status">Stato</label>
-          <select
-            id="one-piece-status"
+          <CustomSelect
             value={ownershipFilter}
-            onChange={(event) => setOwnershipFilter(event.target.value)}
-          >
-            <option value="all">Tutte</option>
-            <option value="owned">Possedute</option>
-            <option value="missing">Mancanti</option>
-          </select>
+            onChange={setOwnershipFilter}
+            ariaLabel="Seleziona stato"
+            options={[
+              { value: "all", label: "Tutte" },
+              { value: "owned", label: "Possedute" },
+              { value: "missing", label: "Mancanti" },
+            ]}
+          />
         </div>
 
         <div className="filter-result">

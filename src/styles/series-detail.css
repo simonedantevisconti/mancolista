@@ -1211,3 +1211,40 @@
   letter-spacing: 0.04em;
   overflow-wrap: anywhere;
 }
+
+
+/* FULLSCREEN CARD PREVIEW */
+.card-preview-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100dvh;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.96);
+  backdrop-filter: none;
+  cursor: zoom-out;
+}
+
+.card-preview-fullscreen .card-preview-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 24px);
+  object-fit: contain;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: default;
+}
+
+.card-preview-fullscreen .card-preview-close {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 1;
+}

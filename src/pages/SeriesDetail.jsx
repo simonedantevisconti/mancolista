@@ -1,3 +1,4 @@
+import CardPreviewButton from "../components/CardPreviewButton";
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
@@ -513,6 +514,7 @@ const SeriesDetail = () => {
               </button>
 
               <div className="brainrot-card-info">
+                <CardPreviewButton card={card} />
                 <span className="card-number">
                   #{String(card.number).padStart(3, "0")}
                 </span>

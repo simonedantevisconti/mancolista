@@ -1,3 +1,4 @@
+import CardPreviewButton from "../components/CardPreviewButton";
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import {
@@ -406,6 +407,7 @@ const OnePieceRomanceDawnDetail = () => {
               </button>
 
               <div className="brainrot-card-info">
+                <CardPreviewButton card={card} unavailable={Boolean(missingImages[card.id])} />
                 <span className="card-number">
                   {card.code}
                 </span>

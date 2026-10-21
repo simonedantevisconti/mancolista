@@ -48,7 +48,7 @@ export const kpopDemonHuntersSeries = [
     id: "mcdonalds-photocards",
     name: "McDonald's x KPop Demon Hunters",
     subtitle: "Promotional Photocards",
-    totalCards: 8,
+    totalCards: 13,
     itemLabel: "photocard",
     coverImage: "/loghi/kpop-mcdonalds.webp",
     fallbackImage: "/loghi/k-pop-demon-hunter.webp",
@@ -434,14 +434,26 @@ export const kayouMiniSeries1Cards = miniEditionGroups.flatMap(
 );
 
 export const mcdonaldsPhotocards = [
-  { id: "baby-saja", name: "Baby Saja" },
-  { id: "rumi", name: "Rumi" },
-  { id: "jinu", name: "Jinu" },
-  { id: "zoey", name: "Zoey" },
-  { id: "mystery-saja", name: "Mystery Saja" },
-  { id: "romance-saja", name: "Romance Saja" },
-  { id: "abby-saja", name: "Abby Saja" },
-  { id: "mira", name: "Mira" },
+  // 💠 Comune: personaggi singoli (gli ID esistenti restano invariati).
+  { id: "baby-saja", name: "Baby Saja", rarity: "💠 Comune" },
+  { id: "rumi", name: "Rumi", rarity: "💠 Comune" },
+  { id: "jinu", name: "Jinu", rarity: "💠 Comune" },
+  { id: "zoey", name: "Zoey", rarity: "💠 Comune" },
+  { id: "mystery-saja", name: "Mystery Saja", rarity: "💠 Comune" },
+  { id: "romance-saja", name: "Romance Saja", rarity: "💠 Comune" },
+  { id: "abby-saja", name: "Abby Saja", rarity: "💠 Comune" },
+  { id: "mira", name: "Mira", rarity: "💠 Comune" },
+
+  // 💠💠 Non comune: gruppi.
+  { id: "huntrx", name: "HUNTR/X", rarity: "💠💠 Non comune" },
+  { id: "saja-boys", name: "Saja Boys", rarity: "💠💠 Non comune" },
+
+  // 💠💠💠 Raro: arti alternative.
+  { id: "rumi-white-outfit", name: "Rumi (outfit bianco)", rarity: "💠💠💠 Raro" },
+  { id: "demon-jinu", name: "Demon Jinu", rarity: "💠💠💠 Raro" },
+
+  // ❤️ Chase: mani di Rumi e Jinu.
+  { id: "rujinu-hands", name: "RuJinu - Mani", rarity: "❤️ Chase" },
 ];
 
 export const generateKpopDemonHuntersCards = (seriesId) => {
@@ -512,7 +524,7 @@ export const generateKpopDemonHuntersCards = (seriesId) => {
     return mcdonaldsPhotocards.map((card, index) => ({
       ...card,
       number: index + 1,
-      rarity: "promo",
+      rarity: card.rarity,
       frontImage: `${baseFolder}/${card.id}.webp`,
       backImage: series.coverImage,
       fallbackImage: series.coverImage,

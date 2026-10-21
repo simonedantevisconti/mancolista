@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import "../styles/series-detail.css";
 
-// Anteprima indipendente: non modifica lo stato delle carte su Firebase.
+// Il pulsante apre esclusivamente l'immagine, senza modificare le carte salvate.
 const CardPreviewButton = ({ card, unavailable = false }) => {
   const [open, setOpen] = useState(false);
   const [available, setAvailable] = useState(!unavailable);
 
   useEffect(() => {
     setAvailable(!unavailable);
+    setOpen(false);
   }, [unavailable, card.frontImage]);
 
   useEffect(() => {
@@ -16,19 +18,19 @@ const CardPreviewButton = ({ card, unavailable = false }) => {
     const onKeyDown = (event) => {
       if (event.key === "Escape") setOpen(false);
     };
-
-    document.body.classList.add("card-preview-open");
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.classList.remove("card-preview-open");
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
   if (!card.frontImage || !available) return null;
 
-  const openPreview = () => {
+  const showImage = () => {
     const image = new Image();
     image.onload = () => setOpen(true);
     image.onerror = () => setAvailable(false);
@@ -37,44 +39,41 @@ const CardPreviewButton = ({ card, unavailable = false }) => {
 
   return (
     <>
-      <button type="button" className="card-preview-button" onClick={openPreview}>
+      <button
+        type="button"
+        className="card-preview-button"
+        onClick={(event) => {
+          event.stopPropagation();
+          showImage();
+        }}
+      >
         Anteprima
       </button>
-
-      {open && (
+      {open && createPortal(
         <div
-          className="card-preview-overlay"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setOpen(false);
-          }}
+          className="card-preview-overlay card-preview-fullscreen"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Anteprima immagine ${card.name}`}
+          onClick={() => setOpen(false)}
         >
-          <div
-            className="card-preview-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Anteprima ${card.name}`}
+          <button
+            className="card-preview-close"
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Chiudi anteprima"
           >
-            <button
-              type="button"
-              className="card-preview-close"
-              onClick={() => setOpen(false)}
-              aria-label="Chiudi anteprima"
-            >
-              ×
-            </button>
-            <img
-              className="card-preview-image"
-              src={card.frontImage}
-              alt={card.name}
-            />
-            <div className="card-preview-info">
-              <span>{card.code || `#${String(card.number || "").padStart(3, "0")}`}</span>
-              <h2>{card.name}</h2>
-              {card.rarity && <strong>{card.rarity}</strong>}
-            </div>
-          </div>
-        </div>
+            ×
+          </button>
+          <img
+            className="card-preview-image"
+            src={card.frontImage}
+            alt={card.name}
+            onClick={(event) => event.stopPropagation()}
+            onError={() => setOpen(false)}
+          />
+        </div>,
+        document.body,
       )}
     </>
   );
